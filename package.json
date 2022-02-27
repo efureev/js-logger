@@ -11,7 +11,8 @@
   "homepage": "https://github.com/efureev/browser-logger",
   "scripts": {
     "build": "rm -rf dist && tsc -p src",
-    "test": "mocha -r ts-node/register -R spec test/**/*.ts"
+    "test": "mocha -r ts-node/register test/**/*.ts",
+    "coverage": "nyc npm run test && nyc report --reporter=html"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -19,22 +20,16 @@
   "files": [
     "dist"
   ],
-  "peerDependencies": {
-    "webpack": ">=5.0.0 < 6.0.0"
-  },
   "engines": {
     "node": ">= 16"
   },
-  "dependencies": {
-  },
   "devDependencies": {
-    "@babel/register": "^7.17.0",
-    "@types/webpack": "5.28.0",
     "@types/mocha": "9.1.0",
     "@types/expect": "24.3.0",
+    "mocha": "9.2.1",
+    "ts-node": "^9.1.1",
     "typescript": "^4.5.5",
-    "webpack": "5.69.1",
-    "mocha": "9.2.1"
+    "nyc": "^15.1.0"
   },
   "repository": {
     "type": "git",

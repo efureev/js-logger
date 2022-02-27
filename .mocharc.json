@@ -1,14 +1,19 @@
 {
   "diff": true,
   "extension": [
-    "js"
+    "js",
+    "ts"
   ],
   "package": "./package.json",
   "reporter": "landing",
   "slow": 75,
   "timeout": 2000,
   "ui": "bdd",
-  "watch-files": ["src/**/*.js", "tests/**/*.js"],
+  "watch-files": [
+    "src/**/*.js",
+    "src/**/*.ts",
+    "test/**/*.js"
+  ],
   "watch-ignore": [
     "node_modules",
     ".git",
