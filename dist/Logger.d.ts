@@ -14,6 +14,9 @@ declare class Logger {
     private shouldLog;
     log(msgText: string | Message | MessageBlock, prefix?: string, offset?: number): void;
     info(msgText: string, prefix?: string, offset?: number): void;
+    debug(msgText: string, prefix?: string, offset?: number): void;
+    error(msgText: string, prefix?: string, offset?: number): void;
+    trace(msgText: string, prefix?: string, offset?: number): void;
     private static buildMessage;
 }
 export default Logger;

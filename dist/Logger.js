@@ -34,6 +34,24 @@ class Logger {
         const msg = Logger.buildMessage(msgText, prefix, offset);
         this.driver.info(msg);
     }
+    debug(msgText, prefix, offset = 0) {
+        if (!this.shouldLog(LogLevel_1.LEVEL_DEBUG)) {
+            return;
+        }
+        this.driver.debug(Logger.buildMessage(msgText, prefix, offset));
+    }
+    error(msgText, prefix, offset = 0) {
+        if (!this.shouldLog(LogLevel_1.LEVEL_ERROR)) {
+            return;
+        }
+        this.driver.error(Logger.buildMessage(msgText, prefix, offset));
+    }
+    trace(msgText, prefix, offset = 0) {
+        if (!this.shouldLog(LogLevel_1.LEVEL_TRACE)) {
+            return;
+        }
+        this.driver.trace(Logger.buildMessage(msgText, prefix, offset));
+    }
     static buildMessage(msgText, prefix, offset = 0) {
         if (msgText instanceof Message_1.default) {
             return msgText;
