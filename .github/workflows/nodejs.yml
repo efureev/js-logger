@@ -50,6 +50,19 @@ jobs:
         env:
           CI: true
 
+  cover-all:
+    runs-on: ubuntu-latest
+    needs: [ testing-on-node]
+    steps:
+      - uses: actions/checkout@v2
+      # Setup .npmrc file to publish to npm
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '16.x'
+          registry-url: 'https://registry.npmjs.org'
+      - run: yarn install
+      - run: yarn coverage
+
   npm-publish:
     runs-on: ubuntu-latest
     needs: [ testing-on-node]
@@ -66,7 +79,9 @@ jobs:
       - run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-#
+
+
+
 #  npm-publish-fake:
 #    name: npm-publish
 #    needs: [lint-changelog, testing-on-node]
