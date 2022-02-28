@@ -35,7 +35,7 @@ class Logger {
     this.driver.log(Logger.buildMessage(msgText, prefix, offset))
   }
 
-  info(msgText: string, prefix?: string, offset = 0): void {
+  info(msgText: string | Message | MessageBlock, prefix?: string, offset = 0): void {
     if (!this.shouldLog(LEVEL_INFO)) {
       return
     }
@@ -45,7 +45,7 @@ class Logger {
     this.driver.info(msg)
   }
 
-  debug(msgText: string, prefix?: string, offset = 0) {
+  debug(msgText: string | Message | MessageBlock, prefix?: string, offset = 0) {
     if (!this.shouldLog(LEVEL_DEBUG)) {
       return
     }
@@ -53,7 +53,7 @@ class Logger {
     this.driver.debug(Logger.buildMessage(msgText, prefix, offset))
   }
 
-  error(msgText: string, prefix?: string, offset = 0) {
+  error(msgText: string | Message | MessageBlock, prefix?: string, offset = 0) {
     if (!this.shouldLog(LEVEL_ERROR)) {
       return
     }
@@ -61,7 +61,7 @@ class Logger {
     this.driver.error(Logger.buildMessage(msgText, prefix, offset))
   }
 
-  trace(msgText: string, prefix?: string, offset = 0) {
+  trace(msgText: string | Message | MessageBlock, prefix?: string, offset = 0) {
     if (!this.shouldLog(LEVEL_TRACE)) {
       return
     }
