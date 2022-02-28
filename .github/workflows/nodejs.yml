@@ -52,11 +52,11 @@ jobs:
       - run: yarn coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2
-          with:
-            token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
-            files: ./coverage/coverage-final.json
-            file: ./coverage/coverage-final.json
-            verbose: true # optional (default = false)
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+          files: ./coverage/coverage-final.json
+          file: ./coverage/coverage-final.json
+          verbose: true # optional (default = false)
 
   npm-publish:
     runs-on: ubuntu-latest
