@@ -461,5 +461,5 @@ var BrowserLogger = function BrowserLogger() {
   });
 };
 
-export { BrowserLogger, ConsoleDriver, Logger as default };
+export { BrowserLogger, ConsoleDriver, Message, MessageBlock, Logger as default };
 //# sourceMappingURL=bundle.esm.js.map

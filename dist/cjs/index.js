@@ -3,10 +3,29 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var _exportNames = {};
+var _exportNames = {
+  Message: true,
+  MessageBlock: true
+};
+Object.defineProperty(exports, "Message", {
+  enumerable: true,
+  get: function get() {
+    return _Message.default;
+  }
+});
+Object.defineProperty(exports, "MessageBlock", {
+  enumerable: true,
+  get: function get() {
+    return _MessageBlock.default;
+  }
+});
 exports.default = void 0;
 
 var _Logger = _interopRequireDefault(require("./Logger"));
+
+var _Message = _interopRequireDefault(require("./Message"));
+
+var _MessageBlock = _interopRequireDefault(require("./MessageBlock"));
 
 var _drivers = require("./drivers");
 
@@ -32,34 +51,6 @@ Object.keys(_shorcuts).forEach(function (key) {
     enumerable: true,
     get: function get() {
       return _shorcuts[key];
-    }
-  });
-});
-
-var _Message = require("./Message");
-
-Object.keys(_Message).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  if (Object.prototype.hasOwnProperty.call(_exportNames, key)) return;
-  if (key in exports && exports[key] === _Message[key]) return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _Message[key];
-    }
-  });
-});
-
-var _MessageBlock = require("./MessageBlock");
-
-Object.keys(_MessageBlock).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  if (Object.prototype.hasOwnProperty.call(_exportNames, key)) return;
-  if (key in exports && exports[key] === _MessageBlock[key]) return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _MessageBlock[key];
     }
   });
 });

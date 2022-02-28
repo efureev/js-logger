@@ -1,3 +1,4 @@
 import Logger from './Logger';
-export declare const BrowserLogger: (level?: number) => Logger;
+declare const BrowserLogger: (level?: number) => Logger;
+export { BrowserLogger, };
 //# sourceMappingURL=shorcuts.d.ts.map
