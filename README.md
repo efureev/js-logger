@@ -30,3 +30,17 @@ msg.pushBlock(MessageBlock.instance('prefix').color('white').background('red').p
 msg.pushBlock(MessageBlock.instance('Basic text').color('red'))
 logger.log(msg)
 ```
+
+
+```shell
+const logger = new Logger(new ConsoleDriver())
+
+logger.log(
+  Message.instance().pushBlock(
+    MessageBlock.instance('MessageBlock 1')
+      .background('red')
+      .color('white'),
+    MessageBlock.instance('MessageBlock').color('red')
+  )
+)
+```
