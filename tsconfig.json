@@ -4,6 +4,10 @@
     "target": "esnext",
     // Specify module code generation: 'commonjs', 'amd', 'system', 'umd' or 'es2015'.
     "module": "commonjs",
+    "lib": [
+      "es6",
+      "dom"
+    ],
     /* Redirect output structure to the directory. */
     "outDir": "dist",
     /* Specify the root directory of input files. Use to control the output directory structure with --outDir. */
@@ -32,7 +36,6 @@
   ],
   "exclude": [
     "dist",
-    "node_modules",
-    "dev-utils"
+    "node_modules"
   ]
 }
