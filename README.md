@@ -43,4 +43,30 @@ logger.log(
     MessageBlock.instance('MessageBlock').color('red')
   )
 )
+
+const msg = Message.instance()
+    .pushBlock(
+      MessageBlock
+        .instance('Warning')
+        .background(colors.orange)
+        .color(colors.white)
+        .bold()
+        .padding(1, 5)
+        .borderRadius(4)
+        .offsetLeft(1),
+    
+      MessageBlock
+        .instance('test message from MessageBlocks')
+        .color(colors.purple)
+        .italic()
+        .offsetLeft(1),
+    
+      MessageBlock
+        .instance('\tTotal:\t532!')
+        .background(colors.brown)
+        .color(colors.white)
+        .marginTop(10)
+        .marginBottom(3)
+        .offsetLeft(3),
+    )
 ```
