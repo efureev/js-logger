@@ -98,11 +98,7 @@ class MessageBlock {
   }
 
   image(url: string, width?: number, height?: number): this {
-    return this
-      .push('background-image', `url(${url}}`)
-      .push('background-size', `cover`)
-      .width(width)
-      .height(height)
+    return this.push('background-image', `url(${url}}`).push('background-size', `cover`).width(width).height(height)
   }
 
   italic(): this {

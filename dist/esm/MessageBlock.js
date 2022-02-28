@@ -72,6 +72,34 @@ class MessageBlock {
     return this.push('border', `${width}px ${style} ${color}`);
   }
 
+  size(value) {
+    return this.push('font-size', `${value}px`);
+  }
+
+  bold() {
+    return this.push('font-weight', 'bold');
+  }
+
+  lineHeight(value) {
+    return this.push('line-height', `${value}px`);
+  }
+
+  width(value) {
+    return value ? this.push('width', `${value}px`) : this;
+  }
+
+  height(value) {
+    return value ? this.push('height', `${value}px`) : this;
+  }
+
+  image(url, width, height) {
+    return this.push('background-image', `url(${url}}`).push('background-size', `cover`).width(width).height(height);
+  }
+
+  italic() {
+    return this.push('font-style', 'italic');
+  }
+
   text(value) {
     this._text = value;
     return this;

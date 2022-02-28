@@ -20,6 +20,13 @@ declare class MessageBlock {
     offsetRight(value: number): this;
     borderRadius(value: number): this;
     border(width: number, style: string, color: string): this;
+    size(value: number): this;
+    bold(): this;
+    lineHeight(value: number): this;
+    width(value?: number): this;
+    height(value?: number): this;
+    image(url: string, width?: number, height?: number): this;
+    italic(): this;
     text(value: string): this;
     getText(): string;
     getStyle(): MessageBlockStyle;

@@ -185,6 +185,41 @@
         return this.push('border', "".concat(width, "px ").concat(style, " ").concat(color));
       }
     }, {
+      key: "size",
+      value: function size(value) {
+        return this.push('font-size', "".concat(value, "px"));
+      }
+    }, {
+      key: "bold",
+      value: function bold() {
+        return this.push('font-weight', 'bold');
+      }
+    }, {
+      key: "lineHeight",
+      value: function lineHeight(value) {
+        return this.push('line-height', "".concat(value, "px"));
+      }
+    }, {
+      key: "width",
+      value: function width(value) {
+        return value ? this.push('width', "".concat(value, "px")) : this;
+      }
+    }, {
+      key: "height",
+      value: function height(value) {
+        return value ? this.push('height', "".concat(value, "px")) : this;
+      }
+    }, {
+      key: "image",
+      value: function image(url, width, height) {
+        return this.push('background-image', "url(".concat(url, "}")).push('background-size', "cover").width(width).height(height);
+      }
+    }, {
+      key: "italic",
+      value: function italic() {
+        return this.push('font-style', 'italic');
+      }
+    }, {
       key: "text",
       value: function text(value) {
         this._text = value;
