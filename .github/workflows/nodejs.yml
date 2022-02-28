@@ -45,24 +45,18 @@ jobs:
             ${{ runner.os }}-node-
 
       - run: yarn
-
       - run: yarn lint
       - run: yarn test
         env:
           CI: true
-
-  #  cover-all:
-  #    runs-on: ubuntu-latest
-  #    needs: [ testing-on-node]
-  #    steps:
-  #      - uses: actions/checkout@v2
-  #      # Setup .npmrc file to publish to npm
-  #      - uses: actions/setup-node@v1
-  #        with:
-  #          node-version: '16.x'
-  #          registry-url: 'https://registry.npmjs.org'
-  #      - run: yarn install
-  #      - run: yarn coverage
+      - run: yarn coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v2
+          with:
+            token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+            files: ./coverage/coverage-final.json
+            file: ./coverage/coverage-final.json
+            verbose: true # optional (default = false)
 
   npm-publish:
     runs-on: ubuntu-latest
