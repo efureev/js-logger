@@ -1,5 +1,4 @@
-// export interface MessageBlockStyle extends {[index: string]:any}
-import { isEmptyObject } from "./utils";
+import { isEmptyObject } from './utils';
 
 class MessageBlock {
   style = new Object(null);

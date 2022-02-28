@@ -1,4 +1,4 @@
-import Message from "../Message";
+import Message from '../Message';
 export interface LoggerDriver {
     debug(msg: Message): void;
     info(msg: Message): void;

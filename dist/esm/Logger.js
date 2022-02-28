@@ -1,6 +1,6 @@
-import { LEVEL_DEBUG, LEVEL_ERROR, LEVEL_INFO, LEVEL_TRACE } from "./LogLevel";
-import Message from "./Message";
-import MessageBlock from "./MessageBlock";
+import { LEVEL_DEBUG, LEVEL_ERROR, LEVEL_INFO, LEVEL_TRACE } from './LogLevel';
+import Message from './Message';
+import MessageBlock from './MessageBlock';
 
 class Logger {
   logLevel = LEVEL_ERROR;

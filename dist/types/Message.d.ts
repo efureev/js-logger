@@ -1,4 +1,4 @@
-import MessageBlock from "./MessageBlock";
+import MessageBlock from './MessageBlock';
 declare class Message {
     private blocks;
     constructor(text?: MessageBlock | string);

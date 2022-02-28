@@ -1,5 +1,4 @@
-// export interface MessageBlockStyle extends {[index: string]:any}
-import MessageBlock from "./MessageBlock";
+import MessageBlock from './MessageBlock';
 
 class Message {
   blocks = new Array();

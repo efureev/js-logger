@@ -1,6 +1,6 @@
-import { LoggerDriver } from "./drivers/LoggerDriver";
-import Message from "./Message";
-import MessageBlock from "./MessageBlock";
+import { LoggerDriver } from './drivers/LoggerDriver';
+import Message from './Message';
+import MessageBlock from './MessageBlock';
 export interface LoggerConfig {
     driver: LoggerDriver;
     level?: number;

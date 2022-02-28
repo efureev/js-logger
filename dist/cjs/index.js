@@ -36,6 +36,34 @@ Object.keys(_shorcuts).forEach(function (key) {
   });
 });
 
+var _Message = require("./Message");
+
+Object.keys(_Message).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  if (Object.prototype.hasOwnProperty.call(_exportNames, key)) return;
+  if (key in exports && exports[key] === _Message[key]) return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _Message[key];
+    }
+  });
+});
+
+var _MessageBlock = require("./MessageBlock");
+
+Object.keys(_MessageBlock).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  if (Object.prototype.hasOwnProperty.call(_exportNames, key)) return;
+  if (key in exports && exports[key] === _MessageBlock[key]) return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _MessageBlock[key];
+    }
+  });
+});
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var _default = _Logger.default;

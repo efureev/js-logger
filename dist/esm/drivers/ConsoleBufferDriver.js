@@ -1,4 +1,4 @@
-import { ConsoleDriver } from "./index";
+import { ConsoleDriver } from './index';
 
 class ConsoleBufferDriver extends ConsoleDriver {
   buffer = [];

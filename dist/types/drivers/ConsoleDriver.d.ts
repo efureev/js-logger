@@ -1,6 +1,6 @@
-import Message from "../Message";
-import MessageBlock from "../MessageBlock";
-import { LoggerDriver } from "./LoggerDriver";
+import Message from '../Message';
+import MessageBlock from '../MessageBlock';
+import { LoggerDriver } from './LoggerDriver';
 export interface FormatConsole {
     fmtStr: string;
     fmtArgs: Array<string>;
