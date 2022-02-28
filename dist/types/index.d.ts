@@ -4,5 +4,5 @@ import MessageBlock from './MessageBlock';
 export * from './drivers';
 export * from './shorcuts';
 export default Logger;
-export { Message, MessageBlock, };
+export { Message, MessageBlock };
 //# sourceMappingURL=index.d.ts.map

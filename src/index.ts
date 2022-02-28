@@ -7,8 +7,4 @@ export * from './shorcuts'
 
 export default Logger
 
-export {
-  Message,
-  MessageBlock,
-}
-
+export { Message, MessageBlock }

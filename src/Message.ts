@@ -12,7 +12,7 @@ class Message {
   }
 
   pushBlock(...args: MessageBlock[]): this {
-    args.forEach((block) => {
+    args.forEach(block => {
       this.blocks.push(block)
     })
 

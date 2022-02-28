@@ -33,8 +33,17 @@ var Message = /*#__PURE__*/function () {
     }
   }, {
     key: "pushBlock",
-    value: function pushBlock(block) {
-      this.blocks.push(block);
+    value: function pushBlock() {
+      var _this = this;
+
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      args.forEach(function (block) {
+        _this.blocks.push(block);
+      });
+      return this;
     }
   }, {
     key: "clear",

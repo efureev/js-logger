@@ -11,8 +11,11 @@ class Message {
     return this.blocks;
   }
 
-  pushBlock(block) {
-    this.blocks.push(block);
+  pushBlock(...args) {
+    args.forEach(block => {
+      this.blocks.push(block);
+    });
+    return this;
   }
 
   clear() {

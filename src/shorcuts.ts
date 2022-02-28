@@ -4,6 +4,4 @@ import { ConsoleDriver } from './drivers'
 
 const BrowserLogger = (level: number = LEVEL_ERROR) => new Logger({ level: level, driver: new ConsoleDriver() })
 
-export {
-  BrowserLogger,
-}
+export { BrowserLogger }
