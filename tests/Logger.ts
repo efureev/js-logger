@@ -103,6 +103,7 @@ describe('Logger', () => {
             .instance('Warning')
             .background(colors.orange)
             .color(colors.white)
+            .bold()
             .padding(1, 5)
             .borderRadius(4)
             .offsetLeft(1),
@@ -110,10 +111,11 @@ describe('Logger', () => {
           MessageBlock
             .instance('test message from MessageBlocks')
             .color(colors.purple)
+            .italic()
             .offsetLeft(1),
 
           MessageBlock
-            .instance('\nTotal:\t532!')
+            .instance('\tTotal:\t532!')
             .background(colors.brown)
             .color(colors.white)
             .marginTop(10)
@@ -124,9 +126,8 @@ describe('Logger', () => {
       logger.log(msg)
 
       assert.deepEqual(driver.buffer, [
-        '%cWarning%ctest message from MessageBlocks%c\nTotal:\t532!',
-        'background:#F99157;color:#FFFFFF;padding:1px 5px;border-radius:4px;margin-left:10px;',
-        'color:#C594C5;margin-left:10px;',
+        '%cWarning%ctest message from MessageBlocks%c	Total:	532!',
+        'background:#F99157;color:#FFFFFF;font-weight:bold;padding:1px 5px;border-radius:4px;margin-left:10px;', 'color:#C594C5;font-style:italic;margin-left:10px;',
         'background:#AB7967;color:#FFFFFF;margin-top:10px;margin-bottom:3px;margin-left:30px;',
       ])
 

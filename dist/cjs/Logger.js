@@ -112,10 +112,10 @@ var Logger = /*#__PURE__*/function () {
       var msg = new _Message.default();
 
       if (prefix) {
-        var block = new _MessageBlock.default(prefix);
+        var block = _MessageBlock.default.instance(prefix).offsetRight(1);
 
         if (offset) {
-          block.paddingLeft(offset);
+          block.offsetLeft(offset);
         }
 
         msg.pushBlock(block);

@@ -77,6 +77,38 @@ class MessageBlock {
     return this.push('border', `${width}px ${style} ${color}`)
   }
 
+  size(value: number): this {
+    return this.push('font-size', `${value}px`)
+  }
+
+  bold(): this {
+    return this.push('font-weight', 'bold')
+  }
+
+  lineHeight(value: number): this {
+    return this.push('line-height', `${value}px`)
+  }
+
+  width(value?: number): this {
+    return value ? this.push('width', `${value}px`) : this
+  }
+
+  height(value?: number): this {
+    return value ? this.push('height', `${value}px`) : this
+  }
+
+  image(url: string, width?: number, height?: number): this {
+    return this
+      .push('background-image', `url(${url}}`)
+      .push('background-size', `cover`)
+      .width(width)
+      .height(height)
+  }
+
+  italic(): this {
+    return this.push('font-style', 'italic')
+  }
+
   text(value: string): this {
     this._text = value
 

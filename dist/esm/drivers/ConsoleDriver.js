@@ -1,12 +1,3 @@
-/*
-export const STYLE_INFO = 'color: white; background:blue; padding: 2px 5px;'
-export const STYLE_PURPLE = 'color: white; background:purple; padding: 2px 5px;'
-
-export const map = {
-  info: STYLE_INFO,
-  purple: STYLE_PURPLE,
-}
-*/
 class ConsoleDriver {
   debug(msg) {
     this.perform(msg, 'debug');
@@ -56,23 +47,16 @@ class ConsoleDriver {
   }
 
   static formatBlock(block) {
-    let fmtStr = '';
+    let fmtStr = `%c${block.getText()}`;
     const fmtArgs = [];
+    let strStyle = '';
+    const style = block.getStyle();
 
-    if (block.hasStyle()) {
-      fmtStr += '%c';
-      const style = block.getStyle();
-      let strStyle = '';
-
-      for (const keyStyle in style) {
-        strStyle += `${keyStyle}:${style[keyStyle]};`;
-      }
-
-      fmtArgs.push(strStyle);
+    for (const keyStyle in style) {
+      strStyle += `${keyStyle}:${style[keyStyle]};`;
     }
 
-    fmtStr += '%s';
-    fmtArgs.push(block.getText());
+    fmtArgs.push(strStyle);
     return {
       fmtStr,
       fmtArgs

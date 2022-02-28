@@ -21,7 +21,7 @@ var MessageBlock = /*#__PURE__*/function () {
 
     _defineProperty(this, "style", new Object(null));
 
-    this._text = text; // this.parse(block)
+    this._text = text;
   }
 
   _createClass(MessageBlock, [{
@@ -46,9 +46,61 @@ var MessageBlock = /*#__PURE__*/function () {
       return this.push('margin-left', "".concat(value, "px"));
     }
   }, {
-    key: "paddingLeft",
-    value: function paddingLeft(value) {
+    key: "marginRight",
+    value: function marginRight(value) {
+      return this.push('margin-right', "".concat(value, "px"));
+    }
+  }, {
+    key: "marginTop",
+    value: function marginTop(value) {
+      return this.push('margin-top', "".concat(value, "px"));
+    }
+  }, {
+    key: "marginBottom",
+    value: function marginBottom(value) {
+      return this.push('margin-bottom', "".concat(value, "px"));
+    }
+  }, {
+    key: "margin",
+    value: function margin(vValue, hValue) {
+      var value = "".concat(vValue, "px");
+
+      if (hValue !== undefined) {
+        value += " ".concat(hValue, "px");
+      }
+
+      return this.push('margin', value);
+    }
+  }, {
+    key: "padding",
+    value: function padding(vValue, hValue) {
+      var value = "".concat(vValue, "px");
+
+      if (hValue !== undefined) {
+        value += " ".concat(hValue, "px");
+      }
+
+      return this.push('padding', value);
+    }
+  }, {
+    key: "offsetLeft",
+    value: function offsetLeft(value) {
       return this.marginLeft(value * 10);
+    }
+  }, {
+    key: "offsetRight",
+    value: function offsetRight(value) {
+      return this.marginRight(value * 10);
+    }
+  }, {
+    key: "borderRadius",
+    value: function borderRadius(value) {
+      return this.push('border-radius', "".concat(value, "px"));
+    }
+  }, {
+    key: "border",
+    value: function border(width, style, color) {
+      return this.push('border', "".concat(width, "px ").concat(style, " ").concat(color));
     }
   }, {
     key: "text",
@@ -90,32 +142,6 @@ var MessageBlock = /*#__PURE__*/function () {
     value: function instance(block) {
       return block instanceof MessageBlock ? block : new MessageBlock(block);
     }
-    /*  getStyleString(): string {
-        let str = ''
-         for (const key in this.style) {
-          const v = this.style[key]
-           str += `${key}:${v};`
-        }
-         return str
-      }*/
-
-    /*
-      parse(block) {
-        if (isString(block)) {
-          this.text = block
-          return
-        }
-         if (isObject(block)) {
-          if (!block.text) {
-            throw new Error('Invalid MessageBlock config')
-          }
-           this.text = block.text
-          // this.style = block.type || null
-          return
-        }
-         throw new Error('Invalid MessageBlock config')
-      }*/
-
   }]);
 
   return MessageBlock;

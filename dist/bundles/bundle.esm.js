@@ -97,7 +97,7 @@ var MessageBlock = /*#__PURE__*/function () {
 
     _defineProperty(this, "style", new Object(null));
 
-    this._text = text; // this.parse(block)
+    this._text = text;
   }
 
   _createClass(MessageBlock, [{
@@ -122,9 +122,61 @@ var MessageBlock = /*#__PURE__*/function () {
       return this.push('margin-left', "".concat(value, "px"));
     }
   }, {
-    key: "paddingLeft",
-    value: function paddingLeft(value) {
+    key: "marginRight",
+    value: function marginRight(value) {
+      return this.push('margin-right', "".concat(value, "px"));
+    }
+  }, {
+    key: "marginTop",
+    value: function marginTop(value) {
+      return this.push('margin-top', "".concat(value, "px"));
+    }
+  }, {
+    key: "marginBottom",
+    value: function marginBottom(value) {
+      return this.push('margin-bottom', "".concat(value, "px"));
+    }
+  }, {
+    key: "margin",
+    value: function margin(vValue, hValue) {
+      var value = "".concat(vValue, "px");
+
+      if (hValue !== undefined) {
+        value += " ".concat(hValue, "px");
+      }
+
+      return this.push('margin', value);
+    }
+  }, {
+    key: "padding",
+    value: function padding(vValue, hValue) {
+      var value = "".concat(vValue, "px");
+
+      if (hValue !== undefined) {
+        value += " ".concat(hValue, "px");
+      }
+
+      return this.push('padding', value);
+    }
+  }, {
+    key: "offsetLeft",
+    value: function offsetLeft(value) {
       return this.marginLeft(value * 10);
+    }
+  }, {
+    key: "offsetRight",
+    value: function offsetRight(value) {
+      return this.marginRight(value * 10);
+    }
+  }, {
+    key: "borderRadius",
+    value: function borderRadius(value) {
+      return this.push('border-radius', "".concat(value, "px"));
+    }
+  }, {
+    key: "border",
+    value: function border(width, style, color) {
+      return this.push('border', "".concat(width, "px ").concat(style, " ").concat(color));
     }
   }, {
     key: "text",
@@ -166,32 +218,6 @@ var MessageBlock = /*#__PURE__*/function () {
     value: function instance(block) {
       return block instanceof MessageBlock ? block : new MessageBlock(block);
     }
-    /*  getStyleString(): string {
-        let str = ''
-         for (const key in this.style) {
-          const v = this.style[key]
-           str += `${key}:${v};`
-        }
-         return str
-      }*/
-
-    /*
-      parse(block) {
-        if (isString(block)) {
-          this.text = block
-          return
-        }
-         if (isObject(block)) {
-          if (!block.text) {
-            throw new Error('Invalid MessageBlock config')
-          }
-           this.text = block.text
-          // this.style = block.type || null
-          return
-        }
-         throw new Error('Invalid MessageBlock config')
-      }*/
-
   }]);
 
   return MessageBlock;
@@ -343,10 +369,10 @@ var Logger = /*#__PURE__*/function () {
       var msg = new Message();
 
       if (prefix) {
-        var block = new MessageBlock(prefix);
+        var block = MessageBlock.instance(prefix).offsetRight(1);
 
         if (offset) {
-          block.paddingLeft(offset);
+          block.offsetLeft(offset);
         }
 
         msg.pushBlock(block);
@@ -360,15 +386,6 @@ var Logger = /*#__PURE__*/function () {
   return Logger;
 }();
 
-/*
-export const STYLE_INFO = 'color: white; background:blue; padding: 2px 5px;'
-export const STYLE_PURPLE = 'color: white; background:purple; padding: 2px 5px;'
-
-export const map = {
-  info: STYLE_INFO,
-  purple: STYLE_PURPLE,
-}
-*/
 var ConsoleDriver = /*#__PURE__*/function () {
   function ConsoleDriver() {
     _classCallCheck(this, ConsoleDriver);
@@ -435,23 +452,16 @@ var ConsoleDriver = /*#__PURE__*/function () {
   }, {
     key: "formatBlock",
     value: function formatBlock(block) {
-      var fmtStr = '';
+      var fmtStr = "%c".concat(block.getText());
       var fmtArgs = [];
+      var strStyle = '';
+      var style = block.getStyle();
 
-      if (block.hasStyle()) {
-        fmtStr += '%c';
-        var style = block.getStyle();
-        var strStyle = '';
-
-        for (var keyStyle in style) {
-          strStyle += "".concat(keyStyle, ":").concat(style[keyStyle], ";");
-        }
-
-        fmtArgs.push(strStyle);
+      for (var keyStyle in style) {
+        strStyle += "".concat(keyStyle, ":").concat(style[keyStyle], ";");
       }
 
-      fmtStr += '%s';
-      fmtArgs.push(block.getText());
+      fmtArgs.push(strStyle);
       return {
         fmtStr: fmtStr,
         fmtArgs: fmtArgs

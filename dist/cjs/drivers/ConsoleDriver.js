@@ -23,15 +23,6 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 
-/*
-export const STYLE_INFO = 'color: white; background:blue; padding: 2px 5px;'
-export const STYLE_PURPLE = 'color: white; background:purple; padding: 2px 5px;'
-
-export const map = {
-  info: STYLE_INFO,
-  purple: STYLE_PURPLE,
-}
-*/
 var ConsoleDriver = /*#__PURE__*/function () {
   function ConsoleDriver() {
     _classCallCheck(this, ConsoleDriver);
@@ -98,23 +89,16 @@ var ConsoleDriver = /*#__PURE__*/function () {
   }, {
     key: "formatBlock",
     value: function formatBlock(block) {
-      var fmtStr = '';
+      var fmtStr = "%c".concat(block.getText());
       var fmtArgs = [];
+      var strStyle = '';
+      var style = block.getStyle();
 
-      if (block.hasStyle()) {
-        fmtStr += '%c';
-        var style = block.getStyle();
-        var strStyle = '';
-
-        for (var keyStyle in style) {
-          strStyle += "".concat(keyStyle, ":").concat(style[keyStyle], ";");
-        }
-
-        fmtArgs.push(strStyle);
+      for (var keyStyle in style) {
+        strStyle += "".concat(keyStyle, ":").concat(style[keyStyle], ";");
       }
 
-      fmtStr += '%s';
-      fmtArgs.push(block.getText());
+      fmtArgs.push(strStyle);
       return {
         fmtStr: fmtStr,
         fmtArgs: fmtArgs

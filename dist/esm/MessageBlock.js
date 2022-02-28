@@ -4,7 +4,7 @@ class MessageBlock {
   style = new Object(null);
 
   constructor(text) {
-    this._text = text; // this.parse(block)
+    this._text = text;
   }
 
   push(key, value) {
@@ -24,8 +24,52 @@ class MessageBlock {
     return this.push('margin-left', `${value}px`);
   }
 
-  paddingLeft(value) {
+  marginRight(value) {
+    return this.push('margin-right', `${value}px`);
+  }
+
+  marginTop(value) {
+    return this.push('margin-top', `${value}px`);
+  }
+
+  marginBottom(value) {
+    return this.push('margin-bottom', `${value}px`);
+  }
+
+  margin(vValue, hValue) {
+    let value = `${vValue}px`;
+
+    if (hValue !== undefined) {
+      value += ` ${hValue}px`;
+    }
+
+    return this.push('margin', value);
+  }
+
+  padding(vValue, hValue) {
+    let value = `${vValue}px`;
+
+    if (hValue !== undefined) {
+      value += ` ${hValue}px`;
+    }
+
+    return this.push('padding', value);
+  }
+
+  offsetLeft(value) {
     return this.marginLeft(value * 10);
+  }
+
+  offsetRight(value) {
+    return this.marginRight(value * 10);
+  }
+
+  borderRadius(value) {
+    return this.push('border-radius', `${value}px`);
+  }
+
+  border(width, style, color) {
+    return this.push('border', `${width}px ${style} ${color}`);
   }
 
   text(value) {
@@ -60,32 +104,6 @@ class MessageBlock {
   static instance(block) {
     return block instanceof MessageBlock ? block : new MessageBlock(block);
   }
-  /*  getStyleString(): string {
-      let str = ''
-       for (const key in this.style) {
-        const v = this.style[key]
-         str += `${key}:${v};`
-      }
-       return str
-    }*/
-
-  /*
-    parse(block) {
-      if (isString(block)) {
-        this.text = block
-        return
-      }
-       if (isObject(block)) {
-        if (!block.text) {
-          throw new Error('Invalid MessageBlock config')
-        }
-         this.text = block.text
-        // this.style = block.type || null
-        return
-      }
-       throw new Error('Invalid MessageBlock config')
-    }*/
-
 
 }
 

@@ -11,7 +11,15 @@ declare class MessageBlock {
     color(value: string): this;
     background(value: string): this;
     marginLeft(value: number): this;
-    paddingLeft(value: number): this;
+    marginRight(value: number): this;
+    marginTop(value: number): this;
+    marginBottom(value: number): this;
+    margin(vValue: number, hValue?: number): this;
+    padding(vValue: number, hValue?: number): this;
+    offsetLeft(value: number): this;
+    offsetRight(value: number): this;
+    borderRadius(value: number): this;
+    border(width: number, style: string, color: string): this;
     text(value: string): this;
     getText(): string;
     getStyle(): MessageBlockStyle;
