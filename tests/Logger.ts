@@ -1,26 +1,25 @@
-import assert from "assert";
-import Logger from "../src";
-// import ConsoleDriver from "../src/drivers/ConsoleDriver";
-import Message from "../src/Message";
-import MessageBlock from "../src/MessageBlock";
-// @ts-ignore
-import ConsoleBufferDriver from "../src/drivers/ConsoleBufferDriver";
+import assert from 'assert'
+import Logger from '../src'
+import Message from '../src/Message'
+import colors from '../src/Color'
+import MessageBlock from '../src/MessageBlock'
+import ConsoleBufferDriver from '../src/drivers/ConsoleBufferDriver'
 
 describe('Logger', () => {
 
   const driver = new ConsoleBufferDriver()
-  const logger = new Logger({driver})
+  const logger = new Logger({ driver })
 
   describe('From string', () => {
     it('Log without a prefix', () => {
 
       logger.log('test message')
 
-      assert.deepEqual(driver.buffer, ['%s', 'test message'])
+      assert.deepEqual(driver.buffer, ['%ctest message', ''])
 
       assert.equal(driver.buffer.length, 2)
-      assert.equal(driver.buffer[0], '%s')
-      assert.equal(driver.buffer[1], 'test message')
+      assert.equal(driver.buffer[0], '%ctest message')
+      assert.equal(driver.buffer[1], '')
       driver.clearBuffer()
       assert.equal(driver.buffer.length, 0)
     })
@@ -29,7 +28,7 @@ describe('Logger', () => {
 
       logger.log('test message', '[PREFIX]')
 
-      assert.deepEqual(driver.buffer, ['%s%s', '[PREFIX]', 'test message'])
+      assert.deepEqual(driver.buffer, ['%c[PREFIX]%ctest message', 'margin-right:10px;', ''])
       driver.clearBuffer()
     })
 
@@ -37,7 +36,7 @@ describe('Logger', () => {
 
       logger.log('test message', '[PREFIX]', 3)
 
-      assert.deepEqual(driver.buffer, ['%c%s%s', 'margin-left:30px;', '[PREFIX]', 'test message'])
+      assert.deepEqual(driver.buffer, ['%c[PREFIX]%ctest message', 'margin-right:10px;margin-left:30px;', ''])
       driver.clearBuffer()
 
     })
@@ -47,14 +46,14 @@ describe('Logger', () => {
     it('Message from string', () => {
       logger.log(new Message('test message from Message'))
 
-      assert.deepEqual(driver.buffer, ['%s', 'test message from Message'])
+      assert.deepEqual(driver.buffer, ['%ctest message from Message', ''])
       driver.clearBuffer()
     })
 
     it('Message from MessageBlocks', () => {
       logger.log(new Message(MessageBlock.instance('test message from MessageBlocks')))
 
-      assert.deepEqual(driver.buffer, ['%s', 'test message from MessageBlocks'])
+      assert.deepEqual(driver.buffer, ['%ctest message from MessageBlocks', ''])
       driver.clearBuffer()
     })
 
@@ -64,11 +63,11 @@ describe('Logger', () => {
           MessageBlock
             .instance('test message from MessageBlock')
             .color('red')
-            .paddingLeft(2)
-        )
+            .offsetLeft(2),
+        ),
       )
 
-      assert.deepEqual(driver.buffer, ['%c%s', 'color:red;margin-left:20px;', 'test message from MessageBlock'])
+      assert.deepEqual(driver.buffer, ['%ctest message from MessageBlock', 'color:red;margin-left:20px;'])
       driver.clearBuffer()
     })
 
@@ -78,23 +77,59 @@ describe('Logger', () => {
           .instance('prefix')
           .background('red')
           .color('white')
-          .paddingLeft(1)
+          .offsetLeft(1),
       )
       msg.pushBlock(
         MessageBlock
           .instance('test message from MessageBlocks')
-          .color('black')
+          .color('black'),
       )
 
       logger.log(msg)
 
       assert.deepEqual(driver.buffer, [
-        '%c%s%c%s',
+        '%cprefix%ctest message from MessageBlocks',
         'background:red;color:white;margin-left:10px;',
-        'prefix',
         'color:black;',
-        'test message from MessageBlocks'
       ])
+      driver.clearBuffer()
+    })
+
+
+    it('Badged', () => {
+      const msg = Message.instance()
+        .pushBlock(
+          MessageBlock
+            .instance('Warning')
+            .background(colors.orange)
+            .color(colors.white)
+            .padding(1, 5)
+            .borderRadius(4)
+            .offsetLeft(1),
+
+          MessageBlock
+            .instance('test message from MessageBlocks')
+            .color(colors.purple)
+            .offsetLeft(1),
+
+          MessageBlock
+            .instance('\nTotal:\t532!')
+            .background(colors.brown)
+            .color(colors.white)
+            .marginTop(10)
+            .marginBottom(3)
+            .offsetLeft(3),
+        )
+
+      logger.log(msg)
+
+      assert.deepEqual(driver.buffer, [
+        '%cWarning%ctest message from MessageBlocks%c\nTotal:\t532!',
+        'background:#F99157;color:#FFFFFF;padding:1px 5px;border-radius:4px;margin-left:10px;',
+        'color:#C594C5;margin-left:10px;',
+        'background:#AB7967;color:#FFFFFF;margin-top:10px;margin-bottom:3px;margin-left:30px;',
+      ])
+
       driver.clearBuffer()
     })
   })

@@ -77,9 +77,10 @@ class Logger {
     const msg = new Message()
 
     if (prefix) {
-      const block = new MessageBlock(prefix)
+      const block = MessageBlock.instance(prefix).offsetRight(1)
+
       if (offset) {
-        block.paddingLeft(offset)
+        block.offsetLeft(offset)
       }
 
       msg.pushBlock(block)

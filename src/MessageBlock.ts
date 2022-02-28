@@ -13,7 +13,6 @@ class MessageBlock {
 
   constructor(text: string) {
     this._text = text
-    // this.parse(block)
   }
 
   push(key: string, value: string): this {
@@ -34,8 +33,48 @@ class MessageBlock {
     return this.push('margin-left', `${value}px`)
   }
 
-  paddingLeft(value: number): this {
+  marginRight(value: number): this {
+    return this.push('margin-right', `${value}px`)
+  }
+
+  marginTop(value: number): this {
+    return this.push('margin-top', `${value}px`)
+  }
+
+  marginBottom(value: number): this {
+    return this.push('margin-bottom', `${value}px`)
+  }
+
+  margin(vValue: number, hValue?: number): this {
+    let value = `${vValue}px`
+    if (hValue !== undefined) {
+      value += ` ${hValue}px`
+    }
+    return this.push('margin', value)
+  }
+
+  padding(vValue: number, hValue?: number): this {
+    let value = `${vValue}px`
+    if (hValue !== undefined) {
+      value += ` ${hValue}px`
+    }
+    return this.push('padding', value)
+  }
+
+  offsetLeft(value: number): this {
     return this.marginLeft(value * 10)
+  }
+
+  offsetRight(value: number): this {
+    return this.marginRight(value * 10)
+  }
+
+  borderRadius(value: number): this {
+    return this.push('border-radius', `${value}px`)
+  }
+
+  border(width: number, style: string, color: string): this {
+    return this.push('border', `${width}px ${style} ${color}`)
   }
 
   text(value: string): this {
@@ -72,38 +111,6 @@ class MessageBlock {
   static instance(block: MessageBlock | string): MessageBlock {
     return block instanceof MessageBlock ? block : new MessageBlock(block)
   }
-
-  /*  getStyleString(): string {
-      let str = ''
-
-      for (const key in this.style) {
-        const v = this.style[key]
-
-        str += `${key}:${v};`
-      }
-
-      return str
-    }*/
-
-  /*
-    parse(block) {
-      if (isString(block)) {
-        this.text = block
-        return
-      }
-
-      if (isObject(block)) {
-        if (!block.text) {
-          throw new Error('Invalid MessageBlock config')
-        }
-
-        this.text = block.text
-        // this.style = block.type || null
-        return
-      }
-
-      throw new Error('Invalid MessageBlock config')
-    }*/
 }
 
 export default MessageBlock

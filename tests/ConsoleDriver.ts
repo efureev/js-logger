@@ -1,7 +1,7 @@
 import Message from '../src/Message'
 
 import assert from 'assert'
-import ConsoleDriver from "../src/drivers/ConsoleDriver";
+import ConsoleDriver from '../src/drivers/ConsoleDriver'
 
 describe('checking basics message', () => {
 
@@ -12,6 +12,6 @@ describe('checking basics message', () => {
 
     driver.info(msg)
 
-    assert.equal(msg.count(), 1);
+    assert.equal(msg.count(), 1)
   })
 })
