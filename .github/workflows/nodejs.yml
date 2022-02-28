@@ -46,22 +46,23 @@ jobs:
 
       - run: yarn
 
+      - run: yarn lint
       - run: yarn test
         env:
           CI: true
 
-  cover-all:
-    runs-on: ubuntu-latest
-    needs: [ testing-on-node]
-    steps:
-      - uses: actions/checkout@v2
-      # Setup .npmrc file to publish to npm
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '16.x'
-          registry-url: 'https://registry.npmjs.org'
-      - run: yarn install
-      - run: yarn coverage
+  #  cover-all:
+  #    runs-on: ubuntu-latest
+  #    needs: [ testing-on-node]
+  #    steps:
+  #      - uses: actions/checkout@v2
+  #      # Setup .npmrc file to publish to npm
+  #      - uses: actions/setup-node@v1
+  #        with:
+  #          node-version: '16.x'
+  #          registry-url: 'https://registry.npmjs.org'
+  #      - run: yarn install
+  #      - run: yarn coverage
 
   npm-publish:
     runs-on: ubuntu-latest
