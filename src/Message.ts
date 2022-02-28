@@ -11,8 +11,12 @@ class Message {
     return this.blocks
   }
 
-  pushBlock(block: MessageBlock): void {
-    this.blocks.push(block)
+  pushBlock(...args: MessageBlock[]): this {
+    args.forEach((block) => {
+      this.blocks.push(block)
+    })
+
+    return this
   }
 
   clear() {
@@ -29,7 +33,7 @@ class Message {
     }
   }
 
-  static instance(block: Message | MessageBlock | string): Message {
+  static instance(block?: Message | MessageBlock | string): Message {
     return block instanceof Message ? block : new Message(block)
   }
 }
