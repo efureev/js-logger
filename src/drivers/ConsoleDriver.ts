@@ -8,9 +8,9 @@ export const map = {
 }
 */
 
-import Message from "../Message";
-import MessageBlock from "../MessageBlock";
-import {LoggerDriver} from "./LoggerDriver";
+import Message from '../Message'
+import MessageBlock from '../MessageBlock'
+import { LoggerDriver } from './LoggerDriver'
 
 export interface FormatConsole {
   fmtStr: string
@@ -54,15 +54,13 @@ class ConsoleDriver implements LoggerDriver {
     let fmtStr: string = ''
     const fmtArgs: Array<string> = []
 
-    msg.getBlocks().forEach(
-      (block) => {
-        const {fmtStr: str, fmtArgs: args} = ConsoleDriver.formatBlock(block)
-        fmtStr += str
-        fmtArgs.push(...args)
-      }
-    )
+    msg.getBlocks().forEach(block => {
+      const { fmtStr: str, fmtArgs: args } = ConsoleDriver.formatBlock(block)
+      fmtStr += str
+      fmtArgs.push(...args)
+    })
 
-    return {fmtStr, fmtArgs}
+    return { fmtStr, fmtArgs }
   }
 
   protected static formatBlock(block: MessageBlock): FormatConsole {
@@ -83,9 +81,8 @@ class ConsoleDriver implements LoggerDriver {
     fmtStr += '%s'
     fmtArgs.push(block.getText())
 
-    return {fmtStr, fmtArgs}
+    return { fmtStr, fmtArgs }
   }
-
 }
 
 export default ConsoleDriver

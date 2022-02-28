@@ -1,6 +1,6 @@
 import Logger from './Logger'
 
-export * from "./drivers";
-export * from "./shorcuts";
+export * from './drivers'
+export * from './shorcuts'
 
-export default Logger;
+export default Logger

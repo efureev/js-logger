@@ -1,6 +1,4 @@
-// export interface MessageBlockStyle extends {[index: string]:any}
-
-import {isEmptyObject} from "./utils";
+import { isEmptyObject } from './utils'
 
 export interface MessageBlockStyle {
   [index: string]: any
@@ -10,8 +8,8 @@ export interface MessageBlockStyle {
 }
 
 class MessageBlock {
-  private _text: string;
-  private style: MessageBlockStyle = new Object(null);
+  private _text: string
+  private style: MessageBlockStyle = new Object(null)
 
   constructor(text: string) {
     this._text = text
@@ -61,14 +59,14 @@ class MessageBlock {
   clearStyle(): this {
     this.style = new Object(null)
 
-    return this;
+    return this
   }
 
   toJSON(): string {
     return JSON.stringify({
       _text: this._text,
-      style: this.style
-    });
+      style: this.style,
+    })
   }
 
   static instance(block: MessageBlock | string): MessageBlock {

@@ -1,9 +1,7 @@
-// export interface MessageBlockStyle extends {[index: string]:any}
-
-import MessageBlock from "./MessageBlock";
+import MessageBlock from './MessageBlock'
 
 class Message {
-  private blocks: Array<MessageBlock> = new Array<MessageBlock>();
+  private blocks: Array<MessageBlock> = new Array<MessageBlock>()
 
   constructor(text?: MessageBlock | string) {
     this.parse(text)

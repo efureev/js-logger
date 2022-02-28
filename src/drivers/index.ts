@@ -1,5 +1,3 @@
 import ConsoleDriver from './ConsoleDriver'
 
-export {
-  ConsoleDriver
-};
+export { ConsoleDriver }
