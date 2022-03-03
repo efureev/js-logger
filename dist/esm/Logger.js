@@ -1,5 +1,6 @@
 import { LEVEL_DEBUG, LEVEL_ERROR, LEVEL_INFO, LEVEL_TRACE } from './LogLevel';
 import Message from './Message';
+import colors from './Color';
 import MessageBlock from './MessageBlock';
 
 class Logger {
@@ -63,8 +64,8 @@ class Logger {
   }
 
   panel(panelText, {
-    bgColor = '#FFF',
-    color = '#333',
+    bgColor = colors.white,
+    color = colors.gray,
     offset = 0
   } = {}, baseText) {
     const msg = Message.instance().pushBlock(MessageBlock.instance(panelText).background(bgColor).color(color).offsetLeft(offset).borderRadius(3).padding(2, 4), baseText ? MessageBlock.instance(baseText).offsetLeft(1) : null);

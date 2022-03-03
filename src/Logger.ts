@@ -73,7 +73,7 @@ class Logger {
   panel(
     panelText: string | MessageBlock,
     { bgColor = colors.white, color = colors.gray, offset = 0 } = {},
-    baseText?: string | MessageBlock,
+    baseText?: string | MessageBlock
   ) {
     const msg = Message.instance().pushBlock(
       MessageBlock.instance(panelText)
@@ -83,7 +83,7 @@ class Logger {
         .borderRadius(3)
         .padding(2, 4),
 
-      baseText ? MessageBlock.instance(baseText).offsetLeft(1) : null,
+      baseText ? MessageBlock.instance(baseText).offsetLeft(1) : null
     )
 
     this.driver.log(msg)

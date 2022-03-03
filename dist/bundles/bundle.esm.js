@@ -353,6 +353,20 @@ var Message = /*#__PURE__*/function () {
   return Message;
 }();
 
+var colors = {
+  black: '#000000',
+  gray: '#1B2B34',
+  red: '#EC5f67',
+  orange: '#F99157',
+  yellow: '#FAC863',
+  green: '#99C794',
+  teal: '#5FB3B3',
+  blue: '#6699CC',
+  purple: '#C594C5',
+  brown: '#AB7967',
+  white: '#FFFFFF'
+};
+
 var Logger = /*#__PURE__*/function () {
   function Logger(config) {
     _classCallCheck(this, Logger);
@@ -437,9 +451,9 @@ var Logger = /*#__PURE__*/function () {
     value: function panel(panelText) {
       var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
           _ref$bgColor = _ref.bgColor,
-          bgColor = _ref$bgColor === void 0 ? '#FFF' : _ref$bgColor,
+          bgColor = _ref$bgColor === void 0 ? colors.white : _ref$bgColor,
           _ref$color = _ref.color,
-          color = _ref$color === void 0 ? '#333' : _ref$color,
+          color = _ref$color === void 0 ? colors.gray : _ref$color,
           _ref$offset = _ref.offset,
           offset = _ref$offset === void 0 ? 0 : _ref$offset;
 

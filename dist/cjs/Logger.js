@@ -9,6 +9,8 @@ var _LogLevel = require("./LogLevel");
 
 var _Message = _interopRequireDefault(require("./Message"));
 
+var _Color = _interopRequireDefault(require("./Color"));
+
 var _MessageBlock = _interopRequireDefault(require("./MessageBlock"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -105,9 +107,9 @@ var Logger = /*#__PURE__*/function () {
     value: function panel(panelText) {
       var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
           _ref$bgColor = _ref.bgColor,
-          bgColor = _ref$bgColor === void 0 ? '#FFF' : _ref$bgColor,
+          bgColor = _ref$bgColor === void 0 ? _Color.default.white : _ref$bgColor,
           _ref$color = _ref.color,
-          color = _ref$color === void 0 ? '#333' : _ref$color,
+          color = _ref$color === void 0 ? _Color.default.gray : _ref$color,
           _ref$offset = _ref.offset,
           offset = _ref$offset === void 0 ? 0 : _ref$offset;
 
