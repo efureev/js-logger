@@ -4,6 +4,7 @@ import MessageBlock from './MessageBlock'
 
 export * from './drivers'
 export * from './shorcuts'
+export * from './Color'
 
 export default Logger
 

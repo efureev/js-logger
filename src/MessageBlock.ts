@@ -15,94 +15,106 @@ class MessageBlock {
     this._text = text
   }
 
-  push(key: string, value: string): this {
-    this.style[key] = value
+  push(key: string, value: string, check: boolean = false): this {
+    if (!check || !this.has('color')) {
+      this.style[key] = value
+    }
 
     return this
   }
 
-  color(value: string): this {
-    return this.push('color', value)
+  has(key: string): boolean {
+    return this.style[key] !== undefined
   }
 
-  background(value: string): this {
-    return this.push('background', value)
+  color(value: string, check: boolean = false): this {
+    return this.push('color', value, check)
   }
 
-  marginLeft(value: number): this {
-    return this.push('margin-left', `${value}px`)
+  background(value: string, check: boolean = false): this {
+    return this.push('background', value, check)
   }
 
-  marginRight(value: number): this {
-    return this.push('margin-right', `${value}px`)
+  marginLeft(value: number, check: boolean = false): this {
+    if (value != 0) {
+      return this.push('margin-left', `${value}px`, check)
+    }
+    return this
   }
 
-  marginTop(value: number): this {
-    return this.push('margin-top', `${value}px`)
+  marginRight(value: number, check: boolean = false): this {
+    if (value != 0) {
+      return this.push('margin-right', `${value}px`, check)
+    }
+    return this
   }
 
-  marginBottom(value: number): this {
-    return this.push('margin-bottom', `${value}px`)
+  marginTop(value: number, check: boolean = false): this {
+    return this.push('margin-top', `${value}px`, check)
   }
 
-  margin(vValue: number, hValue?: number): this {
-    let value = `${vValue}px`
+  marginBottom(value: number, check: boolean = false): this {
+    return this.push('margin-bottom', `${value}px`, check)
+  }
+
+  margin(vValue: number, hValue?: number, check: boolean = false): this {
+    let value = vValue === 0 ? '' : `${vValue}px`
     if (hValue !== undefined) {
       value += ` ${hValue}px`
     }
-    return this.push('margin', value)
+    return this.push('margin', value, check)
   }
 
-  padding(vValue: number, hValue?: number): this {
-    let value = `${vValue}px`
+  padding(vValue: number, hValue?: number, check: boolean = false): this {
+    let value = vValue === 0 ? '' : `${vValue}px`
     if (hValue !== undefined) {
       value += ` ${hValue}px`
     }
-    return this.push('padding', value)
+    return this.push('padding', value, check)
   }
 
-  offsetLeft(value: number): this {
-    return this.marginLeft(value * 10)
+  offsetLeft(value: number, check: boolean = false): this {
+    return this.marginLeft(value * 10, check)
   }
 
-  offsetRight(value: number): this {
-    return this.marginRight(value * 10)
+  offsetRight(value: number, check: boolean = false): this {
+    return this.marginRight(value * 10, check)
   }
 
-  borderRadius(value: number): this {
-    return this.push('border-radius', `${value}px`)
+  borderRadius(value: number, check: boolean = false): this {
+    return this.push('border-radius', `${value}px`, check)
   }
 
-  border(width: number, style: string, color: string): this {
-    return this.push('border', `${width}px ${style} ${color}`)
+  border(width: number, style: string, color: string, check: boolean = false): this {
+    return this.push('border', `${width}px ${style} ${color}`, check)
   }
 
-  size(value: number): this {
-    return this.push('font-size', `${value}px`)
+  size(value: number, check: boolean = false): this {
+    return this.push('font-size', `${value}px`, check)
   }
 
-  bold(): this {
-    return this.push('font-weight', 'bold')
+  bold(check: boolean = false): this {
+    return this.push('font-weight', 'bold', check)
   }
 
-  lineHeight(value: number): this {
-    return this.push('line-height', `${value}px`)
+  italic(check: boolean = false): this {
+    return this.push('font-style', 'italic', check)
   }
 
-  width(value?: number): this {
-    return value ? this.push('width', `${value}px`) : this
+  lineHeight(value: number, check: boolean = false): this {
+    return this.push('line-height', `${value}px`, check)
   }
 
-  height(value?: number): this {
-    return value ? this.push('height', `${value}px`) : this
+  width(value?: number, check: boolean = false): this {
+    return value ? this.push('width', `${value}px`, check) : this
+  }
+
+  height(value?: number, check: boolean = false): this {
+    return value ? this.push('height', `${value}px`, check) : this
   }
 
   image(url: string, width?: number, height?: number): this {
     return this.push('background-image', `url(${url}}`).push('background-size', `cover`).width(width).height(height)
-  }
-
-  italic(): this {
-    return this.push('font-style', 'italic')
   }
 
   text(value: string): this {

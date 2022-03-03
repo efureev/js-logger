@@ -133,5 +133,35 @@ describe('Logger', () => {
 
       driver.clearBuffer()
     })
+
+  })
+  describe('Panel', () => {
+
+
+    it('Basic', () => {
+      logger.panel('Warning')
+      assert.deepEqual(driver.buffer, [
+        '%cWarning', 'background:#FFF;color:#333;border-radius:3px;padding:2px 4px;',
+      ])
+      driver.clearBuffer()
+    })
+
+    it('with options', () => {
+      logger.panel('Warning', { bgColor: colors.teal, offset: 1 })
+      assert.deepEqual(driver.buffer, [
+        '%cWarning', 'background:#5FB3B3;color:#333;margin-left:10px;border-radius:3px;padding:2px 4px;',
+      ])
+      driver.clearBuffer()
+    })
+
+    it('with options and post text', () => {
+      logger.panel('Warning', { bgColor: colors.brown, color: colors.teal, offset: 1 }, 'Post text')
+      assert.deepEqual(driver.buffer, [
+        '%cWarning%cPost text',
+        'background:#AB7967;color:#5FB3B3;margin-left:10px;border-radius:3px;padding:2px 4px;',
+        'margin-left:10px;',
+      ])
+      driver.clearBuffer()
+    })
   })
 })

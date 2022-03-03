@@ -69,6 +69,26 @@ class Logger {
     this.driver.trace(Logger.buildMessage(msgText, prefix, offset))
   }
 
+  panel(
+    panelText: string | MessageBlock,
+    { bgColor = '#FFF', color = '#333', offset = 0 } = {},
+    baseText?: string | MessageBlock,
+  ) {
+
+    const msg = Message.instance().pushBlock(
+      MessageBlock.instance(panelText)
+        .background(bgColor)
+        .color(color)
+        .offsetLeft(offset)
+        .borderRadius(3)
+        .padding(2, 4),
+
+      baseText ? MessageBlock.instance(baseText).offsetLeft(1) : null,
+    )
+
+    this.driver.log(msg)
+  }
+
   private static buildMessage(msgText: string | Message | MessageBlock, prefix?: string, offset: number = 0): Message {
     if (msgText instanceof Message) {
       return msgText

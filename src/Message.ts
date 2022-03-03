@@ -11,9 +11,11 @@ class Message {
     return this.blocks
   }
 
-  pushBlock(...args: MessageBlock[]): this {
+  pushBlock(...args: (MessageBlock | null)[]): this {
     args.forEach(block => {
-      this.blocks.push(block)
+      if (block instanceof MessageBlock) {
+        this.blocks.push(block)
+      }
     })
 
     return this
