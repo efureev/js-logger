@@ -1,6 +1,6 @@
 {
   "name": "@feugene/browser-logger",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Do logging into browser",
   "keywords": [
     "log",
