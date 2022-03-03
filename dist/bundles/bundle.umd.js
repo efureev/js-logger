@@ -594,6 +594,7 @@
   exports.ConsoleDriver = ConsoleDriver;
   exports.Message = Message;
   exports.MessageBlock = MessageBlock;
+  exports.colors = colors;
   exports["default"] = Logger;
 
   Object.defineProperty(exports, '__esModule', { value: true });

@@ -5,7 +5,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 var _exportNames = {
   Message: true,
-  MessageBlock: true
+  MessageBlock: true,
+  colors: true
 };
 Object.defineProperty(exports, "Message", {
   enumerable: true,
@@ -19,6 +20,12 @@ Object.defineProperty(exports, "MessageBlock", {
     return _MessageBlock.default;
   }
 });
+Object.defineProperty(exports, "colors", {
+  enumerable: true,
+  get: function get() {
+    return _Color.default;
+  }
+});
 exports.default = void 0;
 
 var _Logger = _interopRequireDefault(require("./Logger"));
@@ -26,6 +33,8 @@ var _Logger = _interopRequireDefault(require("./Logger"));
 var _Message = _interopRequireDefault(require("./Message"));
 
 var _MessageBlock = _interopRequireDefault(require("./MessageBlock"));
+
+var _Color = _interopRequireDefault(require("./Color"));
 
 var _drivers = require("./drivers");
 
@@ -51,20 +60,6 @@ Object.keys(_shorcuts).forEach(function (key) {
     enumerable: true,
     get: function get() {
       return _shorcuts[key];
-    }
-  });
-});
-
-var _Color = require("./Color");
-
-Object.keys(_Color).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  if (Object.prototype.hasOwnProperty.call(_exportNames, key)) return;
-  if (key in exports && exports[key] === _Color[key]) return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _Color[key];
     }
   });
 });
