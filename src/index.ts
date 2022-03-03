@@ -1,11 +1,11 @@
 import Logger from './Logger'
 import Message from './Message'
 import MessageBlock from './MessageBlock'
+import colors from './Color'
 
 export * from './drivers'
 export * from './shorcuts'
-export * from './Color'
 
 export default Logger
 
-export { Message, MessageBlock }
+export { Message, MessageBlock, colors }

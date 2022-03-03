@@ -5,5 +5,5 @@ export * from './drivers';
 export * from './shorcuts';
 export * from './Color';
 export default Logger;
-export { Message, MessageBlock };
+export { Message, MessageBlock,colors };
 //# sourceMappingURL=index.js.map
