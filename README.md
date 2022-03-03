@@ -11,6 +11,13 @@
 yarn add @feugene/browser-logger
 ```
 
+## Example in Browsers
+
+Chrome
+![Chrome](./.media/chrome.png)
+
+Safari
+![Chrome](./.media/safari.png)
 
 ## Use
 
@@ -31,42 +38,105 @@ msg.pushBlock(MessageBlock.instance('Basic text').color('red'))
 logger.log(msg)
 ```
 
+U
+### Advanced use
 
-```shell
-const logger = new Logger(new ConsoleDriver())
+You can use your logger-wrapper with your custom panels:
 
-logger.log(
-  Message.instance().pushBlock(
-    MessageBlock.instance('MessageBlock 1')
-      .background('red')
-      .color('white'),
-    MessageBlock.instance('MessageBlock').color('red')
-  )
-)
+```js
+import { BrowserLogger, colors } from '@feugene/browser-logger'
 
-const msg = Message.instance()
-    .pushBlock(
-      MessageBlock
-        .instance('Warning')
-        .background(colors.orange)
-        .color(colors.white)
-        .bold()
-        .padding(1, 5)
-        .borderRadius(4)
-        .offsetLeft(1),
-    
-      MessageBlock
-        .instance('test message from MessageBlocks')
-        .color(colors.purple)
-        .italic()
-        .offsetLeft(1),
-    
-      MessageBlock
-        .instance('\tTotal:\t532!')
-        .background(colors.brown)
-        .color(colors.white)
-        .marginTop(10)
-        .marginBottom(3)
-        .offsetLeft(3),
+export default class Logger {
+  constructor(level) {
+    this.logger = BrowserLogger(level)
+
+    return new Proxy(this, {
+      get(target, prop) {
+        if (prop in target) {
+          return target[prop]
+        }
+        return target.logger[prop]
+      },
+    })
+  }
+
+  warning(text, title = '⚠️ warning', offset = 0) {
+    return this.logger.panel(
+      title,
+      { bgColor: colors.orange, color: colors.white, offset },
+      text
     )
+  }
+
+  info(text, title = 'info', offset = 0) {
+    return this.logger.panel(title, { bgColor: colors.teal, offset }, text)
+  }
+
+  error(text, title = '🆘 error', offset = 0) {
+    return this.logger.panel(
+      title,
+      { bgColor: colors.red, color: colors.white, offset },
+      text
+    )
+  }
+}
+```
+
+And use it:
+
+```js
+import { Message, MessageBlock, colors } from '@feugene/browser-logger'
+{
+// ...
+    this.logger = new Logger()
+
+    this.logger.warning('MessageBlock', undefined, 4)
+    this.logger.warning('MessageBlock', 'ALERT')
+    this.logger.error('MessageBlock')
+    this.logger.error('MessageBlock')
+    this.logger.info('Info', 'text')
+
+    this.logger.panel('Title', undefined, 'Post Text')
+    this.logger.panel('Title', {}, 'Post Text')
+    this.logger.panel('Title', {
+      bgColor: '#5FB3B3',
+      color: '#1B2B34',
+      offset: 5,
+    })
+
+    const msg = Message.instance().pushBlock(
+      MessageBlock.instance('panel 1')
+        .background('green')
+        .borderRadius(3)
+        .offsetLeft(1)
+        .padding(2, 4),
+
+      MessageBlock.instance('panel 2')
+        .background('blue')
+        .offsetLeft(1)
+        .padding(2, 4),
+
+      MessageBlock.instance('panel 3')
+        .background('black')
+        .color('white')
+        .borderRadius(10)
+        .offsetLeft(5)
+        .padding(2, 4),
+
+      MessageBlock.instance('4 330')
+        .background(colors.purple)
+        .color('white')
+        .borderRadius(10)
+        .offsetLeft(5)
+        .padding(2, 20)
+    )
+
+    this.logger.log(msg)
+
+    this.logger.panel('Title', {
+      bgColor: '#5FB3B3',
+      color: '#1B2B34',
+      offset: 5,
+    })
+}
 ```
