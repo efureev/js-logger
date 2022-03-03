@@ -13,7 +13,9 @@ class Message {
 
   pushBlock(...args) {
     args.forEach(block => {
-      this.blocks.push(block);
+      if (block instanceof MessageBlock) {
+        this.blocks.push(block);
+      }
     });
     return this;
   }

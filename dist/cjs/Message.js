@@ -41,7 +41,9 @@ var Message = /*#__PURE__*/function () {
       }
 
       args.forEach(function (block) {
-        _this.blocks.push(block);
+        if (block instanceof _MessageBlock.default) {
+          _this.blocks.push(block);
+        }
       });
       return this;
     }

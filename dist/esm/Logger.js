@@ -62,6 +62,15 @@ class Logger {
     this.driver.trace(Logger.buildMessage(msgText, prefix, offset));
   }
 
+  panel(panelText, {
+    bgColor = '#FFF',
+    color = '#333',
+    offset = 0
+  } = {}, baseText) {
+    const msg = Message.instance().pushBlock(MessageBlock.instance(panelText).background(bgColor).color(color).offsetLeft(offset).borderRadius(3).padding(2, 4), baseText ? MessageBlock.instance(baseText).offsetLeft(1) : null);
+    this.driver.log(msg);
+  }
+
   static buildMessage(msgText, prefix, offset = 0) {
     if (msgText instanceof Message) {
       return msgText;

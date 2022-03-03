@@ -100,6 +100,23 @@ var Logger = /*#__PURE__*/function () {
 
       this.driver.trace(Logger.buildMessage(msgText, prefix, offset));
     }
+  }, {
+    key: "panel",
+    value: function panel(panelText) {
+      var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+          _ref$bgColor = _ref.bgColor,
+          bgColor = _ref$bgColor === void 0 ? '#FFF' : _ref$bgColor,
+          _ref$color = _ref.color,
+          color = _ref$color === void 0 ? '#333' : _ref$color,
+          _ref$offset = _ref.offset,
+          offset = _ref$offset === void 0 ? 0 : _ref$offset;
+
+      var baseText = arguments.length > 2 ? arguments[2] : undefined;
+
+      var msg = _Message.default.instance().pushBlock(_MessageBlock.default.instance(panelText).background(bgColor).color(color).offsetLeft(offset).borderRadius(3).padding(2, 4), baseText ? _MessageBlock.default.instance(baseText).offsetLeft(1) : null);
+
+      this.driver.log(msg);
+    }
   }], [{
     key: "buildMessage",
     value: function buildMessage(msgText, prefix) {

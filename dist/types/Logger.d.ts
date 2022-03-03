@@ -17,6 +17,11 @@ declare class Logger {
     debug(msgText: string | Message | MessageBlock, prefix?: string, offset?: number): void;
     error(msgText: string | Message | MessageBlock, prefix?: string, offset?: number): void;
     trace(msgText: string | Message | MessageBlock, prefix?: string, offset?: number): void;
+    panel(panelText: string | MessageBlock, { bgColor, color, offset }?: {
+        bgColor?: string | undefined;
+        color?: string | undefined;
+        offset?: number | undefined;
+    }, baseText?: string | MessageBlock): void;
     private static buildMessage;
 }
 export default Logger;

@@ -3,7 +3,7 @@ declare class Message {
     private blocks;
     constructor(text?: MessageBlock | string);
     getBlocks(): Array<MessageBlock>;
-    pushBlock(...args: MessageBlock[]): this;
+    pushBlock(...args: (MessageBlock | null)[]): this;
     clear(): void;
     count(): number;
     private parse;

@@ -103,115 +103,153 @@ var MessageBlock = /*#__PURE__*/function () {
   _createClass(MessageBlock, [{
     key: "push",
     value: function push(key, value) {
-      this.style[key] = value;
+      var check = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+
+      if (!check || !this.has('color')) {
+        this.style[key] = value;
+      }
+
       return this;
+    }
+  }, {
+    key: "has",
+    value: function has(key) {
+      return this.style[key] !== undefined;
     }
   }, {
     key: "color",
     value: function color(value) {
-      return this.push('color', value);
+      var check = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      return this.push('color', value, check);
     }
   }, {
     key: "background",
     value: function background(value) {
-      return this.push('background', value);
+      var check = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      return this.push('background', value, check);
     }
   }, {
     key: "marginLeft",
     value: function marginLeft(value) {
-      return this.push('margin-left', "".concat(value, "px"));
+      var check = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+      if (value != 0) {
+        return this.push('margin-left', "".concat(value, "px"), check);
+      }
+
+      return this;
     }
   }, {
     key: "marginRight",
     value: function marginRight(value) {
-      return this.push('margin-right', "".concat(value, "px"));
+      var check = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+      if (value != 0) {
+        return this.push('margin-right', "".concat(value, "px"), check);
+      }
+
+      return this;
     }
   }, {
     key: "marginTop",
     value: function marginTop(value) {
-      return this.push('margin-top', "".concat(value, "px"));
+      var check = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      return this.push('margin-top', "".concat(value, "px"), check);
     }
   }, {
     key: "marginBottom",
     value: function marginBottom(value) {
-      return this.push('margin-bottom', "".concat(value, "px"));
+      var check = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      return this.push('margin-bottom', "".concat(value, "px"), check);
     }
   }, {
     key: "margin",
     value: function margin(vValue, hValue) {
-      var value = "".concat(vValue, "px");
+      var check = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+      var value = vValue === 0 ? '' : "".concat(vValue, "px");
 
       if (hValue !== undefined) {
         value += " ".concat(hValue, "px");
       }
 
-      return this.push('margin', value);
+      return this.push('margin', value, check);
     }
   }, {
     key: "padding",
     value: function padding(vValue, hValue) {
-      var value = "".concat(vValue, "px");
+      var check = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+      var value = vValue === 0 ? '' : "".concat(vValue, "px");
 
       if (hValue !== undefined) {
         value += " ".concat(hValue, "px");
       }
 
-      return this.push('padding', value);
+      return this.push('padding', value, check);
     }
   }, {
     key: "offsetLeft",
     value: function offsetLeft(value) {
-      return this.marginLeft(value * 10);
+      var check = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      return this.marginLeft(value * 10, check);
     }
   }, {
     key: "offsetRight",
     value: function offsetRight(value) {
-      return this.marginRight(value * 10);
+      var check = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      return this.marginRight(value * 10, check);
     }
   }, {
     key: "borderRadius",
     value: function borderRadius(value) {
-      return this.push('border-radius', "".concat(value, "px"));
+      var check = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      return this.push('border-radius', "".concat(value, "px"), check);
     }
   }, {
     key: "border",
     value: function border(width, style, color) {
-      return this.push('border', "".concat(width, "px ").concat(style, " ").concat(color));
+      var check = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+      return this.push('border', "".concat(width, "px ").concat(style, " ").concat(color), check);
     }
   }, {
     key: "size",
     value: function size(value) {
-      return this.push('font-size', "".concat(value, "px"));
+      var check = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      return this.push('font-size', "".concat(value, "px"), check);
     }
   }, {
     key: "bold",
     value: function bold() {
-      return this.push('font-weight', 'bold');
+      var check = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+      return this.push('font-weight', 'bold', check);
+    }
+  }, {
+    key: "italic",
+    value: function italic() {
+      var check = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+      return this.push('font-style', 'italic', check);
     }
   }, {
     key: "lineHeight",
     value: function lineHeight(value) {
-      return this.push('line-height', "".concat(value, "px"));
+      var check = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      return this.push('line-height', "".concat(value, "px"), check);
     }
   }, {
     key: "width",
     value: function width(value) {
-      return value ? this.push('width', "".concat(value, "px")) : this;
+      var check = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      return value ? this.push('width', "".concat(value, "px"), check) : this;
     }
   }, {
     key: "height",
     value: function height(value) {
-      return value ? this.push('height', "".concat(value, "px")) : this;
+      var check = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      return value ? this.push('height', "".concat(value, "px"), check) : this;
     }
   }, {
     key: "image",
     value: function image(url, width, height) {
       return this.push('background-image', "url(".concat(url, "}")).push('background-size', "cover").width(width).height(height);
-    }
-  }, {
-    key: "italic",
-    value: function italic() {
-      return this.push('font-style', 'italic');
     }
   }, {
     key: "text",
@@ -282,7 +320,9 @@ var Message = /*#__PURE__*/function () {
       }
 
       args.forEach(function (block) {
-        _this.blocks.push(block);
+        if (block instanceof MessageBlock) {
+          _this.blocks.push(block);
+        }
       });
       return this;
     }
@@ -391,6 +431,21 @@ var Logger = /*#__PURE__*/function () {
       }
 
       this.driver.trace(Logger.buildMessage(msgText, prefix, offset));
+    }
+  }, {
+    key: "panel",
+    value: function panel(panelText) {
+      var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+          _ref$bgColor = _ref.bgColor,
+          bgColor = _ref$bgColor === void 0 ? '#FFF' : _ref$bgColor,
+          _ref$color = _ref.color,
+          color = _ref$color === void 0 ? '#333' : _ref$color,
+          _ref$offset = _ref.offset,
+          offset = _ref$offset === void 0 ? 0 : _ref$offset;
+
+      var baseText = arguments.length > 2 ? arguments[2] : undefined;
+      var msg = Message.instance().pushBlock(MessageBlock.instance(panelText).background(bgColor).color(color).offsetLeft(offset).borderRadius(3).padding(2, 4), baseText ? MessageBlock.instance(baseText).offsetLeft(1) : null);
+      this.driver.log(msg);
     }
   }], [{
     key: "buildMessage",

@@ -7,97 +7,112 @@ class MessageBlock {
     this._text = text;
   }
 
-  push(key, value) {
-    this.style[key] = value;
+  push(key, value, check = false) {
+    if (!check || !this.has('color')) {
+      this.style[key] = value;
+    }
+
     return this;
   }
 
-  color(value) {
-    return this.push('color', value);
+  has(key) {
+    return this.style[key] !== undefined;
   }
 
-  background(value) {
-    return this.push('background', value);
+  color(value, check = false) {
+    return this.push('color', value, check);
   }
 
-  marginLeft(value) {
-    return this.push('margin-left', `${value}px`);
+  background(value, check = false) {
+    return this.push('background', value, check);
   }
 
-  marginRight(value) {
-    return this.push('margin-right', `${value}px`);
+  marginLeft(value, check = false) {
+    if (value != 0) {
+      return this.push('margin-left', `${value}px`, check);
+    }
+
+    return this;
   }
 
-  marginTop(value) {
-    return this.push('margin-top', `${value}px`);
+  marginRight(value, check = false) {
+    if (value != 0) {
+      return this.push('margin-right', `${value}px`, check);
+    }
+
+    return this;
   }
 
-  marginBottom(value) {
-    return this.push('margin-bottom', `${value}px`);
+  marginTop(value, check = false) {
+    return this.push('margin-top', `${value}px`, check);
   }
 
-  margin(vValue, hValue) {
-    let value = `${vValue}px`;
+  marginBottom(value, check = false) {
+    return this.push('margin-bottom', `${value}px`, check);
+  }
+
+  margin(vValue, hValue, check = false) {
+    let value = vValue === 0 ? '' : `${vValue}px`;
 
     if (hValue !== undefined) {
       value += ` ${hValue}px`;
     }
 
-    return this.push('margin', value);
+    return this.push('margin', value, check);
   }
 
-  padding(vValue, hValue) {
-    let value = `${vValue}px`;
+  padding(vValue, hValue, check = false) {
+    let value = vValue === 0 ? '' : `${vValue}px`;
 
     if (hValue !== undefined) {
       value += ` ${hValue}px`;
     }
 
-    return this.push('padding', value);
+    return this.push('padding', value, check);
   }
 
-  offsetLeft(value) {
-    return this.marginLeft(value * 10);
+  offsetLeft(value, check = false) {
+    return this.marginLeft(value * 10, check);
   }
 
-  offsetRight(value) {
-    return this.marginRight(value * 10);
+  offsetRight(value, check = false) {
+    return this.marginRight(value * 10, check);
   }
 
-  borderRadius(value) {
-    return this.push('border-radius', `${value}px`);
+  borderRadius(value, check = false) {
+    return this.push('border-radius', `${value}px`, check);
   }
 
-  border(width, style, color) {
-    return this.push('border', `${width}px ${style} ${color}`);
+  border(width, style, color, check = false) {
+    return this.push('border', `${width}px ${style} ${color}`, check);
   }
 
-  size(value) {
-    return this.push('font-size', `${value}px`);
+  size(value, check = false) {
+    return this.push('font-size', `${value}px`, check);
   }
 
-  bold() {
-    return this.push('font-weight', 'bold');
+  bold(check = false) {
+    return this.push('font-weight', 'bold', check);
   }
 
-  lineHeight(value) {
-    return this.push('line-height', `${value}px`);
+  italic(check = false) {
+    return this.push('font-style', 'italic', check);
   }
 
-  width(value) {
-    return value ? this.push('width', `${value}px`) : this;
+  lineHeight(value, check = false) {
+    return this.push('line-height', `${value}px`, check);
   }
 
-  height(value) {
-    return value ? this.push('height', `${value}px`) : this;
+  width(value, check = false) {
+    return value ? this.push('width', `${value}px`, check) : this;
+  }
+
+  height(value, check = false) {
+    return value ? this.push('height', `${value}px`, check) : this;
   }
 
   image(url, width, height) {
     return this.push('background-image', `url(${url}}`).push('background-size', `cover`).width(width).height(height);
-  }
-
-  italic() {
-    return this.push('font-style', 'italic');
   }
 
   text(value) {
