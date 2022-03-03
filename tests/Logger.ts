@@ -141,7 +141,7 @@ describe('Logger', () => {
     it('Basic', () => {
       logger.panel('Warning')
       assert.deepEqual(driver.buffer, [
-        '%cWarning', 'background:#FFF;color:#333;border-radius:3px;padding:2px 4px;',
+        '%cWarning', 'background:#FFFFFF;color:#1B2B34;border-radius:3px;padding:2px 4px;',
       ])
       driver.clearBuffer()
     })
@@ -149,7 +149,7 @@ describe('Logger', () => {
     it('with options', () => {
       logger.panel('Warning', { bgColor: colors.teal, offset: 1 })
       assert.deepEqual(driver.buffer, [
-        '%cWarning', 'background:#5FB3B3;color:#333;margin-left:10px;border-radius:3px;padding:2px 4px;',
+        '%cWarning', 'background:#5FB3B3;color:#1B2B34;margin-left:10px;border-radius:3px;padding:2px 4px;',
       ])
       driver.clearBuffer()
     })
