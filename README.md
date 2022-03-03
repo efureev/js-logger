@@ -13,11 +13,9 @@ yarn add @feugene/browser-logger
 
 ## Example in Browsers
 
-Chrome  
-![Chrome](./.media/chrome.png)
-
-Safari  
-![Chrome](./.media/safari.png)
+| Chrome | Safari |
+|---|---|
+|![Chrome](./.media/chrome.png)|![Chrome](./.media/safari.png)|
 
 
 ## Use
