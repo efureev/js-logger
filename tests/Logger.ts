@@ -63,8 +63,8 @@ describe('Logger', () => {
           MessageBlock
             .instance('test message from MessageBlock')
             .color('red')
-            .offsetLeft(2),
-        ),
+            .offsetLeft(2)
+        )
       )
 
       assert.deepEqual(driver.buffer, ['%ctest message from MessageBlock', 'color:red;margin-left:20px;'])
@@ -77,12 +77,12 @@ describe('Logger', () => {
           .instance('prefix')
           .background('red')
           .color('white')
-          .offsetLeft(1),
+          .offsetLeft(1)
       )
       msg.pushBlock(
         MessageBlock
           .instance('test message from MessageBlocks')
-          .color('black'),
+          .color('black')
       )
 
       logger.log(msg)
@@ -90,7 +90,7 @@ describe('Logger', () => {
       assert.deepEqual(driver.buffer, [
         '%cprefix%ctest message from MessageBlocks',
         'background:red;color:white;margin-left:10px;',
-        'color:black;',
+        'color:black;'
       ])
       driver.clearBuffer()
     })
@@ -120,7 +120,7 @@ describe('Logger', () => {
             .color(colors.white)
             .marginTop(10)
             .marginBottom(3)
-            .offsetLeft(3),
+            .offsetLeft(3)
         )
 
       logger.log(msg)
@@ -128,7 +128,7 @@ describe('Logger', () => {
       assert.deepEqual(driver.buffer, [
         '%cWarning%ctest message from MessageBlocks%c	Total:	532!',
         'background:#F99157;color:#FFFFFF;font-weight:bold;padding:1px 5px;border-radius:4px;margin-left:10px;', 'color:#C594C5;font-style:italic;margin-left:10px;',
-        'background:#AB7967;color:#FFFFFF;margin-top:10px;margin-bottom:3px;margin-left:30px;',
+        'background:#AB7967;color:#FFFFFF;margin-top:10px;margin-bottom:3px;margin-left:30px;'
       ])
 
       driver.clearBuffer()
@@ -141,7 +141,7 @@ describe('Logger', () => {
     it('Basic', () => {
       logger.panel('Warning')
       assert.deepEqual(driver.buffer, [
-        '%cWarning', 'background:#FFFFFF;color:#1B2B34;border-radius:3px;padding:2px 4px;',
+        '%cWarning', 'background:#FFFFFF;color:#1B2B34;border-radius:3px;padding:2px 4px;'
       ])
       driver.clearBuffer()
     })
@@ -149,7 +149,7 @@ describe('Logger', () => {
     it('with options', () => {
       logger.panel('Warning', { bgColor: colors.teal, offset: 1 })
       assert.deepEqual(driver.buffer, [
-        '%cWarning', 'background:#5FB3B3;color:#1B2B34;margin-left:10px;border-radius:3px;padding:2px 4px;',
+        '%cWarning', 'background:#5FB3B3;color:#1B2B34;margin-left:10px;border-radius:3px;padding:2px 4px;'
       ])
       driver.clearBuffer()
     })
@@ -159,7 +159,7 @@ describe('Logger', () => {
       assert.deepEqual(driver.buffer, [
         '%cWarning%cPost text',
         'background:#AB7967;color:#5FB3B3;margin-left:10px;border-radius:3px;padding:2px 4px;',
-        'margin-left:10px;',
+        'margin-left:10px;'
       ])
       driver.clearBuffer()
     })
