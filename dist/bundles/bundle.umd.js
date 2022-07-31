@@ -81,10 +81,15 @@
     throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
   }
 
-  var LEVEL_ERROR = 1;
-  var LEVEL_INFO = 2;
-  var LEVEL_DEBUG = 4;
-  var LEVEL_TRACE = 8;
+  var ERROR = 1;
+  var INFO = 2;
+  var DEBUG = 4;
+  var TRACE = 8;
+  var LEVEL_ERROR = ERROR;
+  var LEVEL_INFO = LEVEL_ERROR | INFO;
+  var LEVEL_DEBUG = LEVEL_INFO | DEBUG;
+  var LEVEL_TRACE = LEVEL_DEBUG | TRACE;
+  var LOG_ALL = LEVEL_TRACE;
 
   // export const isString = (str: any) => typeof str !== 'string'
   var isEmptyObject = function isEmptyObject(object) {
@@ -375,7 +380,7 @@
 
       _classCallCheck(this, Logger);
 
-      _defineProperty(this, "logLevel", LEVEL_ERROR);
+      _defineProperty(this, "logLevel", LOG_ALL);
 
       this.driver = driver;
       this.colors = colors;
@@ -403,7 +408,7 @@
     }, {
       key: "shouldLog",
       value: function shouldLog(msgLevel) {
-        return this.logLevel <= msgLevel; // @todo: bit operations
+        return (this.logLevel & msgLevel) !== 0;
       }
     }, {
       key: "log",
@@ -416,7 +421,7 @@
       value: function info(msgText, prefix) {
         var offset = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
 
-        if (!this.shouldLog(LEVEL_INFO)) {
+        if (!this.shouldLog(INFO)) {
           return;
         }
 
@@ -428,7 +433,7 @@
       value: function debug(msgText, prefix) {
         var offset = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
 
-        if (!this.shouldLog(LEVEL_DEBUG)) {
+        if (!this.shouldLog(DEBUG)) {
           return;
         }
 
@@ -439,7 +444,7 @@
       value: function error(msgText, prefix) {
         var offset = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
 
-        if (!this.shouldLog(LEVEL_ERROR)) {
+        if (!this.shouldLog(ERROR)) {
           return;
         }
 
@@ -450,7 +455,7 @@
       value: function trace(msgText, prefix) {
         var offset = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
 
-        if (!this.shouldLog(LEVEL_TRACE)) {
+        if (!this.shouldLog(TRACE)) {
           return;
         }
 
@@ -556,14 +561,6 @@
     white: '#FFFFFF'
   };
 
-  // import ColorCollection from '../../ColorCollection'
-
-  /*
-
-  export interface DriverConfig {
-    colorCollection: ColorCollection
-  }
-  */
   var ConsoleDriver = /*#__PURE__*/function () {
     function ConsoleDriver() {
       _classCallCheck(this, ConsoleDriver);
@@ -571,12 +568,7 @@
 
     _createClass(ConsoleDriver, [{
       key: "debug",
-      value: // private readonly colorCollection: ColorCollection
-      //
-      // constructor({ colorCollection }: DriverConfig) {
-      //   this.colorCollection = colorCollection
-      // }
-      function debug(msg) {
+      value: function debug(msg) {
         this.perform(msg, 'debug');
       }
     }, {

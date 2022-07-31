@@ -23,14 +23,6 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 
-// import ColorCollection from '../../ColorCollection'
-
-/*
-
-export interface DriverConfig {
-  colorCollection: ColorCollection
-}
-*/
 var ConsoleDriver = /*#__PURE__*/function () {
   function ConsoleDriver() {
     _classCallCheck(this, ConsoleDriver);
@@ -38,12 +30,7 @@ var ConsoleDriver = /*#__PURE__*/function () {
 
   _createClass(ConsoleDriver, [{
     key: "debug",
-    value: // private readonly colorCollection: ColorCollection
-    //
-    // constructor({ colorCollection }: DriverConfig) {
-    //   this.colorCollection = colorCollection
-    // }
-    function debug(msg) {
+    value: function debug(msg) {
       this.perform(msg, 'debug');
     }
   }, {

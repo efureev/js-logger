@@ -1,9 +1,9 @@
-import { LEVEL_DEBUG, LEVEL_ERROR, LEVEL_INFO, LEVEL_TRACE } from './LogLevel';
+import { DEBUG, ERROR, INFO, LOG_ALL, TRACE } from './LogLevel';
 import Message from './Message';
 import MessageBlock from './MessageBlock';
 
 class Logger {
-  logLevel = LEVEL_ERROR;
+  logLevel = LOG_ALL;
 
   constructor({
     driver,
@@ -31,7 +31,7 @@ class Logger {
   }
 
   shouldLog(msgLevel) {
-    return this.logLevel <= msgLevel; // @todo: bit operations
+    return (this.logLevel & msgLevel) !== 0;
   }
 
   log(msgText, prefix, offset = 0) {
@@ -39,7 +39,7 @@ class Logger {
   }
 
   info(msgText, prefix, offset = 0) {
-    if (!this.shouldLog(LEVEL_INFO)) {
+    if (!this.shouldLog(INFO)) {
       return;
     }
 
@@ -48,7 +48,7 @@ class Logger {
   }
 
   debug(msgText, prefix, offset = 0) {
-    if (!this.shouldLog(LEVEL_DEBUG)) {
+    if (!this.shouldLog(DEBUG)) {
       return;
     }
 
@@ -56,7 +56,7 @@ class Logger {
   }
 
   error(msgText, prefix, offset = 0) {
-    if (!this.shouldLog(LEVEL_ERROR)) {
+    if (!this.shouldLog(ERROR)) {
       return;
     }
 
@@ -64,7 +64,7 @@ class Logger {
   }
 
   trace(msgText, prefix, offset = 0) {
-    if (!this.shouldLog(LEVEL_TRACE)) {
+    if (!this.shouldLog(TRACE)) {
       return;
     }
 

@@ -5,6 +5,7 @@ import colors from './Color'
 
 export * from './drivers'
 export * from './shorcuts'
+export * from './LogLevel'
 
 export default Logger
 

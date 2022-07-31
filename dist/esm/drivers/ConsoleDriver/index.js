@@ -1,17 +1,4 @@
-// import ColorCollection from '../../ColorCollection'
-
-/*
-
-export interface DriverConfig {
-  colorCollection: ColorCollection
-}
-*/
 class ConsoleDriver {
-  // private readonly colorCollection: ColorCollection
-  //
-  // constructor({ colorCollection }: DriverConfig) {
-  //   this.colorCollection = colorCollection
-  // }
   debug(msg) {
     this.perform(msg, 'debug');
   }

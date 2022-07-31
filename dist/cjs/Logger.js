@@ -29,7 +29,7 @@ var Logger = /*#__PURE__*/function () {
 
     _classCallCheck(this, Logger);
 
-    _defineProperty(this, "logLevel", _LogLevel.LEVEL_ERROR);
+    _defineProperty(this, "logLevel", _LogLevel.LOG_ALL);
 
     this.driver = driver;
     this.colors = colors;
@@ -57,7 +57,7 @@ var Logger = /*#__PURE__*/function () {
   }, {
     key: "shouldLog",
     value: function shouldLog(msgLevel) {
-      return this.logLevel <= msgLevel; // @todo: bit operations
+      return (this.logLevel & msgLevel) !== 0;
     }
   }, {
     key: "log",
@@ -70,7 +70,7 @@ var Logger = /*#__PURE__*/function () {
     value: function info(msgText, prefix) {
       var offset = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
 
-      if (!this.shouldLog(_LogLevel.LEVEL_INFO)) {
+      if (!this.shouldLog(_LogLevel.INFO)) {
         return;
       }
 
@@ -82,7 +82,7 @@ var Logger = /*#__PURE__*/function () {
     value: function debug(msgText, prefix) {
       var offset = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
 
-      if (!this.shouldLog(_LogLevel.LEVEL_DEBUG)) {
+      if (!this.shouldLog(_LogLevel.DEBUG)) {
         return;
       }
 
@@ -93,7 +93,7 @@ var Logger = /*#__PURE__*/function () {
     value: function error(msgText, prefix) {
       var offset = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
 
-      if (!this.shouldLog(_LogLevel.LEVEL_ERROR)) {
+      if (!this.shouldLog(_LogLevel.ERROR)) {
         return;
       }
 
@@ -104,7 +104,7 @@ var Logger = /*#__PURE__*/function () {
     value: function trace(msgText, prefix) {
       var offset = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
 
-      if (!this.shouldLog(_LogLevel.LEVEL_TRACE)) {
+      if (!this.shouldLog(_LogLevel.TRACE)) {
         return;
       }
 

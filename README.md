@@ -17,28 +17,59 @@ yarn add @feugene/browser-logger
 |---|---|
 |![Chrome](./.media/chrome.png)|![Chrome](./.media/safari.png)|
 
-
 ## Use
 
-```shell
-const logger = new Logger(new ConsoleDriver())
+### Basic use
+
+```js
+import { BrowserLogger } from '@feugene/browser-logger'
+
+const logger = new BrowserLogger()
 
 // ...
 
 logger.log('test')
 logger.info('test', 'prefix', 3)
 logger.error(new Message('test'))
+```
+
+### Advanced use
+
+```js
+import { Logger, ConsoleDriver, ColorCollection, LEVEL_INFO } from '@feugene/browser-logger'
+
+const logger = new Logger(
+  new Logger({
+    driver: new ConsoleDriver(),
+    colors: new ColorCollection({ // colors map
+      black: '#000000',
+      red: '#EC5f67',
+      yellow: '#FAC863',
+      green: '#99C794',
+      blue: '#6699CC',
+      white: '#FFFFFF',
+    }),
+    level: LEVEL_INFO
+  })
+)
+
+// ...
+
+this.logger.panel('Title', {
+  bgColor: 'yellow', // => '#FAC863'
+  color: 'teal', // => 'teal' because it absents in color map
+  offset: 5,
+})
 
 // ...
 
 const msg = new Message()
-msg.pushBlock(MessageBlock.instance('prefix').color('white').background('red').paddingLeft(2))
-msg.pushBlock(MessageBlock.instance('Basic text').color('red'))
+msg.pushBlock(MessageBlock.instance('prefix').color('#FFF').background('#00FFAA').paddingLeft(2))
+msg.pushBlock(MessageBlock.instance('Basic text', { color: this.logger.getColors() }).color('red'))
 logger.log(msg)
 ```
 
-U
-### Advanced use
+### Deep Advanced use
 
 You can use your logger-wrapper with your custom panels:
 
@@ -85,57 +116,59 @@ And use it:
 
 ```js
 import { Message, MessageBlock, colors } from '@feugene/browser-logger'
+
 {
-// ...
-    this.logger = new Logger()
+  // ...
+  this.logger = new Logger()
 
-    this.logger.warning('MessageBlock', undefined, 4)
-    this.logger.warning('MessageBlock', 'ALERT')
-    this.logger.error('MessageBlock')
-    this.logger.error('MessageBlock')
-    this.logger.info('Info', 'text')
+  this.logger.warning('MessageBlock', undefined, 4)
+  this.logger.warning('MessageBlock', 'ALERT')
+  this.logger.error('MessageBlock')
+  this.logger.error('MessageBlock')
+  this.logger.info('Info', 'text')
 
-    this.logger.panel('Title', undefined, 'Post Text')
-    this.logger.panel('Title', {}, 'Post Text')
-    this.logger.panel('Title', {
-      bgColor: '#5FB3B3',
-      color: '#1B2B34',
-      offset: 5,
-    })
+  this.logger.panel('Title', undefined, 'Post Text')
+  this.logger.panel('Title', {}, 'Post Text')
+  this.logger.panel('Title', {
+    bgColor: '#5FB3B3',
+    color: '#1B2B34',
+    offset: 5,
+  })
 
-    const msg = Message.instance().pushBlock(
-      MessageBlock.instance('panel 1')
-        .background('green')
-        .borderRadius(3)
-        .offsetLeft(1)
-        .padding(2, 4),
+  const colors = this.logger.getColors()
+  const msg = Message.instance().pushBlock(
+    MessageBlock.instance('panel 1', { colors: colors })
+      .background('green')
+      .borderRadius(3)
+      .offsetLeft(1)
+      .padding(2, 4),
 
-      MessageBlock.instance('panel 2')
-        .background('blue')
-        .offsetLeft(1)
-        .padding(2, 4),
+    MessageBlock.instance('panel 2')
+      .background(colors.get('blue'))
+      .offsetLeft(1)
+      .padding(2, 4),
 
-      MessageBlock.instance('panel 3')
-        .background('black')
-        .color('white')
-        .borderRadius(10)
-        .offsetLeft(5)
-        .padding(2, 4),
+    MessageBlock.instance('panel 3')
+      .background('#000')
+      .color('#fff')
+      .borderRadius(10)
+      .offsetLeft(5)
+      .padding(2, 4),
 
-      MessageBlock.instance('4 330')
-        .background(colors.purple)
-        .color('white')
-        .borderRadius(10)
-        .offsetLeft(5)
-        .padding(2, 20)
-    )
+    MessageBlock.instance('4 330')
+      .background(colors.get('purple'))
+      .color('#fff')
+      .borderRadius(10)
+      .offsetLeft(5)
+      .padding(2, 20)
+  )
 
-    this.logger.log(msg)
+  this.logger.log(msg)
 
-    this.logger.panel('Title', {
-      bgColor: '#5FB3B3',
-      color: '#1B2B34',
-      offset: 5,
-    })
+  this.logger.panel('Title', {
+    bgColor: '#5FB3B3',
+    color: 'gray',
+    offset: 5,
+  })
 }
 ```
