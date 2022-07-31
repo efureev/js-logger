@@ -172,3 +172,31 @@ import { Message, MessageBlock, colors } from '@feugene/browser-logger'
   })
 }
 ```
+
+## Features
+
+### Log levels
+
+The Logger logs messages by `Log Levels`.
+
+There are 4 message types:
+
+- Error
+- Info
+- Debug
+- Trace
+
+- There are 4 log levels:
+
+- `LEVEL_ERROR` - Log only `Error` type messages
+- `LEVEL_INFO` - Log only `Error` and `Info` type messages
+- `LEVEL_DEBUG` - Log only `Error`, `Info` and `Debug` type messages
+- `LEVEL_TRACE` - Log only `Error`, `Info`,`Debug` and `Trace` type messages
+- `LOG_ALL` - It's an alias of `LEVEL_TRACE`
+
+You may define log level of your Logger. By default, log level is `LOG_ALL`.  
+You may point your own Log level:
+
+```js
+logger.setLevel(INFO | DEBUG) // will be logs only `info` & `debug` messages
+```
