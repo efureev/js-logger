@@ -5,6 +5,7 @@ import MessageBlock from '../src/MessageBlock'
 import ConsoleBufferDriver from '../src/drivers/ConsoleBufferDriver'
 import ColorCollection from '../src/ColorCollection'
 import colors from '../src/Color'
+import { INFO, LEVEL_DEBUG, LEVEL_ERROR, TRACE } from '../src/LogLevel'
 
 describe('Logger', () => {
 
@@ -144,9 +145,8 @@ describe('Logger', () => {
     })
 
   })
+
   describe('Panel', () => {
-
-
     it('Basic', () => {
       logger.panel('Warning')
       assert.deepEqual(driver.buffer, [
@@ -175,6 +175,111 @@ describe('Logger', () => {
         'margin-left:10px;'
       ])
       driver.clearBuffer()
+    })
+  })
+})
+
+describe('Logger levels', () => {
+
+  const driver = new ConsoleBufferDriver()
+  const colorCollection = new ColorCollection(colors)
+  const logger = new Logger({ driver, colors: colorCollection })
+
+  describe('level Errors', () => {
+    it('Errors should log', () => {
+      logger.setLevel(LEVEL_ERROR)
+      driver.clearBuffer()
+      logger.error('test message')
+      assert.equal(driver.buffer.length, 2)
+      assert.equal(driver.buffer[0], '%ctest message')
+    })
+
+    it('Info should not log', () => {
+      logger.setLevel(LEVEL_ERROR)
+      driver.clearBuffer()
+      logger.info('test message')
+      assert.equal(driver.buffer.length, 0)
+    })
+
+    it('debug should not log', () => {
+      logger.setLevel(LEVEL_ERROR)
+      driver.clearBuffer()
+      logger.debug('test message')
+      assert.equal(driver.buffer.length, 0)
+    })
+
+    it('trace should not log', () => {
+      logger.setLevel(LEVEL_ERROR)
+      driver.clearBuffer()
+      logger.trace('test message')
+      assert.equal(driver.buffer.length, 0)
+    })
+  })
+
+
+  describe('level info && trace', () => {
+    it('Errors should not log', () => {
+      logger.setLevel(INFO | TRACE)
+      driver.clearBuffer()
+      logger.error('test message')
+      assert.equal(driver.buffer.length, 0)
+    })
+
+    it('Info should not log', () => {
+      logger.setLevel(INFO | TRACE)
+      driver.clearBuffer()
+      logger.info('test message')
+      assert.equal(driver.buffer.length, 2)
+      assert.equal(driver.buffer[0], '%ctest message')
+    })
+
+    it('debug should not log', () => {
+      logger.setLevel(INFO | TRACE)
+      driver.clearBuffer()
+      logger.debug('test message')
+      assert.equal(driver.buffer.length, 0)
+    })
+
+    it('trace should log', () => {
+      logger.setLevel(INFO | TRACE)
+      driver.clearBuffer()
+      logger.trace('test message')
+      assert.equal(driver.buffer.length, 2)
+      assert.equal(driver.buffer[0], '%ctest message')
+    })
+
+
+    describe('level LEVEL_DEBUG', () => {
+      it('Errors should log', () => {
+        logger.setLevel(LEVEL_DEBUG)
+        driver.clearBuffer()
+        logger.error('test message')
+        assert.equal(driver.buffer.length, 2)
+        assert.equal(driver.buffer[0], '%ctest message')
+      })
+
+      it('Info should log', () => {
+        logger.setLevel(LEVEL_DEBUG)
+        driver.clearBuffer()
+        logger.info('test message')
+        assert.equal(driver.buffer.length, 2)
+        assert.equal(driver.buffer[0], '%ctest message')
+      })
+
+      it('debug should not log', () => {
+        logger.setLevel(LEVEL_DEBUG)
+        driver.clearBuffer()
+        logger.debug('test message')
+        assert.equal(driver.buffer.length, 2)
+        assert.equal(driver.buffer[0], '%ctest message')
+      })
+
+      it('trace should not log', () => {
+        logger.setLevel(LEVEL_DEBUG)
+        driver.clearBuffer()
+        logger.trace('test message')
+        assert.equal(driver.buffer.length, 0)
+      })
     })
   })
 })

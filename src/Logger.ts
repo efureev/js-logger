@@ -1,6 +1,6 @@
 import { LoggerDriver } from './drivers/LoggerDriver'
 import type { LevelType } from './LogLevel'
-import { LEVEL_DEBUG, LEVEL_ERROR, LEVEL_INFO, LEVEL_TRACE } from './LogLevel'
+import { DEBUG, ERROR, INFO, LOG_ALL, TRACE } from './LogLevel'
 import Message from './Message'
 import MessageBlock from './MessageBlock'
 import { ColorValue } from './Color'
@@ -22,7 +22,7 @@ class Logger {
   private readonly driver: LoggerDriver
   private readonly colors: ColorCollection
 
-  private logLevel: LevelType = LEVEL_ERROR
+  private logLevel: LevelType = LOG_ALL
 
   constructor({ driver, colors, level }: LoggerConfig) {
     this.driver = driver
@@ -45,8 +45,8 @@ class Logger {
     return this.colors
   }
 
-  private shouldLog(msgLevel: number) {
-    return this.logLevel <= msgLevel // @todo: bit operations
+  private shouldLog(msgLevel: number): boolean {
+    return (this.logLevel & msgLevel) !== 0
   }
 
   log(msgText: string | Message | MessageBlock, prefix?: string, offset = 0): void {
@@ -54,7 +54,7 @@ class Logger {
   }
 
   info(msgText: string | Message | MessageBlock, prefix?: string, offset = 0): void {
-    if (!this.shouldLog(LEVEL_INFO)) {
+    if (!this.shouldLog(INFO)) {
       return
     }
 
@@ -64,7 +64,7 @@ class Logger {
   }
 
   debug(msgText: string | Message | MessageBlock, prefix?: string, offset = 0) {
-    if (!this.shouldLog(LEVEL_DEBUG)) {
+    if (!this.shouldLog(DEBUG)) {
       return
     }
 
@@ -72,7 +72,7 @@ class Logger {
   }
 
   error(msgText: string | Message | MessageBlock, prefix?: string, offset = 0) {
-    if (!this.shouldLog(LEVEL_ERROR)) {
+    if (!this.shouldLog(ERROR)) {
       return
     }
 
@@ -80,7 +80,7 @@ class Logger {
   }
 
   trace(msgText: string | Message | MessageBlock, prefix?: string, offset = 0) {
-    if (!this.shouldLog(LEVEL_TRACE)) {
+    if (!this.shouldLog(TRACE)) {
       return
     }
 
