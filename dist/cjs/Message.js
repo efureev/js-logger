@@ -18,12 +18,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var Message = /*#__PURE__*/function () {
-  function Message(text) {
+  function Message(text, colors) {
     _classCallCheck(this, Message);
 
     _defineProperty(this, "blocks", new Array());
 
-    this.parse(text);
+    this.parse(text, colors);
   }
 
   _createClass(Message, [{
@@ -59,15 +59,17 @@ var Message = /*#__PURE__*/function () {
     }
   }, {
     key: "parse",
-    value: function parse(text) {
+    value: function parse(text, colors) {
       if (text) {
-        this.pushBlock(_MessageBlock.default.instance(text));
+        this.pushBlock(_MessageBlock.default.instance(text, {
+          colors: colors
+        }));
       }
     }
   }], [{
     key: "instance",
-    value: function instance(block) {
-      return block instanceof Message ? block : new Message(block);
+    value: function instance(block, colors) {
+      return block instanceof Message ? block : new Message(block, colors);
     }
   }]);
 

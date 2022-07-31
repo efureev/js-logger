@@ -7,7 +7,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _index = require("./index");
+var _ConsoleDriver2 = _interopRequireDefault(require("../ConsoleDriver"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -17,7 +19,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
@@ -27,19 +29,19 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var ConsoleBufferDriver = /*#__PURE__*/function (_ConsoleDriver) {
-  _inherits(ConsoleBufferDriver, _ConsoleDriver);
+var ConsoleBuffer = /*#__PURE__*/function (_ConsoleDriver) {
+  _inherits(ConsoleBuffer, _ConsoleDriver);
 
-  var _super = _createSuper(ConsoleBufferDriver);
+  var _super = _createSuper(ConsoleBuffer);
 
-  function ConsoleBufferDriver() {
+  function ConsoleBuffer() {
     var _this;
 
-    _classCallCheck(this, ConsoleBufferDriver);
+    _classCallCheck(this, ConsoleBuffer);
 
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
@@ -52,10 +54,10 @@ var ConsoleBufferDriver = /*#__PURE__*/function (_ConsoleDriver) {
     return _this;
   }
 
-  _createClass(ConsoleBufferDriver, [{
+  _createClass(ConsoleBuffer, [{
     key: "perform",
     value: function perform(msg, type) {
-      this.buffer = ConsoleBufferDriver.buildStrings(ConsoleBufferDriver.formatMessage(msg));
+      this.buffer = _ConsoleDriver2.default.buildStrings(_ConsoleDriver2.default.formatMessage(msg));
     }
   }, {
     key: "clearBuffer",
@@ -64,9 +66,9 @@ var ConsoleBufferDriver = /*#__PURE__*/function (_ConsoleDriver) {
     }
   }]);
 
-  return ConsoleBufferDriver;
-}(_index.ConsoleDriver);
+  return ConsoleBuffer;
+}(_ConsoleDriver2.default);
 
-var _default = ConsoleBufferDriver;
+var _default = ConsoleBuffer;
 exports.default = _default;
-//# sourceMappingURL=ConsoleBufferDriver.js.map
+//# sourceMappingURL=index.js.map

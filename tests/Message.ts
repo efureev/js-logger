@@ -1,9 +1,11 @@
 import assert from 'assert'
 import MessageBlock from '../src/MessageBlock'
 import Message from '../src/Message'
+import ColorCollection from '../src/ColorCollection'
 
 
 describe('checking basics message', () => {
+  const colors = new ColorCollection()
 
   it('create from string', () => {
 
@@ -19,15 +21,15 @@ describe('checking basics message', () => {
 
   it('push block', () => {
 
-    const msg = new Message()
+    const msg = new Message(undefined, colors)
 
     assert.equal(msg.count(), 0)
 
-    const block1 = new MessageBlock('test')
+    const block1 = new MessageBlock('test', { colors })
     msg.pushBlock(block1)
     assert.equal(msg.count(), 1)
 
-    const block2 = new MessageBlock('test2')
+    const block2 = new MessageBlock('test2', { colors })
     block2.color('red')
     msg.pushBlock(block2)
     assert.equal(msg.count(), 2)
@@ -44,7 +46,7 @@ describe('checking basics message', () => {
     const msg = Message.instance()
       .pushBlock(
         MessageBlock.instance('prefix').color('red'),
-        MessageBlock.instance('text'),
+        MessageBlock.instance('text')
       )
 
     assert.equal(msg.count(), 2)

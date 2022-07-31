@@ -1,13 +1,29 @@
-import Message from '../Message'
-import MessageBlock from '../MessageBlock'
-import { LoggerDriver } from './LoggerDriver'
+import Message from '../../Message'
+import MessageBlock from '../../MessageBlock'
+import { LoggerDriver } from '../LoggerDriver'
+
+// import ColorCollection from '../../ColorCollection'
 
 export interface FormatConsole {
   fmtStr: string
   fmtArgs: Array<string>
 }
 
+/*
+
+export interface DriverConfig {
+  colorCollection: ColorCollection
+}
+*/
+
+
 class ConsoleDriver implements LoggerDriver {
+  // private readonly colorCollection: ColorCollection
+  //
+  // constructor({ colorCollection }: DriverConfig) {
+  //   this.colorCollection = colorCollection
+  // }
+
   debug(msg: Message): void {
     this.perform(msg, 'debug')
   }

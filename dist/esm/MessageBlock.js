@@ -3,12 +3,15 @@ import { isEmptyObject } from './utils';
 class MessageBlock {
   style = new Object(null);
 
-  constructor(text) {
+  constructor(text, {
+    colors
+  } = {}) {
+    this.colors = colors;
     this._text = text;
   }
 
   push(key, value, check = false) {
-    if (!check || !this.has('color')) {
+    if (value !== undefined && (!check || !this.has('color'))) {
       this.style[key] = value;
     }
 
@@ -20,11 +23,11 @@ class MessageBlock {
   }
 
   color(value, check = false) {
-    return this.push('color', value, check);
+    return this.push('color', this.colors && this.colors.get(value) || value, check);
   }
 
   background(value, check = false) {
-    return this.push('background', value, check);
+    return this.push('background', this.colors && this.colors.get(value) || value, check);
   }
 
   marginLeft(value, check = false) {
@@ -144,8 +147,8 @@ class MessageBlock {
     });
   }
 
-  static instance(block) {
-    return block instanceof MessageBlock ? block : new MessageBlock(block);
+  static instance(block, options = {}) {
+    return block instanceof MessageBlock ? block : new MessageBlock(block, options);
   }
 
 }

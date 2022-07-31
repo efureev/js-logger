@@ -1,4 +1,4 @@
-export const isString = (str: any) => typeof str !== 'string'
+// export const isString = (str: any) => typeof str !== 'string'
 
 export const isEmptyObject = (object: object) => {
   // @ts-ignore

@@ -1,22 +1,30 @@
 import { isEmptyObject } from './utils'
+import type { ColorValue } from './Color'
+import ColorCollection from './ColorCollection'
 
 export interface MessageBlockStyle {
   [index: string]: any
 
-  color?: string
-  background?: string
+  color?: ColorValue
+  background?: ColorValue
+}
+
+interface MessageBlockOptions {
+  colors?: ColorCollection
 }
 
 class MessageBlock {
+  private colors?: ColorCollection
   private _text: string
   private style: MessageBlockStyle = new Object(null)
 
-  constructor(text: string) {
+  constructor(text: string, { colors }: MessageBlockOptions = {}) {
+    this.colors = colors
     this._text = text
   }
 
-  push(key: string, value: string, check: boolean = false): this {
-    if (!check || !this.has('color')) {
+  push(key: string, value?: string, check: boolean = false): this {
+    if (value !== undefined && (!check || !this.has('color'))) {
       this.style[key] = value
     }
 
@@ -27,12 +35,12 @@ class MessageBlock {
     return this.style[key] !== undefined
   }
 
-  color(value: string, check: boolean = false): this {
-    return this.push('color', value, check)
+  color(value?: string, check: boolean = false): this {
+    return this.push('color', (this.colors && this.colors.get(value)) || value, check)
   }
 
-  background(value: string, check: boolean = false): this {
-    return this.push('background', value, check)
+  background(value?: string, check: boolean = false): this {
+    return this.push('background', (this.colors && this.colors.get(value)) || value, check)
   }
 
   marginLeft(value: number, check: boolean = false): this {
@@ -85,7 +93,7 @@ class MessageBlock {
     return this.push('border-radius', `${value}px`, check)
   }
 
-  border(width: number, style: string, color: string, check: boolean = false): this {
+  border(width: number, style: string, color: ColorValue, check: boolean = false): this {
     return this.push('border', `${width}px ${style} ${color}`, check)
   }
 
@@ -148,8 +156,8 @@ class MessageBlock {
     })
   }
 
-  static instance(block: MessageBlock | string): MessageBlock {
-    return block instanceof MessageBlock ? block : new MessageBlock(block)
+  static instance(block: MessageBlock | string, options: MessageBlockOptions = {}): MessageBlock {
+    return block instanceof MessageBlock ? block : new MessageBlock(block, options)
   }
 }
 

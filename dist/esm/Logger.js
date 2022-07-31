@@ -1,16 +1,20 @@
 import { LEVEL_DEBUG, LEVEL_ERROR, LEVEL_INFO, LEVEL_TRACE } from './LogLevel';
 import Message from './Message';
-import colors from './Color';
 import MessageBlock from './MessageBlock';
 
 class Logger {
   logLevel = LEVEL_ERROR;
 
-  constructor(config) {
-    this.driver = config.driver;
+  constructor({
+    driver,
+    colors,
+    level
+  }) {
+    this.driver = driver;
+    this.colors = colors;
 
-    if (config.level) {
-      this.logLevel = config.level;
+    if (level) {
+      this.logLevel = level;
     }
   }
 
@@ -22,12 +26,16 @@ class Logger {
     return this.driver;
   }
 
+  getColors() {
+    return this.colors;
+  }
+
   shouldLog(msgLevel) {
     return this.logLevel <= msgLevel; // @todo: bit operations
   }
 
   log(msgText, prefix, offset = 0) {
-    this.driver.log(Logger.buildMessage(msgText, prefix, offset));
+    this.driver.log(this.buildMessage(msgText, prefix, offset));
   }
 
   info(msgText, prefix, offset = 0) {
@@ -35,7 +43,7 @@ class Logger {
       return;
     }
 
-    const msg = Logger.buildMessage(msgText, prefix, offset);
+    const msg = this.buildMessage(msgText, prefix, offset);
     this.driver.info(msg);
   }
 
@@ -44,7 +52,7 @@ class Logger {
       return;
     }
 
-    this.driver.debug(Logger.buildMessage(msgText, prefix, offset));
+    this.driver.debug(this.buildMessage(msgText, prefix, offset));
   }
 
   error(msgText, prefix, offset = 0) {
@@ -52,7 +60,7 @@ class Logger {
       return;
     }
 
-    this.driver.error(Logger.buildMessage(msgText, prefix, offset));
+    this.driver.error(this.buildMessage(msgText, prefix, offset));
   }
 
   trace(msgText, prefix, offset = 0) {
@@ -60,27 +68,33 @@ class Logger {
       return;
     }
 
-    this.driver.trace(Logger.buildMessage(msgText, prefix, offset));
+    this.driver.trace(this.buildMessage(msgText, prefix, offset));
   }
 
   panel(panelText, {
-    bgColor = colors.white,
-    color = colors.gray,
-    offset = 0
+    bgColor,
+    color,
+    offset
   } = {}, baseText) {
-    const msg = Message.instance().pushBlock(MessageBlock.instance(panelText).background(bgColor).color(color).offsetLeft(offset).borderRadius(3).padding(2, 4), baseText ? MessageBlock.instance(baseText).offsetLeft(1) : null);
+    const msg = Message.instance(undefined, this.colors).pushBlock(MessageBlock.instance(panelText, {
+      colors: this.colors
+    }).background(bgColor || 'white').color(color || 'gray').offsetLeft(offset || 0).borderRadius(3).padding(2, 4), baseText ? MessageBlock.instance(baseText, {
+      colors: this.colors
+    }).offsetLeft(1) : null);
     this.driver.log(msg);
   }
 
-  static buildMessage(msgText, prefix, offset = 0) {
+  buildMessage(msgText, prefix, offset = 0) {
     if (msgText instanceof Message) {
       return msgText;
     }
 
-    const msg = new Message();
+    const msg = new Message(undefined, this.colors);
 
     if (prefix) {
-      const block = MessageBlock.instance(prefix).offsetRight(1);
+      const block = MessageBlock.instance(prefix, {
+        colors: this.colors
+      }).offsetRight(1);
 
       if (offset) {
         block.offsetLeft(offset);
@@ -89,7 +103,9 @@ class Logger {
       msg.pushBlock(block);
     }
 
-    msg.pushBlock(MessageBlock.instance(msgText));
+    msg.pushBlock(MessageBlock.instance(msgText, {
+      colors: this.colors
+    }));
     return msg;
   }
 

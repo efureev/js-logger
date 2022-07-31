@@ -17,10 +17,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 var MessageBlock = /*#__PURE__*/function () {
   function MessageBlock(text) {
+    var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+        colors = _ref.colors;
+
     _classCallCheck(this, MessageBlock);
 
     _defineProperty(this, "style", new Object(null));
 
+    this.colors = colors;
     this._text = text;
   }
 
@@ -29,7 +33,7 @@ var MessageBlock = /*#__PURE__*/function () {
     value: function push(key, value) {
       var check = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 
-      if (!check || !this.has('color')) {
+      if (value !== undefined && (!check || !this.has('color'))) {
         this.style[key] = value;
       }
 
@@ -44,13 +48,13 @@ var MessageBlock = /*#__PURE__*/function () {
     key: "color",
     value: function color(value) {
       var check = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-      return this.push('color', value, check);
+      return this.push('color', this.colors && this.colors.get(value) || value, check);
     }
   }, {
     key: "background",
     value: function background(value) {
       var check = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-      return this.push('background', value, check);
+      return this.push('background', this.colors && this.colors.get(value) || value, check);
     }
   }, {
     key: "marginLeft",
@@ -213,7 +217,8 @@ var MessageBlock = /*#__PURE__*/function () {
   }], [{
     key: "instance",
     value: function instance(block) {
-      return block instanceof MessageBlock ? block : new MessageBlock(block);
+      var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      return block instanceof MessageBlock ? block : new MessageBlock(block, options);
     }
   }]);
 

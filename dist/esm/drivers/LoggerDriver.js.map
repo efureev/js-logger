@@ -1,1 +1,1 @@
-{"version":3,"sources":[],"names":[],"mappings":"","sourcesContent":[],"file":"LoggerDriver.js"}
+{"version":3,"file":"LoggerDriver.js","names":[],"sources":["../../../src/drivers/LoggerDriver.ts"],"sourcesContent":["import Message from '../Message'\n\nexport interface LoggerDriver {\n  debug(msg: Message): void\n\n  info(msg: Message): void\n\n  log(msg: Message): void\n\n  error(msg: Message): void\n\n  trace(msg: Message): void\n}\n"],"mappings":""}

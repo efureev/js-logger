@@ -1,6 +1,6 @@
 {
   "name": "@feugene/browser-logger",
-  "version": "0.3.4",
+  "version": "0.4.0",
   "description": "Do logging into browser",
   "keywords": [
     "log",
@@ -37,22 +37,22 @@
     "node": ">= 16"
   },
   "devDependencies": {
-    "@babel/cli": "^7.17.6",
-    "@babel/core": "^7.17.5",
-    "@babel/preset-env": "^7.16.11",
-    "@babel/preset-typescript": "^7.16.7",
+    "@babel/cli": "^7.18.9",
+    "@babel/core": "^7.18.9",
+    "@babel/preset-env": "^7.18.9",
+    "@babel/preset-typescript": "^7.18.6",
     "@rollup/plugin-babel": "^5.3.1",
-    "@rollup/plugin-node-resolve": "^13.1.3",
-    "@types/jest": "^27.4.1",
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "@types/jest": "^28.1.6",
     "cross-env": "^7.0.3",
-    "husky": "^7.0.0",
-    "jest": "^27.5.1",
+    "husky": "^7.0.4",
+    "jest": "^28.1.3",
     "npm-run-all": "^4.1.5",
-    "prettier": "^2.5.1",
+    "prettier": "^2.7.1",
     "rimraf": "^3.0.2",
-    "rollup": "^2.68.0",
+    "rollup": "^2.77.2",
     "rollup-plugin-terser": "^7.0.2",
-    "typescript": "^4.5.5"
+    "typescript": "^4.7.4"
   },
   "repository": {
     "type": "git",

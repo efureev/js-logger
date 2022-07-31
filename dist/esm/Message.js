@@ -3,8 +3,8 @@ import MessageBlock from './MessageBlock';
 class Message {
   blocks = new Array();
 
-  constructor(text) {
-    this.parse(text);
+  constructor(text, colors) {
+    this.parse(text, colors);
   }
 
   getBlocks() {
@@ -28,14 +28,16 @@ class Message {
     return this.blocks.length;
   }
 
-  parse(text) {
+  parse(text, colors) {
     if (text) {
-      this.pushBlock(MessageBlock.instance(text));
+      this.pushBlock(MessageBlock.instance(text, {
+        colors
+      }));
     }
   }
 
-  static instance(block) {
-    return block instanceof Message ? block : new Message(block);
+  static instance(block, colors) {
+    return block instanceof Message ? block : new Message(block, colors);
   }
 
 }

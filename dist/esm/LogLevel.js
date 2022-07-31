@@ -1,7 +1,7 @@
-export const LEVEL_ERROR = 1 << 0;
-export const LEVEL_INFO = 1 << 1;
-export const LEVEL_DEBUG = 1 << 2;
-export const LEVEL_TRACE = 1 << 3;
+export const LEVEL_ERROR = 1;
+export const LEVEL_INFO = 2;
+export const LEVEL_DEBUG = 4;
+export const LEVEL_TRACE = 8;
 export default {
   LEVEL_ERROR,
   LEVEL_INFO,

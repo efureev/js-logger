@@ -9,8 +9,6 @@ var _LogLevel = require("./LogLevel");
 
 var _Message = _interopRequireDefault(require("./Message"));
 
-var _Color = _interopRequireDefault(require("./Color"));
-
 var _MessageBlock = _interopRequireDefault(require("./MessageBlock"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -24,15 +22,20 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var Logger = /*#__PURE__*/function () {
-  function Logger(config) {
+  function Logger(_ref) {
+    var driver = _ref.driver,
+        colors = _ref.colors,
+        level = _ref.level;
+
     _classCallCheck(this, Logger);
 
     _defineProperty(this, "logLevel", _LogLevel.LEVEL_ERROR);
 
-    this.driver = config.driver;
+    this.driver = driver;
+    this.colors = colors;
 
-    if (config.level) {
-      this.logLevel = config.level;
+    if (level) {
+      this.logLevel = level;
     }
   }
 
@@ -47,6 +50,11 @@ var Logger = /*#__PURE__*/function () {
       return this.driver;
     }
   }, {
+    key: "getColors",
+    value: function getColors() {
+      return this.colors;
+    }
+  }, {
     key: "shouldLog",
     value: function shouldLog(msgLevel) {
       return this.logLevel <= msgLevel; // @todo: bit operations
@@ -55,7 +63,7 @@ var Logger = /*#__PURE__*/function () {
     key: "log",
     value: function log(msgText, prefix) {
       var offset = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
-      this.driver.log(Logger.buildMessage(msgText, prefix, offset));
+      this.driver.log(this.buildMessage(msgText, prefix, offset));
     }
   }, {
     key: "info",
@@ -66,7 +74,7 @@ var Logger = /*#__PURE__*/function () {
         return;
       }
 
-      var msg = Logger.buildMessage(msgText, prefix, offset);
+      var msg = this.buildMessage(msgText, prefix, offset);
       this.driver.info(msg);
     }
   }, {
@@ -78,7 +86,7 @@ var Logger = /*#__PURE__*/function () {
         return;
       }
 
-      this.driver.debug(Logger.buildMessage(msgText, prefix, offset));
+      this.driver.debug(this.buildMessage(msgText, prefix, offset));
     }
   }, {
     key: "error",
@@ -89,7 +97,7 @@ var Logger = /*#__PURE__*/function () {
         return;
       }
 
-      this.driver.error(Logger.buildMessage(msgText, prefix, offset));
+      this.driver.error(this.buildMessage(msgText, prefix, offset));
     }
   }, {
     key: "trace",
@@ -100,26 +108,27 @@ var Logger = /*#__PURE__*/function () {
         return;
       }
 
-      this.driver.trace(Logger.buildMessage(msgText, prefix, offset));
+      this.driver.trace(this.buildMessage(msgText, prefix, offset));
     }
   }, {
     key: "panel",
     value: function panel(panelText) {
-      var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
-          _ref$bgColor = _ref.bgColor,
-          bgColor = _ref$bgColor === void 0 ? _Color.default.white : _ref$bgColor,
-          _ref$color = _ref.color,
-          color = _ref$color === void 0 ? _Color.default.gray : _ref$color,
-          _ref$offset = _ref.offset,
-          offset = _ref$offset === void 0 ? 0 : _ref$offset;
+      var _ref2 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+          bgColor = _ref2.bgColor,
+          color = _ref2.color,
+          offset = _ref2.offset;
 
       var baseText = arguments.length > 2 ? arguments[2] : undefined;
 
-      var msg = _Message.default.instance().pushBlock(_MessageBlock.default.instance(panelText).background(bgColor).color(color).offsetLeft(offset).borderRadius(3).padding(2, 4), baseText ? _MessageBlock.default.instance(baseText).offsetLeft(1) : null);
+      var msg = _Message.default.instance(undefined, this.colors).pushBlock(_MessageBlock.default.instance(panelText, {
+        colors: this.colors
+      }).background(bgColor || 'white').color(color || 'gray').offsetLeft(offset || 0).borderRadius(3).padding(2, 4), baseText ? _MessageBlock.default.instance(baseText, {
+        colors: this.colors
+      }).offsetLeft(1) : null);
 
       this.driver.log(msg);
     }
-  }], [{
+  }, {
     key: "buildMessage",
     value: function buildMessage(msgText, prefix) {
       var offset = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
@@ -128,10 +137,12 @@ var Logger = /*#__PURE__*/function () {
         return msgText;
       }
 
-      var msg = new _Message.default();
+      var msg = new _Message.default(undefined, this.colors);
 
       if (prefix) {
-        var block = _MessageBlock.default.instance(prefix).offsetRight(1);
+        var block = _MessageBlock.default.instance(prefix, {
+          colors: this.colors
+        }).offsetRight(1);
 
         if (offset) {
           block.offsetLeft(offset);
@@ -140,7 +151,9 @@ var Logger = /*#__PURE__*/function () {
         msg.pushBlock(block);
       }
 
-      msg.pushBlock(_MessageBlock.default.instance(msgText));
+      msg.pushBlock(_MessageBlock.default.instance(msgText, {
+        colors: this.colors
+      }));
       return msg;
     }
   }]);
