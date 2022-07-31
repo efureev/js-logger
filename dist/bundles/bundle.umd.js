@@ -691,7 +691,7 @@
   }();
 
   var BrowserLogger = function BrowserLogger() {
-    var level = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : LEVEL_ERROR;
+    var level = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : LOG_ALL;
     return new Logger({
       driver: new ConsoleDriver(),
       colors: new ColorCollection(colors),
@@ -701,8 +701,17 @@
 
   exports.BrowserLogger = BrowserLogger;
   exports.ConsoleDriver = ConsoleDriver;
+  exports.DEBUG = DEBUG;
+  exports.ERROR = ERROR;
+  exports.INFO = INFO;
+  exports.LEVEL_DEBUG = LEVEL_DEBUG;
+  exports.LEVEL_ERROR = LEVEL_ERROR;
+  exports.LEVEL_INFO = LEVEL_INFO;
+  exports.LEVEL_TRACE = LEVEL_TRACE;
+  exports.LOG_ALL = LOG_ALL;
   exports.Message = Message;
   exports.MessageBlock = MessageBlock;
+  exports.TRACE = TRACE;
   exports.colors = colors;
   exports["default"] = Logger;
 

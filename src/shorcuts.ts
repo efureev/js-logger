@@ -9,7 +9,7 @@ const BrowserLogger = (level: LevelType = LOG_ALL) =>
   new Logger({
     driver: new ConsoleDriver(),
     colors: new ColorCollection(colors),
-    level: level
+    level: level,
   })
 
 export { BrowserLogger }

@@ -18,7 +18,7 @@ var _Color = _interopRequireDefault(require("./Color"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var BrowserLogger = function BrowserLogger() {
-  var level = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _LogLevel.LEVEL_ERROR;
+  var level = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _LogLevel.LOG_ALL;
   return new _Logger.default({
     driver: new _drivers.ConsoleDriver(),
     colors: new _ColorCollection.default(_Color.default),

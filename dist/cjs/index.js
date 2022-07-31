@@ -64,6 +64,20 @@ Object.keys(_shorcuts).forEach(function (key) {
   });
 });
 
+var _LogLevel = require("./LogLevel");
+
+Object.keys(_LogLevel).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  if (Object.prototype.hasOwnProperty.call(_exportNames, key)) return;
+  if (key in exports && exports[key] === _LogLevel[key]) return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _LogLevel[key];
+    }
+  });
+});
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var _default = _Logger.default;

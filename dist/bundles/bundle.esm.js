@@ -685,7 +685,7 @@ var ColorCollection = /*#__PURE__*/function () {
 }();
 
 var BrowserLogger = function BrowserLogger() {
-  var level = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : LEVEL_ERROR;
+  var level = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : LOG_ALL;
   return new Logger({
     driver: new ConsoleDriver(),
     colors: new ColorCollection(colors),
@@ -693,5 +693,5 @@ var BrowserLogger = function BrowserLogger() {
   });
 };
 
-export { BrowserLogger, ConsoleDriver, Message, MessageBlock, colors, Logger as default };
+export { BrowserLogger, ConsoleDriver, DEBUG, ERROR, INFO, LEVEL_DEBUG, LEVEL_ERROR, LEVEL_INFO, LEVEL_TRACE, LOG_ALL, Message, MessageBlock, TRACE, colors, Logger as default };
 //# sourceMappingURL=bundle.esm.js.map
