@@ -1,4 +1,5 @@
 export declare type LevelType = number;
+export declare type StringLevelType = LevelType | string;
 export declare const ERROR: LevelType;
 export declare const INFO: LevelType;
 export declare const DEBUG: LevelType;

@@ -86,6 +86,11 @@ class Logger {
 
     this.driver.trace(this.buildMessage(msgText, prefix, offset));
   }
+  /**
+   * @deprecated
+   * @use panels
+   */
+
 
   panel(panelText, {
     bgColor,

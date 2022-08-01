@@ -11,17 +11,19 @@ interface MessageBlockOptions {
 export interface MessageBlockConfig {
     text: string;
     bgColor?: ColorValue | string;
-    color?: ColorValue | string;
-    offset?: number;
+    bold?: boolean;
     borderRadius?: number;
+    color?: ColorValue | string;
+    fontSize?: number;
+    italic?: boolean;
+    offset?: number;
     padding?: number | [number, number];
 }
 declare class MessageBlock {
-    private _text;
+    private _text?;
     private readonly colors?;
     private style;
     constructor(text: string | MessageBlockConfig, { colors }?: MessageBlockOptions);
-    fillFromConfig(config: MessageBlockConfig): void;
     push(key: string, value?: string, check?: boolean): this;
     has(key: string): boolean;
     color(value?: string, check?: boolean): this;
@@ -45,6 +47,7 @@ declare class MessageBlock {
     image(url: string, width?: number, height?: number): this;
     text(value: string): this;
     getText(): string;
+    fillFromConfig(config: MessageBlockConfig): void;
     getStyle(): MessageBlockStyle;
     hasStyle(): boolean;
     clearStyle(): this;

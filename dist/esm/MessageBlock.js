@@ -19,20 +19,6 @@ class MessageBlock {
     }
   }
 
-  fillFromConfig(config) {
-    this.text(config.text).background(config.bgColor).color(config.color);
-    config.offset && this.offsetLeft(config.offset);
-    config.borderRadius && this.borderRadius(config.borderRadius);
-
-    if (config.padding) {
-      if (Array.isArray(config.padding)) {
-        this.padding(config.padding[0], config.padding[1]);
-      } else {
-        this.padding(config.padding);
-      }
-    }
-  }
-
   push(key, value, check = false) {
     if (value !== undefined && (!check || !this.has('color'))) {
       this.style[key] = value;
@@ -147,7 +133,24 @@ class MessageBlock {
   }
 
   getText() {
-    return this._text;
+    return this._text || '';
+  }
+
+  fillFromConfig(config) {
+    this.text(config.text).background(config.bgColor).color(config.color);
+    config.offset && this.offsetLeft(config.offset);
+    config.borderRadius && this.borderRadius(config.borderRadius);
+    config.bold && this.bold();
+    config.italic && this.italic();
+    config.fontSize && this.size(config.fontSize);
+
+    if (config.padding) {
+      if (Array.isArray(config.padding)) {
+        this.padding(config.padding[0], config.padding[1]);
+      } else {
+        this.padding(config.padding);
+      }
+    }
   }
 
   getStyle() {

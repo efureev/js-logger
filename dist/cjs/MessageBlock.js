@@ -38,21 +38,6 @@ var MessageBlock = /*#__PURE__*/function () {
   }
 
   _createClass(MessageBlock, [{
-    key: "fillFromConfig",
-    value: function fillFromConfig(config) {
-      this.text(config.text).background(config.bgColor).color(config.color);
-      config.offset && this.offsetLeft(config.offset);
-      config.borderRadius && this.borderRadius(config.borderRadius);
-
-      if (config.padding) {
-        if (Array.isArray(config.padding)) {
-          this.padding(config.padding[0], config.padding[1]);
-        } else {
-          this.padding(config.padding);
-        }
-      }
-    }
-  }, {
     key: "push",
     value: function push(key, value) {
       var check = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
@@ -212,7 +197,25 @@ var MessageBlock = /*#__PURE__*/function () {
   }, {
     key: "getText",
     value: function getText() {
-      return this._text;
+      return this._text || '';
+    }
+  }, {
+    key: "fillFromConfig",
+    value: function fillFromConfig(config) {
+      this.text(config.text).background(config.bgColor).color(config.color);
+      config.offset && this.offsetLeft(config.offset);
+      config.borderRadius && this.borderRadius(config.borderRadius);
+      config.bold && this.bold();
+      config.italic && this.italic();
+      config.fontSize && this.size(config.fontSize);
+
+      if (config.padding) {
+        if (Array.isArray(config.padding)) {
+          this.padding(config.padding[0], config.padding[1]);
+        } else {
+          this.padding(config.padding);
+        }
+      }
     }
   }, {
     key: "getStyle",

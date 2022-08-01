@@ -128,6 +128,11 @@ var Logger = /*#__PURE__*/function () {
 
       this.driver.trace(this.buildMessage(msgText, prefix, offset));
     }
+    /**
+     * @deprecated
+     * @use panels
+     */
+
   }, {
     key: "panel",
     value: function panel(panelText) {
