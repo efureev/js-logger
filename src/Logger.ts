@@ -57,8 +57,12 @@ class Logger {
     return this.colors
   }
 
-  private shouldLog(msgLevel: number): boolean {
-    return (this.logLevel & msgLevel) !== 0
+  private shouldLog(level: LevelType | string): boolean {
+    if (typeof level === 'string') {
+      level = stringToLevel(level)
+    }
+
+    return (this.logLevel & level) !== 0
   }
 
   log(msgText: string | Message | MessageBlock, prefix?: string, offset = 0): void {
@@ -102,8 +106,13 @@ class Logger {
   panel(
     panelText: string | MessageBlock,
     { bgColor, color, offset }: PanelOptions = {},
-    baseText?: string | MessageBlock
+    baseText?: string | MessageBlock,
+    logLevel?: LevelType | string
   ) {
+    if (logLevel && !this.shouldLog(logLevel)) {
+      return
+    }
+
     const msg = Message.instance(undefined, this.colors).pushBlock(
       MessageBlock.instance(panelText, { colors: this.colors })
         .background(bgColor || 'white')

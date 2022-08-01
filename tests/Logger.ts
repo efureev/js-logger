@@ -311,3 +311,37 @@ describe('Logger with string log levels', () => {
     assert.equal(logger.logLevel, TRACE | ERROR)
   })
 })
+
+describe('Log Panel', () => {
+  it('Log', () => {
+    const driver = new ConsoleBufferDriver()
+    const colorCollection = new ColorCollection(colors)
+    const logger = new Logger({ driver, colors: colorCollection })
+
+    logger.panel('title', { bgColor: colors.teal, offset: 12 }, 'text')
+    assert.equal(driver.buffer.length, 3)
+    assert.equal(driver.buffer[0], '%ctitle%ctext')
+  })
+
+  it('Log 2', () => {
+    const driver = new ConsoleBufferDriver()
+    const colorCollection = new ColorCollection(colors)
+    const logger = new Logger({ driver, colors: colorCollection, level: ERROR })
+
+    logger.panel('title', { bgColor: colors.teal, offset: 12 }, 'text')
+    assert.equal(driver.buffer.length, 3)
+    assert.equal(driver.buffer[0], '%ctitle%ctext')
+
+    driver.clearBuffer()
+    logger.panel('title', { bgColor: colors.teal, offset: 12 }, 'text', 'info')
+    assert.equal(driver.buffer.length, 0)
+
+    driver.clearBuffer()
+    logger.panel('title', { bgColor: colors.teal, offset: 12 }, 'text', 'error')
+    assert.equal(driver.buffer.length, 3)
+
+    driver.clearBuffer()
+    logger.panel('title', { bgColor: colors.teal, offset: 12 }, 'text', ERROR)
+    assert.equal(driver.buffer.length, 3)
+  })
+})
