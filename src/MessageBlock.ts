@@ -21,11 +21,11 @@ export interface MessageBlockConfig {
   color?: ColorValue | string
   fontSize?: number
   italic?: boolean
-  lineHeight?: number,
-  offsetLeft?: number,
-  offsetRight?: number,
-  marginTop?: number,
-  marginBottom?: number,
+  lineHeight?: number
+  offsetLeft?: number
+  offsetRight?: number
+  marginTop?: number
+  marginBottom?: number
   padding?: number | [number, number]
 }
 
@@ -198,7 +198,7 @@ class MessageBlock {
   toJSON(): string {
     return JSON.stringify({
       _text: this._text,
-      style: this.style
+      style: this.style,
     })
   }
 

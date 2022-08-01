@@ -16,7 +16,11 @@ export interface MessageBlockConfig {
     color?: ColorValue | string;
     fontSize?: number;
     italic?: boolean;
-    offset?: number;
+    lineHeight?: number;
+    offsetLeft?: number;
+    offsetRight?: number;
+    marginTop?: number;
+    marginBottom?: number;
     padding?: number | [number, number];
 }
 declare class MessageBlock {
