@@ -70,8 +70,12 @@ var Logger = /*#__PURE__*/function () {
     }
   }, {
     key: "shouldLog",
-    value: function shouldLog(msgLevel) {
-      return (this.logLevel & msgLevel) !== 0;
+    value: function shouldLog(level) {
+      if (typeof level === 'string') {
+        level = (0, _LogLevel.stringToLevel)(level);
+      }
+
+      return (this.logLevel & level) !== 0;
     }
   }, {
     key: "log",
@@ -133,6 +137,11 @@ var Logger = /*#__PURE__*/function () {
           offset = _ref2.offset;
 
       var baseText = arguments.length > 2 ? arguments[2] : undefined;
+      var logLevel = arguments.length > 3 ? arguments[3] : undefined;
+
+      if (logLevel && !this.shouldLog(logLevel)) {
+        return;
+      }
 
       var msg = _Message.default.instance(undefined, this.colors).pushBlock(_MessageBlock.default.instance(panelText, {
         colors: this.colors

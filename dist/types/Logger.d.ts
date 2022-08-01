@@ -30,7 +30,7 @@ declare class Logger {
     debug(msgText: string | Message | MessageBlock, prefix?: string, offset?: number): void;
     error(msgText: string | Message | MessageBlock, prefix?: string, offset?: number): void;
     trace(msgText: string | Message | MessageBlock, prefix?: string, offset?: number): void;
-    panel(panelText: string | MessageBlock, { bgColor, color, offset }?: PanelOptions, baseText?: string | MessageBlock): void;
+    panel(panelText: string | MessageBlock, { bgColor, color, offset }?: PanelOptions, baseText?: string | MessageBlock, logLevel?: LevelType | string): void;
     private buildMessage;
 }
 export default Logger;
