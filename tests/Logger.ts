@@ -355,7 +355,7 @@ describe('Log Panels', () => {
     logger.panels('info',
       { text: 'panel 1', bgColor: 'teal', color: 'yellow', borderRadius: 5 },
       { text: 'panel 2', color: 'white' },
-      { text: 'panel 3', color: 'red', offset: 2, padding: 1 }
+      { text: 'panel 3', color: 'red', offsetLeft: 2, padding: 1 }
     )
 
     assert.equal(driver.buffer.length, 4)

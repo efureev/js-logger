@@ -239,4 +239,17 @@ logger.panels(
   { text: 'panel 2', color: 'white' },
   { text: 'panel 3', color: 'red', offset: 2, padding: 1 }
 )
+
+logger.panels(
+  'trace',
+  {
+    text: 'App',
+    bgColor: 'grayLight',
+    color: 'gray',
+    offsetLeft: 2,
+    borderRadius: 3,
+    padding: [2, 4],
+  },
+  'description'
+)
 ```

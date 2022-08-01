@@ -21,7 +21,11 @@ export interface MessageBlockConfig {
   color?: ColorValue | string
   fontSize?: number
   italic?: boolean
-  offset?: number
+  lineHeight?: number,
+  offsetLeft?: number,
+  offsetRight?: number,
+  marginTop?: number,
+  marginBottom?: number,
   padding?: number | [number, number]
 }
 
@@ -158,11 +162,15 @@ class MessageBlock {
   fillFromConfig(config: MessageBlockConfig) {
     this.text(config.text).background(config.bgColor).color(config.color)
 
-    config.offset && this.offsetLeft(config.offset)
+    config.offsetLeft && this.offsetLeft(config.offsetLeft)
+    config.offsetRight && this.offsetRight(config.offsetRight)
     config.borderRadius && this.borderRadius(config.borderRadius)
     config.bold && this.bold()
     config.italic && this.italic()
     config.fontSize && this.size(config.fontSize)
+    config.lineHeight && this.lineHeight(config.lineHeight)
+    config.marginBottom && this.marginBottom(config.marginBottom)
+    config.marginTop && this.marginTop(config.marginTop)
 
     if (config.padding) {
       if (Array.isArray(config.padding)) {
@@ -190,7 +198,7 @@ class MessageBlock {
   toJSON(): string {
     return JSON.stringify({
       _text: this._text,
-      style: this.style,
+      style: this.style
     })
   }
 
