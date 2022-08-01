@@ -418,9 +418,19 @@ var Logger = /*#__PURE__*/function () {
   }
 
   _createClass(Logger, [{
-    key: "setLevel",
-    value: function setLevel(level) {
+    key: "setLogLevel",
+    value: function setLogLevel(level) {
       this.logLevel = level;
+    }
+  }, {
+    key: "addLogLevel",
+    value: function addLogLevel(level) {
+      this.logLevel |= level;
+    }
+  }, {
+    key: "excludeLogLevel",
+    value: function excludeLogLevel(level) {
+      this.logLevel ^= level;
     }
   }, {
     key: "getDriver",
@@ -591,6 +601,8 @@ var colors = {
 var ConsoleDriver = /*#__PURE__*/function () {
   function ConsoleDriver() {
     _classCallCheck(this, ConsoleDriver);
+
+    _defineProperty(this, "output", console);
   }
 
   _createClass(ConsoleDriver, [{
@@ -621,12 +633,11 @@ var ConsoleDriver = /*#__PURE__*/function () {
   }, {
     key: "perform",
     value: function perform(msg, type) {
-      var _console;
+      var _this$output;
 
       var lines = ConsoleDriver.buildStrings(ConsoleDriver.formatMessage(msg)); // @ts-ignore
 
-      (_console = console)[type].apply(_console, _toConsumableArray(lines)); // console[msg.type ?? type](res[0], ...res[1])
-
+      (_this$output = this.output)[type].apply(_this$output, _toConsumableArray(lines));
     }
   }], [{
     key: "buildStrings",

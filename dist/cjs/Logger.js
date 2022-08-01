@@ -44,9 +44,19 @@ var Logger = /*#__PURE__*/function () {
   }
 
   _createClass(Logger, [{
-    key: "setLevel",
-    value: function setLevel(level) {
+    key: "setLogLevel",
+    value: function setLogLevel(level) {
       this.logLevel = level;
+    }
+  }, {
+    key: "addLogLevel",
+    value: function addLogLevel(level) {
+      this.logLevel |= level;
+    }
+  }, {
+    key: "excludeLogLevel",
+    value: function excludeLogLevel(level) {
+      this.logLevel ^= level;
     }
   }, {
     key: "getDriver",

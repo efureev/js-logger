@@ -19,7 +19,9 @@ declare class Logger {
     private readonly colors;
     private logLevel;
     constructor({ driver, colors, level }: LoggerConfig);
-    setLevel(level: LevelType): void;
+    setLogLevel(level: LevelType): void;
+    addLogLevel(level: LevelType): void;
+    excludeLogLevel(level: LevelType): void;
     getDriver(): LoggerDriver;
     getColors(): ColorCollection;
     private shouldLog;

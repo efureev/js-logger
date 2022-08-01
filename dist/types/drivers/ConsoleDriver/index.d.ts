@@ -6,6 +6,7 @@ export interface FormatConsole {
     fmtArgs: Array<string>;
 }
 declare class ConsoleDriver implements LoggerDriver {
+    private output;
     debug(msg: Message): void;
     info(msg: Message): void;
     log(msg: Message): void;

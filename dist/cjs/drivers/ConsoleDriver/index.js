@@ -23,9 +23,13 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var ConsoleDriver = /*#__PURE__*/function () {
   function ConsoleDriver() {
     _classCallCheck(this, ConsoleDriver);
+
+    _defineProperty(this, "output", console);
   }
 
   _createClass(ConsoleDriver, [{
@@ -56,12 +60,11 @@ var ConsoleDriver = /*#__PURE__*/function () {
   }, {
     key: "perform",
     value: function perform(msg, type) {
-      var _console;
+      var _this$output;
 
       var lines = ConsoleDriver.buildStrings(ConsoleDriver.formatMessage(msg)); // @ts-ignore
 
-      (_console = console)[type].apply(_console, _toConsumableArray(lines)); // console[msg.type ?? type](res[0], ...res[1])
-
+      (_this$output = this.output)[type].apply(_this$output, _toConsumableArray(lines));
     }
   }], [{
     key: "buildStrings",

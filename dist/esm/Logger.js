@@ -22,8 +22,16 @@ class Logger {
     }
   }
 
-  setLevel(level) {
+  setLogLevel(level) {
     this.logLevel = level;
+  }
+
+  addLogLevel(level) {
+    this.logLevel |= level;
+  }
+
+  excludeLogLevel(level) {
+    this.logLevel ^= level;
   }
 
   getDriver() {

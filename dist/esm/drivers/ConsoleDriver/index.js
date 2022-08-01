@@ -1,4 +1,6 @@
 class ConsoleDriver {
+  output = console;
+
   debug(msg) {
     this.perform(msg, 'debug');
   }
@@ -22,7 +24,7 @@ class ConsoleDriver {
   perform(msg, type) {
     const lines = ConsoleDriver.buildStrings(ConsoleDriver.formatMessage(msg)); // @ts-ignore
 
-    console[type](...lines); // console[msg.type ?? type](res[0], ...res[1])
+    this.output[type](...lines);
   }
 
   static buildStrings(fmt) {
