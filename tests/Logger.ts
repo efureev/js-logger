@@ -1,5 +1,5 @@
 import assert from 'assert'
-import Logger, { BrowserLogger, LEVEL_INFO, LEVEL_INFO_STR, LEVEL_TRACE } from '../src'
+import Logger, { BrowserLogger, ERROR, LEVEL_INFO, LEVEL_INFO_STR, LEVEL_TRACE } from '../src'
 import Message from '../src/Message'
 import MessageBlock from '../src/MessageBlock'
 import ConsoleBufferDriver from '../src/drivers/ConsoleBufferDriver'
@@ -187,7 +187,7 @@ describe('Logger levels', () => {
 
   describe('level Errors', () => {
     it('Errors should log', () => {
-      logger.setLevel(LEVEL_ERROR)
+      logger.setLogLevel(LEVEL_ERROR)
       driver.clearBuffer()
       logger.error('test message')
       assert.equal(driver.buffer.length, 2)
@@ -195,21 +195,21 @@ describe('Logger levels', () => {
     })
 
     it('Info should not log', () => {
-      logger.setLevel(LEVEL_ERROR)
+      logger.setLogLevel(LEVEL_ERROR)
       driver.clearBuffer()
       logger.info('test message')
       assert.equal(driver.buffer.length, 0)
     })
 
     it('debug should not log', () => {
-      logger.setLevel(LEVEL_ERROR)
+      logger.setLogLevel(LEVEL_ERROR)
       driver.clearBuffer()
       logger.debug('test message')
       assert.equal(driver.buffer.length, 0)
     })
 
     it('trace should not log', () => {
-      logger.setLevel(LEVEL_ERROR)
+      logger.setLogLevel(LEVEL_ERROR)
       driver.clearBuffer()
       logger.trace('test message')
       assert.equal(driver.buffer.length, 0)
@@ -219,14 +219,14 @@ describe('Logger levels', () => {
 
   describe('level info && trace', () => {
     it('Errors should not log', () => {
-      logger.setLevel(INFO | TRACE)
+      logger.setLogLevel(INFO | TRACE)
       driver.clearBuffer()
       logger.error('test message')
       assert.equal(driver.buffer.length, 0)
     })
 
     it('Info should not log', () => {
-      logger.setLevel(INFO | TRACE)
+      logger.setLogLevel(INFO | TRACE)
       driver.clearBuffer()
       logger.info('test message')
       assert.equal(driver.buffer.length, 2)
@@ -234,14 +234,14 @@ describe('Logger levels', () => {
     })
 
     it('debug should not log', () => {
-      logger.setLevel(INFO | TRACE)
+      logger.setLogLevel(INFO | TRACE)
       driver.clearBuffer()
       logger.debug('test message')
       assert.equal(driver.buffer.length, 0)
     })
 
     it('trace should log', () => {
-      logger.setLevel(INFO | TRACE)
+      logger.setLogLevel(INFO | TRACE)
       driver.clearBuffer()
       logger.trace('test message')
       assert.equal(driver.buffer.length, 2)
@@ -251,7 +251,7 @@ describe('Logger levels', () => {
 
     describe('level LEVEL_DEBUG', () => {
       it('Errors should log', () => {
-        logger.setLevel(LEVEL_DEBUG)
+        logger.setLogLevel(LEVEL_DEBUG)
         driver.clearBuffer()
         logger.error('test message')
         assert.equal(driver.buffer.length, 2)
@@ -259,7 +259,7 @@ describe('Logger levels', () => {
       })
 
       it('Info should log', () => {
-        logger.setLevel(LEVEL_DEBUG)
+        logger.setLogLevel(LEVEL_DEBUG)
         driver.clearBuffer()
         logger.info('test message')
         assert.equal(driver.buffer.length, 2)
@@ -267,7 +267,7 @@ describe('Logger levels', () => {
       })
 
       it('debug should not log', () => {
-        logger.setLevel(LEVEL_DEBUG)
+        logger.setLogLevel(LEVEL_DEBUG)
         driver.clearBuffer()
         logger.debug('test message')
         assert.equal(driver.buffer.length, 2)
@@ -275,7 +275,7 @@ describe('Logger levels', () => {
       })
 
       it('trace should not log', () => {
-        logger.setLevel(LEVEL_DEBUG)
+        logger.setLogLevel(LEVEL_DEBUG)
         driver.clearBuffer()
         logger.trace('test message')
         assert.equal(driver.buffer.length, 0)
@@ -299,5 +299,15 @@ describe('Logger with string log levels', () => {
   it('Log3', () => {
     const logger = BrowserLogger(LEVEL_INFO_STR)
     assert.equal(logger.logLevel, LEVEL_INFO)
+
+    logger.excludeLogLevel(INFO)
+    assert.equal(logger.logLevel, ERROR)
+
+    logger.addLogLevel(INFO)
+    assert.equal(logger.logLevel, LEVEL_INFO)
+
+    logger.excludeLogLevel(INFO)
+    logger.addLogLevel(TRACE)
+    assert.equal(logger.logLevel, TRACE | ERROR)
   })
 })

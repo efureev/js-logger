@@ -37,8 +37,16 @@ class Logger {
     }
   }
 
-  setLevel(level: LevelType): void {
+  setLogLevel(level: LevelType): void {
     this.logLevel = level
+  }
+
+  addLogLevel(level: LevelType): void {
+    this.logLevel |= level
+  }
+
+  excludeLogLevel(level: LevelType): void {
+    this.logLevel ^= level
   }
 
   public getDriver(): LoggerDriver {

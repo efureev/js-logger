@@ -8,6 +8,8 @@ export interface FormatConsole {
 }
 
 class ConsoleDriver implements LoggerDriver {
+  private output = console
+
   debug(msg: Message): void {
     this.perform(msg, 'debug')
   }
@@ -32,8 +34,7 @@ class ConsoleDriver implements LoggerDriver {
     const lines = ConsoleDriver.buildStrings(ConsoleDriver.formatMessage(msg))
 
     // @ts-ignore
-    console[type](...lines)
-    // console[msg.type ?? type](res[0], ...res[1])
+    this.output[type](...lines)
   }
 
   protected static buildStrings(fmt: FormatConsole): Array<string> {
