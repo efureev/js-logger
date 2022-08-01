@@ -1,5 +1,5 @@
 import assert from 'assert'
-import Logger from '../src'
+import Logger, { BrowserLogger, LEVEL_INFO, LEVEL_INFO_STR, LEVEL_TRACE } from '../src'
 import Message from '../src/Message'
 import MessageBlock from '../src/MessageBlock'
 import ConsoleBufferDriver from '../src/drivers/ConsoleBufferDriver'
@@ -281,5 +281,23 @@ describe('Logger levels', () => {
         assert.equal(driver.buffer.length, 0)
       })
     })
+  })
+})
+
+
+describe('Logger with string log levels', () => {
+  it('Log', () => {
+    const logger = BrowserLogger()
+    assert.equal(logger.logLevel, LEVEL_TRACE)
+  })
+
+  it('Log2', () => {
+    const logger = BrowserLogger('trace')
+    assert.equal(logger.logLevel, TRACE)
+  })
+
+  it('Log3', () => {
+    const logger = BrowserLogger(LEVEL_INFO_STR)
+    assert.equal(logger.logLevel, LEVEL_INFO)
   })
 })

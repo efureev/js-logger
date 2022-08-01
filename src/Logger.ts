@@ -1,6 +1,6 @@
 import { LoggerDriver } from './drivers/LoggerDriver'
 import type { LevelType } from './LogLevel'
-import { DEBUG, ERROR, INFO, LOG_ALL, TRACE } from './LogLevel'
+import { DEBUG, ERROR, INFO, LOG_ALL, stringToLevel, TRACE } from './LogLevel'
 import Message from './Message'
 import MessageBlock from './MessageBlock'
 import { ColorValue } from './Color'
@@ -9,7 +9,7 @@ import ColorCollection from './ColorCollection'
 export interface LoggerConfig {
   driver: LoggerDriver
   colors: ColorCollection
-  level?: LevelType
+  level?: LevelType | string
 }
 
 interface PanelOptions {
@@ -29,7 +29,11 @@ class Logger {
     this.colors = colors
 
     if (level) {
-      this.logLevel = level
+      if (typeof level === 'string') {
+        this.logLevel = stringToLevel(level)
+      } else {
+        this.logLevel = level
+      }
     }
   }
 

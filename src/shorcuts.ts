@@ -5,7 +5,7 @@ import { ConsoleDriver } from './drivers'
 import ColorCollection from './ColorCollection'
 import colors from './Color'
 
-const BrowserLogger = (level: LevelType = LOG_ALL) =>
+const BrowserLogger = (level: LevelType | string = LOG_ALL) =>
   new Logger({
     driver: new ConsoleDriver(),
     colors: new ColorCollection(colors),
