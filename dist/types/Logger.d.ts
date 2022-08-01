@@ -7,7 +7,7 @@ import ColorCollection from './ColorCollection';
 export interface LoggerConfig {
     driver: LoggerDriver;
     colors: ColorCollection;
-    level?: LevelType;
+    level?: LevelType | string;
 }
 interface PanelOptions {
     bgColor?: ColorValue;

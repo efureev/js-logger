@@ -90,6 +90,35 @@
   var LEVEL_DEBUG = LEVEL_INFO | DEBUG;
   var LEVEL_TRACE = LEVEL_DEBUG | TRACE;
   var LOG_ALL = LEVEL_TRACE;
+  var ERROR_STR = 'error';
+  var INFO_STR = 'info';
+  var DEBUG_STR = 'debug';
+  var TRACE_STR = 'trace';
+  var LEVEL_INFO_STR = 'levelInfo';
+  var LEVEL_DEBUG_STR = 'levelDebug';
+  function stringToLevel(value) {
+    switch (value) {
+      case ERROR_STR:
+        return ERROR;
+
+      case INFO_STR:
+        return INFO;
+
+      case DEBUG_STR:
+        return DEBUG;
+
+      case TRACE_STR:
+        return TRACE;
+
+      case LEVEL_INFO_STR:
+        return LEVEL_INFO;
+
+      case LEVEL_DEBUG_STR:
+        return LEVEL_DEBUG;
+    }
+
+    return LOG_ALL;
+  }
 
   // export const isString = (str: any) => typeof str !== 'string'
   var isEmptyObject = function isEmptyObject(object) {
@@ -386,7 +415,11 @@
       this.colors = colors;
 
       if (level) {
-        this.logLevel = level;
+        if (typeof level === 'string') {
+          this.logLevel = stringToLevel(level);
+        } else {
+          this.logLevel = level;
+        }
       }
     }
 
@@ -702,18 +735,25 @@
   exports.BrowserLogger = BrowserLogger;
   exports.ConsoleDriver = ConsoleDriver;
   exports.DEBUG = DEBUG;
+  exports.DEBUG_STR = DEBUG_STR;
   exports.ERROR = ERROR;
+  exports.ERROR_STR = ERROR_STR;
   exports.INFO = INFO;
+  exports.INFO_STR = INFO_STR;
   exports.LEVEL_DEBUG = LEVEL_DEBUG;
+  exports.LEVEL_DEBUG_STR = LEVEL_DEBUG_STR;
   exports.LEVEL_ERROR = LEVEL_ERROR;
   exports.LEVEL_INFO = LEVEL_INFO;
+  exports.LEVEL_INFO_STR = LEVEL_INFO_STR;
   exports.LEVEL_TRACE = LEVEL_TRACE;
   exports.LOG_ALL = LOG_ALL;
   exports.Message = Message;
   exports.MessageBlock = MessageBlock;
   exports.TRACE = TRACE;
+  exports.TRACE_STR = TRACE_STR;
   exports.colors = colors;
   exports["default"] = Logger;
+  exports.stringToLevel = stringToLevel;
 
   Object.defineProperty(exports, '__esModule', { value: true });
 

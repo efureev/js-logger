@@ -1,4 +1,4 @@
-import { DEBUG, ERROR, INFO, LOG_ALL, TRACE } from './LogLevel';
+import { DEBUG, ERROR, INFO, LOG_ALL, stringToLevel, TRACE } from './LogLevel';
 import Message from './Message';
 import MessageBlock from './MessageBlock';
 
@@ -14,7 +14,11 @@ class Logger {
     this.colors = colors;
 
     if (level) {
-      this.logLevel = level;
+      if (typeof level === 'string') {
+        this.logLevel = stringToLevel(level);
+      } else {
+        this.logLevel = level;
+      }
     }
   }
 

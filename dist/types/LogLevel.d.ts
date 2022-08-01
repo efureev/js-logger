@@ -8,6 +8,13 @@ export declare const LEVEL_INFO: LevelType;
 export declare const LEVEL_DEBUG: LevelType;
 export declare const LEVEL_TRACE: LevelType;
 export declare const LOG_ALL: LevelType;
+export declare const ERROR_STR = "error";
+export declare const INFO_STR = "info";
+export declare const DEBUG_STR = "debug";
+export declare const TRACE_STR = "trace";
+export declare const LEVEL_INFO_STR = "levelInfo";
+export declare const LEVEL_DEBUG_STR = "levelDebug";
+export declare function stringToLevel(value: string): LevelType;
 declare const _default: {
     ERROR: number;
     INFO: number;

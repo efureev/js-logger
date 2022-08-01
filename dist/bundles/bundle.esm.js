@@ -84,6 +84,35 @@ var LEVEL_INFO = LEVEL_ERROR | INFO;
 var LEVEL_DEBUG = LEVEL_INFO | DEBUG;
 var LEVEL_TRACE = LEVEL_DEBUG | TRACE;
 var LOG_ALL = LEVEL_TRACE;
+var ERROR_STR = 'error';
+var INFO_STR = 'info';
+var DEBUG_STR = 'debug';
+var TRACE_STR = 'trace';
+var LEVEL_INFO_STR = 'levelInfo';
+var LEVEL_DEBUG_STR = 'levelDebug';
+function stringToLevel(value) {
+  switch (value) {
+    case ERROR_STR:
+      return ERROR;
+
+    case INFO_STR:
+      return INFO;
+
+    case DEBUG_STR:
+      return DEBUG;
+
+    case TRACE_STR:
+      return TRACE;
+
+    case LEVEL_INFO_STR:
+      return LEVEL_INFO;
+
+    case LEVEL_DEBUG_STR:
+      return LEVEL_DEBUG;
+  }
+
+  return LOG_ALL;
+}
 
 // export const isString = (str: any) => typeof str !== 'string'
 var isEmptyObject = function isEmptyObject(object) {
@@ -380,7 +409,11 @@ var Logger = /*#__PURE__*/function () {
     this.colors = colors;
 
     if (level) {
-      this.logLevel = level;
+      if (typeof level === 'string') {
+        this.logLevel = stringToLevel(level);
+      } else {
+        this.logLevel = level;
+      }
     }
   }
 
@@ -693,5 +726,5 @@ var BrowserLogger = function BrowserLogger() {
   });
 };
 
-export { BrowserLogger, ConsoleDriver, DEBUG, ERROR, INFO, LEVEL_DEBUG, LEVEL_ERROR, LEVEL_INFO, LEVEL_TRACE, LOG_ALL, Message, MessageBlock, TRACE, colors, Logger as default };
+export { BrowserLogger, ConsoleDriver, DEBUG, DEBUG_STR, ERROR, ERROR_STR, INFO, INFO_STR, LEVEL_DEBUG, LEVEL_DEBUG_STR, LEVEL_ERROR, LEVEL_INFO, LEVEL_INFO_STR, LEVEL_TRACE, LOG_ALL, Message, MessageBlock, TRACE, TRACE_STR, colors, Logger as default, stringToLevel };
 //# sourceMappingURL=bundle.esm.js.map

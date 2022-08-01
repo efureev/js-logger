@@ -35,7 +35,11 @@ var Logger = /*#__PURE__*/function () {
     this.colors = colors;
 
     if (level) {
-      this.logLevel = level;
+      if (typeof level === 'string') {
+        this.logLevel = (0, _LogLevel.stringToLevel)(level);
+      } else {
+        this.logLevel = level;
+      }
     }
   }
 
