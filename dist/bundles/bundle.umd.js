@@ -134,7 +134,7 @@
 
   var MessageBlock = /*#__PURE__*/function () {
     function MessageBlock(text) {
-      var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+      var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : new Object(null),
           colors = _ref.colors;
 
       _classCallCheck(this, MessageBlock);
@@ -142,10 +142,34 @@
       _defineProperty(this, "style", new Object(null));
 
       this.colors = colors;
-      this._text = text;
+
+      if (text === undefined) {
+        throw Error('Invalid `text` argument for MessageBlock');
+      }
+
+      if (typeof text === 'string') {
+        this._text = text;
+      } else {
+        this.fillFromConfig(text);
+      }
     }
 
     _createClass(MessageBlock, [{
+      key: "fillFromConfig",
+      value: function fillFromConfig(config) {
+        this.text(config.text).background(config.bgColor).color(config.color);
+        config.offset && this.offsetLeft(config.offset);
+        config.borderRadius && this.borderRadius(config.borderRadius);
+
+        if (config.padding) {
+          if (Array.isArray(config.padding)) {
+            this.padding(config.padding[0], config.padding[1]);
+          } else {
+            this.padding(config.padding);
+          }
+        }
+      }
+    }, {
       key: "push",
       value: function push(key, value) {
         var check = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
@@ -334,7 +358,7 @@
     }], [{
       key: "instance",
       value: function instance(block) {
-        var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+        var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : new Object(null);
         return block instanceof MessageBlock ? block : new MessageBlock(block, options);
       }
     }]);
@@ -511,7 +535,7 @@
     }, {
       key: "panel",
       value: function panel(panelText) {
-        var _ref2 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+        var _ref2 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : new Object(null),
             bgColor = _ref2.bgColor,
             color = _ref2.color,
             offset = _ref2.offset;
@@ -528,6 +552,31 @@
         }).background(bgColor || 'white').color(color || 'gray').offsetLeft(offset || 0).borderRadius(3).padding(2, 4), baseText ? MessageBlock.instance(baseText, {
           colors: this.colors
         }).offsetLeft(1) : null);
+        this.driver.log(msg);
+      }
+    }, {
+      key: "panels",
+      value: function panels(logLevel) {
+        var _this = this,
+            _Message$instance;
+
+        for (var _len = arguments.length, blockConfigs = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+          blockConfigs[_key - 1] = arguments[_key];
+        }
+
+        if (!blockConfigs.length || logLevel && !this.shouldLog(logLevel)) {
+          return;
+        }
+
+        var blocks = [];
+        blockConfigs.forEach(function (blockConfig) {
+          blocks.push(MessageBlock.instance(blockConfig, {
+            colors: _this.colors
+          }));
+        });
+
+        var msg = (_Message$instance = Message.instance()).pushBlock.apply(_Message$instance, blocks);
+
         this.driver.log(msg);
       }
     }, {
@@ -603,6 +652,7 @@
   var colors = {
     black: '#000000',
     gray: '#1B2B34',
+    grayLight: '#536069',
     red: '#EC5f67',
     orange: '#F99157',
     yellow: '#FAC863',

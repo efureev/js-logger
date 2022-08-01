@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.isEmptyObject = void 0;
+exports.isString = exports.isEmptyObject = void 0;
 
 function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
 
@@ -20,4 +20,10 @@ var isEmptyObject = function isEmptyObject(object) {
 };
 
 exports.isEmptyObject = isEmptyObject;
+
+var isString = function isString(value) {
+  return typeof value === 'string';
+};
+
+exports.isString = isString;
 //# sourceMappingURL=utils.js.map

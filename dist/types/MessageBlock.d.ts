@@ -8,11 +8,20 @@ export interface MessageBlockStyle {
 interface MessageBlockOptions {
     colors?: ColorCollection;
 }
+export interface MessageBlockConfig {
+    text: string;
+    bgColor?: ColorValue | string;
+    color?: ColorValue | string;
+    offset?: number;
+    borderRadius?: number;
+    padding?: number | [number, number];
+}
 declare class MessageBlock {
-    private colors?;
     private _text;
+    private readonly colors?;
     private style;
-    constructor(text: string, { colors }?: MessageBlockOptions);
+    constructor(text: string | MessageBlockConfig, { colors }?: MessageBlockOptions);
+    fillFromConfig(config: MessageBlockConfig): void;
     push(key: string, value?: string, check?: boolean): this;
     has(key: string): boolean;
     color(value?: string, check?: boolean): this;
@@ -40,7 +49,7 @@ declare class MessageBlock {
     hasStyle(): boolean;
     clearStyle(): this;
     toJSON(): string;
-    static instance(block: MessageBlock | string, options?: MessageBlockOptions): MessageBlock;
+    static instance(block: MessageBlock | MessageBlockConfig | string, options?: MessageBlockOptions): MessageBlock;
 }
 export default MessageBlock;
 //# sourceMappingURL=MessageBlock.d.ts.map

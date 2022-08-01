@@ -1,4 +1,5 @@
 export type LevelType = number
+export type StringLevelType = LevelType | string
 
 export const ERROR: LevelType = 1
 export const INFO: LevelType = 2

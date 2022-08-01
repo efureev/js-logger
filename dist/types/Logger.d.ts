@@ -1,6 +1,7 @@
 import { LoggerDriver } from './drivers/LoggerDriver';
 import type { LevelType } from './LogLevel';
 import Message from './Message';
+import type { MessageBlockConfig } from './MessageBlock';
 import MessageBlock from './MessageBlock';
 import { ColorValue } from './Color';
 import ColorCollection from './ColorCollection';
@@ -10,10 +11,11 @@ export interface LoggerConfig {
     level?: LevelType | string;
 }
 interface PanelOptions {
-    bgColor?: ColorValue;
-    color?: ColorValue;
+    bgColor?: ColorValue | string;
+    color?: ColorValue | string;
     offset?: number;
 }
+declare type BlockPanel = string | MessageBlockConfig | MessageBlock;
 declare class Logger {
     private readonly driver;
     private readonly colors;
@@ -31,6 +33,7 @@ declare class Logger {
     error(msgText: string | Message | MessageBlock, prefix?: string, offset?: number): void;
     trace(msgText: string | Message | MessageBlock, prefix?: string, offset?: number): void;
     panel(panelText: string | MessageBlock, { bgColor, color, offset }?: PanelOptions, baseText?: string | MessageBlock, logLevel?: LevelType | string): void;
+    panels(logLevel?: LevelType | string, ...blockConfigs: BlockPanel[]): void;
     private buildMessage;
 }
 export default Logger;

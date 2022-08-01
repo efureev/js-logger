@@ -42,4 +42,23 @@ describe('checking basics', () => {
     assert.equal(JSON.stringify(block.getStyle()), JSON.stringify({ color: '#EC5f67' }))
     assert.equal(block.toJSON(), '{"_text":"test","style":{"color":"#EC5f67"}}')
   })
+
+  it('create from config', () => {
+
+    let block = new MessageBlock({ text: 'title' })
+
+    assert.equal(block.getText(), 'title')
+    assert.equal(JSON.stringify(block.getStyle()), JSON.stringify({}))
+    assert.equal(block.toJSON(), '{"_text":"title","style":{}}')
+
+    block = new MessageBlock({ text: 'title 2', bgColor: 'black', color: 'white', padding: [5, 10] })
+
+    assert.equal(block.getText(), 'title 2')
+    assert.equal(JSON.stringify(block.getStyle()), JSON.stringify({
+      background: 'black',
+      color: 'white',
+      padding: '5px 10px'
+    }))
+    assert.equal(block.toJSON(), '{"_text":"title 2","style":{"background":"black","color":"white","padding":"5px 10px"}}')
+  })
 })

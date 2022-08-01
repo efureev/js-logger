@@ -38,6 +38,7 @@ type HexColor = LongHexColor | ShortHexColor;
 const colors = {
   black: '#000000',
   gray: '#1B2B34',
+  grayLight: '#536069',
   red: '#EC5f67',
   orange: '#F99157',
   yellow: '#FAC863',

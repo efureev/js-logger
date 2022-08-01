@@ -6,3 +6,5 @@ export const isEmptyObject = (object: object) => {
 
   return true
 }
+
+export const isString = (value: any) => typeof value === 'string'

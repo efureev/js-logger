@@ -17,7 +17,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 var MessageBlock = /*#__PURE__*/function () {
   function MessageBlock(text) {
-    var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+    var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : new Object(null),
         colors = _ref.colors;
 
     _classCallCheck(this, MessageBlock);
@@ -25,10 +25,34 @@ var MessageBlock = /*#__PURE__*/function () {
     _defineProperty(this, "style", new Object(null));
 
     this.colors = colors;
-    this._text = text;
+
+    if (text === undefined) {
+      throw Error('Invalid `text` argument for MessageBlock');
+    }
+
+    if (typeof text === 'string') {
+      this._text = text;
+    } else {
+      this.fillFromConfig(text);
+    }
   }
 
   _createClass(MessageBlock, [{
+    key: "fillFromConfig",
+    value: function fillFromConfig(config) {
+      this.text(config.text).background(config.bgColor).color(config.color);
+      config.offset && this.offsetLeft(config.offset);
+      config.borderRadius && this.borderRadius(config.borderRadius);
+
+      if (config.padding) {
+        if (Array.isArray(config.padding)) {
+          this.padding(config.padding[0], config.padding[1]);
+        } else {
+          this.padding(config.padding);
+        }
+      }
+    }
+  }, {
     key: "push",
     value: function push(key, value) {
       var check = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
@@ -217,7 +241,7 @@ var MessageBlock = /*#__PURE__*/function () {
   }], [{
     key: "instance",
     value: function instance(block) {
-      var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : new Object(null);
       return block instanceof MessageBlock ? block : new MessageBlock(block, options);
     }
   }]);

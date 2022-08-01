@@ -131,7 +131,7 @@ var Logger = /*#__PURE__*/function () {
   }, {
     key: "panel",
     value: function panel(panelText) {
-      var _ref2 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+      var _ref2 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : new Object(null),
           bgColor = _ref2.bgColor,
           color = _ref2.color,
           offset = _ref2.offset;
@@ -148,6 +148,31 @@ var Logger = /*#__PURE__*/function () {
       }).background(bgColor || 'white').color(color || 'gray').offsetLeft(offset || 0).borderRadius(3).padding(2, 4), baseText ? _MessageBlock.default.instance(baseText, {
         colors: this.colors
       }).offsetLeft(1) : null);
+
+      this.driver.log(msg);
+    }
+  }, {
+    key: "panels",
+    value: function panels(logLevel) {
+      var _this = this,
+          _Message$instance;
+
+      for (var _len = arguments.length, blockConfigs = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        blockConfigs[_key - 1] = arguments[_key];
+      }
+
+      if (!blockConfigs.length || logLevel && !this.shouldLog(logLevel)) {
+        return;
+      }
+
+      var blocks = [];
+      blockConfigs.forEach(function (blockConfig) {
+        blocks.push(_MessageBlock.default.instance(blockConfig, {
+          colors: _this.colors
+        }));
+      });
+
+      var msg = (_Message$instance = _Message.default.instance()).pushBlock.apply(_Message$instance, blocks);
 
       this.driver.log(msg);
     }

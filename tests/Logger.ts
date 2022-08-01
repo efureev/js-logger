@@ -345,3 +345,33 @@ describe('Log Panel', () => {
     assert.equal(driver.buffer.length, 3)
   })
 })
+
+describe('Log Panels', () => {
+  it('Log', () => {
+    const driver = new ConsoleBufferDriver()
+    const colorCollection = new ColorCollection(colors)
+    const logger = new Logger({ driver, colors: colorCollection })
+
+    logger.panels('info',
+      { text: 'panel 1', bgColor: 'teal', color: 'yellow', borderRadius: 5 },
+      { text: 'panel 2', color: 'white' },
+      { text: 'panel 3', color: 'red', offset: 2, padding: 1 }
+    )
+
+    assert.equal(driver.buffer.length, 4)
+    assert.equal(driver.buffer[0], '%cpanel 1%cpanel 2%cpanel 3')
+    assert.equal(driver.buffer[1], 'background:' + colorCollection.get('teal') + ';color:' + colorCollection.get('yellow') + ';border-radius:5px;')
+    assert.equal(driver.buffer[2], 'color:' + colorCollection.get('white') + ';')
+    assert.equal(driver.buffer[3], 'color:' + colorCollection.get('red') + ';margin-left:20px;padding:1px;')
+  })
+
+  it('Log empty config', () => {
+    const driver = new ConsoleBufferDriver()
+    const colorCollection = new ColorCollection(colors)
+    const logger = new Logger({ driver, colors: colorCollection })
+
+    logger.panels('info')
+
+    assert.equal(driver.buffer.length, 0)
+  })
+})

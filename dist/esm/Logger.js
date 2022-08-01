@@ -91,7 +91,7 @@ class Logger {
     bgColor,
     color,
     offset
-  } = {}, baseText, logLevel) {
+  } = new Object(null), baseText, logLevel) {
     if (logLevel && !this.shouldLog(logLevel)) {
       return;
     }
@@ -101,6 +101,21 @@ class Logger {
     }).background(bgColor || 'white').color(color || 'gray').offsetLeft(offset || 0).borderRadius(3).padding(2, 4), baseText ? MessageBlock.instance(baseText, {
       colors: this.colors
     }).offsetLeft(1) : null);
+    this.driver.log(msg);
+  }
+
+  panels(logLevel, ...blockConfigs) {
+    if (!blockConfigs.length || logLevel && !this.shouldLog(logLevel)) {
+      return;
+    }
+
+    const blocks = [];
+    blockConfigs.forEach(blockConfig => {
+      blocks.push(MessageBlock.instance(blockConfig, {
+        colors: this.colors
+      }));
+    });
+    const msg = Message.instance().pushBlock(...blocks);
     this.driver.log(msg);
   }
 

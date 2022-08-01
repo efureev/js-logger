@@ -5,9 +5,32 @@ class MessageBlock {
 
   constructor(text, {
     colors
-  } = {}) {
+  } = new Object(null)) {
     this.colors = colors;
-    this._text = text;
+
+    if (text === undefined) {
+      throw Error('Invalid `text` argument for MessageBlock');
+    }
+
+    if (typeof text === 'string') {
+      this._text = text;
+    } else {
+      this.fillFromConfig(text);
+    }
+  }
+
+  fillFromConfig(config) {
+    this.text(config.text).background(config.bgColor).color(config.color);
+    config.offset && this.offsetLeft(config.offset);
+    config.borderRadius && this.borderRadius(config.borderRadius);
+
+    if (config.padding) {
+      if (Array.isArray(config.padding)) {
+        this.padding(config.padding[0], config.padding[1]);
+      } else {
+        this.padding(config.padding);
+      }
+    }
   }
 
   push(key, value, check = false) {
@@ -147,7 +170,7 @@ class MessageBlock {
     });
   }
 
-  static instance(block, options = {}) {
+  static instance(block, options = new Object(null)) {
     return block instanceof MessageBlock ? block : new MessageBlock(block, options);
   }
 

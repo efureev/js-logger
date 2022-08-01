@@ -5,4 +5,5 @@ export const isEmptyObject = object => {
 
   return true;
 };
+export const isString = value => typeof value === 'string';
 //# sourceMappingURL=utils.js.map

@@ -13,14 +13,34 @@ interface MessageBlockOptions {
   colors?: ColorCollection
 }
 
+export interface MessageBlockConfig {
+  text: string
+  bgColor?: ColorValue | string
+  bold?: boolean
+  borderRadius?: number
+  color?: ColorValue | string
+  fontSize?: number
+  italic?: boolean
+  offset?: number
+  padding?: number | [number, number]
+}
+
 class MessageBlock {
-  private colors?: ColorCollection
-  private _text: string
+  private _text?: string
+  private readonly colors?: ColorCollection
   private style: MessageBlockStyle = new Object(null)
 
-  constructor(text: string, { colors }: MessageBlockOptions = {}) {
+  constructor(text: string | MessageBlockConfig, { colors }: MessageBlockOptions = new Object(null)) {
     this.colors = colors
-    this._text = text
+    if (text === undefined) {
+      throw Error('Invalid `text` argument for MessageBlock')
+    }
+
+    if (typeof text === 'string') {
+      this._text = text
+    } else {
+      this.fillFromConfig(text)
+    }
   }
 
   push(key: string, value?: string, check: boolean = false): this {
@@ -132,7 +152,25 @@ class MessageBlock {
   }
 
   getText(): string {
-    return this._text
+    return this._text || ''
+  }
+
+  fillFromConfig(config: MessageBlockConfig) {
+    this.text(config.text).background(config.bgColor).color(config.color)
+
+    config.offset && this.offsetLeft(config.offset)
+    config.borderRadius && this.borderRadius(config.borderRadius)
+    config.bold && this.bold()
+    config.italic && this.italic()
+    config.fontSize && this.size(config.fontSize)
+
+    if (config.padding) {
+      if (Array.isArray(config.padding)) {
+        this.padding(config.padding[0], config.padding[1])
+      } else {
+        this.padding(config.padding)
+      }
+    }
   }
 
   getStyle(): MessageBlockStyle {
@@ -156,7 +194,10 @@ class MessageBlock {
     })
   }
 
-  static instance(block: MessageBlock | string, options: MessageBlockOptions = {}): MessageBlock {
+  static instance(
+    block: MessageBlock | MessageBlockConfig | string,
+    options: MessageBlockOptions = new Object(null)
+  ): MessageBlock {
     return block instanceof MessageBlock ? block : new MessageBlock(block, options)
   }
 }

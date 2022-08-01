@@ -200,3 +200,43 @@ You may point your own Log level:
 ```js
 logger.setLevel(INFO | DEBUG) // will be logs only `info` & `debug` messages
 ```
+
+### Methods
+
+**Basic**
+
+```js
+const logger = new BrowserLogger(level)
+
+logger.log()
+logger.error()
+logger.info()
+logger.debug()
+logger.trace()
+```
+
+**Panel**
+
+```js
+const logger = new BrowserLogger(level)
+
+logger.panel(
+  'App',
+  { bgColor: 'red', color: 'white', offset: 2 },
+  'description',
+  'error'
+)
+```
+
+**Panels**
+
+```js
+const logger = new BrowserLogger(level)
+
+logger.panels(
+  'info',
+  { text: 'panel 1', bgColor: 'teal', color: 'yellow', borderRadius: 5 },
+  { text: 'panel 2', color: 'white' },
+  { text: 'panel 3', color: 'red', offset: 2, padding: 1 }
+)
+```

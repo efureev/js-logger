@@ -1,7 +1,8 @@
 import { LoggerDriver } from './drivers/LoggerDriver'
 import type { LevelType } from './LogLevel'
-import { DEBUG, ERROR, INFO, LOG_ALL, stringToLevel, TRACE } from './LogLevel'
+import { DEBUG, ERROR, INFO, LOG_ALL, StringLevelType, stringToLevel, TRACE } from './LogLevel'
 import Message from './Message'
+import type { MessageBlockConfig } from './MessageBlock'
 import MessageBlock from './MessageBlock'
 import { ColorValue } from './Color'
 import ColorCollection from './ColorCollection'
@@ -9,14 +10,16 @@ import ColorCollection from './ColorCollection'
 export interface LoggerConfig {
   driver: LoggerDriver
   colors: ColorCollection
-  level?: LevelType | string
+  level?: StringLevelType
 }
 
 interface PanelOptions {
-  bgColor?: ColorValue
-  color?: ColorValue
+  bgColor?: ColorValue | string
+  color?: ColorValue | string
   offset?: number
 }
+
+type BlockPanel = string | MessageBlockConfig | MessageBlock
 
 class Logger {
   private readonly driver: LoggerDriver
@@ -57,7 +60,7 @@ class Logger {
     return this.colors
   }
 
-  private shouldLog(level: LevelType | string): boolean {
+  private shouldLog(level: StringLevelType): boolean {
     if (typeof level === 'string') {
       level = stringToLevel(level)
     }
@@ -103,11 +106,15 @@ class Logger {
     this.driver.trace(this.buildMessage(msgText, prefix, offset))
   }
 
+  /**
+   * @deprecated
+   * @use panels
+   */
   panel(
     panelText: string | MessageBlock,
-    { bgColor, color, offset }: PanelOptions = {},
+    { bgColor, color, offset }: PanelOptions = new Object(null),
     baseText?: string | MessageBlock,
-    logLevel?: LevelType | string
+    logLevel?: StringLevelType
   ) {
     if (logLevel && !this.shouldLog(logLevel)) {
       return
@@ -123,6 +130,21 @@ class Logger {
 
       baseText ? MessageBlock.instance(baseText, { colors: this.colors }).offsetLeft(1) : null
     )
+
+    this.driver.log(msg)
+  }
+
+  panels(logLevel?: StringLevelType, ...blockConfigs: BlockPanel[]) {
+    if (!blockConfigs.length || (logLevel && !this.shouldLog(logLevel))) {
+      return
+    }
+
+    const blocks: MessageBlock[] = []
+    blockConfigs.forEach(blockConfig => {
+      blocks.push(MessageBlock.instance(blockConfig, { colors: this.colors }))
+    })
+
+    const msg = Message.instance().pushBlock(...blocks)
 
     this.driver.log(msg)
   }
