@@ -39,8 +39,8 @@ describe('checking basics', () => {
 
     block.color('red')
 
-    assert.equal(JSON.stringify(block.getStyle()), JSON.stringify({ color: '#EC5f67' }))
-    assert.equal(block.toJSON(), '{"_text":"test","style":{"color":"#EC5f67"}}')
+    assert.equal(JSON.stringify(block.getStyle()), JSON.stringify({ color: '#ff000f' }))
+    assert.equal(block.toJSON(), '{"_text":"test","style":{"color":"#ff000f"}}')
   })
 
   it('create from config', () => {
