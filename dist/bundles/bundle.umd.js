@@ -286,10 +286,11 @@
 
     var _super = _createSuper(ConsoleBuffer);
 
-    function ConsoleBuffer(_ref) {
+    function ConsoleBuffer() {
       var _this;
 
-      var print = _ref.print,
+      var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+          print = _ref.print,
           printFragmented = _ref.printFragmented,
           debugFn = _ref.debugFn;
 
@@ -303,7 +304,7 @@
 
       _defineProperty(_assertThisInitialized(_this), "buffer", []);
 
-      _this.print = print;
+      _this.print = print || false;
       _this.printFragmented = printFragmented || false;
       _this.debugFn = debugFn || _this.output.dir;
       return _this;

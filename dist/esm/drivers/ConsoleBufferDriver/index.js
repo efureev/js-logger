@@ -7,9 +7,9 @@ export default class ConsoleBuffer extends ConsoleDriver {
     print,
     printFragmented,
     debugFn
-  }) {
+  } = {}) {
     super();
-    this.print = print;
+    this.print = print || false;
     this.printFragmented = printFragmented || false;
     this.debugFn = debugFn || this.output.dir;
   }
