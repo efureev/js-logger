@@ -17,6 +17,7 @@ yarn add @feugene/browser-logger
 |---|---|
 |![Chrome](./.media/chrome.png)|![Chrome](./.media/safari.png)|
 
+![](./.media/screenshot.png)
 ## Use
 
 ### Basic use
