@@ -38,8 +38,121 @@ function _defineProperty(obj, key, value) {
   return obj;
 }
 
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function");
+  }
+
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      writable: true,
+      configurable: true
+    }
+  });
+  Object.defineProperty(subClass, "prototype", {
+    writable: false
+  });
+  if (superClass) _setPrototypeOf(subClass, superClass);
+}
+
+function _getPrototypeOf(o) {
+  _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) {
+    return o.__proto__ || Object.getPrototypeOf(o);
+  };
+  return _getPrototypeOf(o);
+}
+
+function _setPrototypeOf(o, p) {
+  _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) {
+    o.__proto__ = p;
+    return o;
+  };
+  return _setPrototypeOf(o, p);
+}
+
+function _isNativeReflectConstruct() {
+  if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+  if (Reflect.construct.sham) return false;
+  if (typeof Proxy === "function") return true;
+
+  try {
+    Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {}));
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
 function _objectDestructuringEmpty(obj) {
   if (obj == null) throw new TypeError("Cannot destructure undefined");
+}
+
+function _assertThisInitialized(self) {
+  if (self === void 0) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return self;
+}
+
+function _possibleConstructorReturn(self, call) {
+  if (call && (typeof call === "object" || typeof call === "function")) {
+    return call;
+  } else if (call !== void 0) {
+    throw new TypeError("Derived constructors may only return object or undefined");
+  }
+
+  return _assertThisInitialized(self);
+}
+
+function _createSuper(Derived) {
+  var hasNativeReflectConstruct = _isNativeReflectConstruct();
+
+  return function _createSuperInternal() {
+    var Super = _getPrototypeOf(Derived),
+        result;
+
+    if (hasNativeReflectConstruct) {
+      var NewTarget = _getPrototypeOf(this).constructor;
+
+      result = Reflect.construct(Super, arguments, NewTarget);
+    } else {
+      result = Super.apply(this, arguments);
+    }
+
+    return _possibleConstructorReturn(this, result);
+  };
+}
+
+function _superPropBase(object, property) {
+  while (!Object.prototype.hasOwnProperty.call(object, property)) {
+    object = _getPrototypeOf(object);
+    if (object === null) break;
+  }
+
+  return object;
+}
+
+function _get() {
+  if (typeof Reflect !== "undefined" && Reflect.get) {
+    _get = Reflect.get.bind();
+  } else {
+    _get = function _get(target, property, receiver) {
+      var base = _superPropBase(target, property);
+
+      if (!base) return;
+      var desc = Object.getOwnPropertyDescriptor(base, property);
+
+      if (desc.get) {
+        return desc.get.call(arguments.length < 3 ? target : receiver);
+      }
+
+      return desc.value;
+    };
+  }
+
+  return _get.apply(this, arguments);
 }
 
 function _toConsumableArray(arr) {
@@ -74,6 +187,174 @@ function _arrayLikeToArray(arr, len) {
 function _nonIterableSpread() {
   throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
+
+var ConsoleDriver = /*#__PURE__*/function () {
+  function ConsoleDriver() {
+    _classCallCheck(this, ConsoleDriver);
+
+    _defineProperty(this, "output", console);
+  }
+
+  _createClass(ConsoleDriver, [{
+    key: "debug",
+    value: function debug(msg) {
+      this.perform(msg, 'debug');
+    }
+  }, {
+    key: "info",
+    value: function info(msg) {
+      this.perform(msg, 'info');
+    }
+  }, {
+    key: "log",
+    value: function log(msg) {
+      this.perform(msg, 'log');
+    }
+  }, {
+    key: "error",
+    value: function error(msg) {
+      this.perform(msg, 'error');
+    }
+  }, {
+    key: "trace",
+    value: function trace(msg) {
+      this.perform(msg, 'trace');
+    }
+  }, {
+    key: "perform",
+    value: function perform(msg, type) {
+      var _this$output;
+
+      var lines = ConsoleDriver.buildStrings(ConsoleDriver.formatMessage(msg)); // @ts-ignore
+
+      (_this$output = this.output)[type].apply(_this$output, _toConsumableArray(lines));
+    }
+  }], [{
+    key: "buildStrings",
+    value: function buildStrings(fmt) {
+      return [fmt.fmtStr].concat(_toConsumableArray(fmt.fmtArgs));
+    }
+  }, {
+    key: "formatMessage",
+    value: function formatMessage(msg) {
+      var fmtStr = '';
+      var fmtArgs = [];
+      msg.getBlocks().forEach(function (block) {
+        var _ConsoleDriver$format = ConsoleDriver.formatBlock(block),
+            str = _ConsoleDriver$format.fmtStr,
+            args = _ConsoleDriver$format.fmtArgs;
+
+        fmtStr += str;
+        fmtArgs.push.apply(fmtArgs, _toConsumableArray(args));
+      });
+      return {
+        fmtStr: fmtStr,
+        fmtArgs: fmtArgs
+      };
+    }
+  }, {
+    key: "formatBlock",
+    value: function formatBlock(block) {
+      var fmtStr = "%c".concat(block.getText());
+      var fmtArgs = [];
+      var strStyle = '';
+      var style = block.getStyle();
+
+      for (var keyStyle in style) {
+        strStyle += "".concat(keyStyle, ":").concat(style[keyStyle], ";");
+      }
+
+      fmtArgs.push(strStyle);
+      return {
+        fmtStr: fmtStr,
+        fmtArgs: fmtArgs
+      };
+    }
+  }]);
+
+  return ConsoleDriver;
+}();
+
+var ConsoleBuffer = /*#__PURE__*/function (_ConsoleDriver) {
+  _inherits(ConsoleBuffer, _ConsoleDriver);
+
+  var _super = _createSuper(ConsoleBuffer);
+
+  function ConsoleBuffer(_ref) {
+    var _this;
+
+    var print = _ref.print,
+        printFragmented = _ref.printFragmented,
+        debugFn = _ref.debugFn;
+
+    _classCallCheck(this, ConsoleBuffer);
+
+    _this = _super.call(this);
+
+    _defineProperty(_assertThisInitialized(_this), "print", false);
+
+    _defineProperty(_assertThisInitialized(_this), "printFragmented", false);
+
+    _defineProperty(_assertThisInitialized(_this), "buffer", []);
+
+    _this.print = print;
+    _this.printFragmented = printFragmented || false;
+    _this.debugFn = debugFn || _this.output.dir;
+    return _this;
+  }
+
+  _createClass(ConsoleBuffer, [{
+    key: "perform",
+    value: function perform(msg, type) {
+      this.buffer = ConsoleDriver.buildStrings(ConsoleDriver.formatMessage(msg));
+
+      if (this.print) {
+        this.output.warn('--[debug] start');
+
+        _get(_getPrototypeOf(ConsoleBuffer.prototype), "perform", this).call(this, msg, type);
+
+        this.debugFn(this.buffer);
+
+        if (this.printFragmented) {
+          this.performFragmented();
+        }
+
+        this.output.warn('--[debug] finish');
+      }
+    }
+  }, {
+    key: "performFragmented",
+    value: function performFragmented() {
+      var _this2 = this;
+
+      if (!this.buffer.length) {
+        return;
+      }
+
+      var fragments = this.buffer[0].split('%c').slice(1);
+      var styles = this.buffer.slice(1);
+
+      if (fragments.length != styles.length) {
+        this.output.error('data inconsistency error: fragments: %d, styles: %d', fragments.length, styles.length);
+        this.output.log('fragments', fragments);
+        this.output.log('styles', styles);
+      }
+
+      fragments.forEach(function (fragment, idx) {
+        _this2.output.log("".concat(fragment, ": ").concat(styles[idx]));
+
+        _this2.output.log("%c".concat(fragment), styles[idx]);
+      });
+    }
+  }, {
+    key: "clearBuffer",
+    value: function clearBuffer() {
+      this.buffer = [];
+    }
+  }]);
+
+  return ConsoleBuffer;
+}(ConsoleDriver);
 
 var ERROR = 1;
 var INFO = 2;
@@ -469,6 +750,37 @@ var Logger = /*#__PURE__*/function () {
       return this.driver;
     }
   }, {
+    key: "setDriver",
+    value: function setDriver(driver) {
+      this.driver = driver;
+      return this;
+    }
+  }, {
+    key: "enableDebug",
+    value: function enableDebug() {
+      var _ref2 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+          printFragmented = _ref2.printFragmented,
+          debugFn = _ref2.debugFn;
+
+      this.originDriver = this.driver;
+      this.driver = new ConsoleBuffer({
+        print: true,
+        printFragmented: printFragmented,
+        debugFn: debugFn
+      });
+      return this;
+    }
+  }, {
+    key: "disableDebug",
+    value: function disableDebug() {
+      if (this.originDriver) {
+        this.setDriver(this.originDriver);
+        this.originDriver = undefined;
+      }
+
+      return this;
+    }
+  }, {
     key: "getColors",
     value: function getColors() {
       return this.colors;
@@ -541,10 +853,10 @@ var Logger = /*#__PURE__*/function () {
   }, {
     key: "panel",
     value: function panel(panelText) {
-      var _ref2 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : new Object(null),
-          bgColor = _ref2.bgColor,
-          color = _ref2.color,
-          offset = _ref2.offset;
+      var _ref3 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : new Object(null),
+          bgColor = _ref3.bgColor,
+          color = _ref3.color,
+          offset = _ref3.offset;
 
       var baseText = arguments.length > 2 ? arguments[2] : undefined;
       var logLevel = arguments.length > 3 ? arguments[3] : undefined;
@@ -658,7 +970,7 @@ type HexColor = LongHexColor | ShortHexColor;
 var colors = {
   black: '#000000',
   gray: '#1B2B34',
-  grayLight: '#536069',
+  grayLight: '#334048',
   red: '#EC5f67',
   orange: '#F99157',
   yellow: '#FAC863',
@@ -669,93 +981,6 @@ var colors = {
   brown: '#AB7967',
   white: '#FFFFFF'
 };
-
-var ConsoleDriver = /*#__PURE__*/function () {
-  function ConsoleDriver() {
-    _classCallCheck(this, ConsoleDriver);
-
-    _defineProperty(this, "output", console);
-  }
-
-  _createClass(ConsoleDriver, [{
-    key: "debug",
-    value: function debug(msg) {
-      this.perform(msg, 'debug');
-    }
-  }, {
-    key: "info",
-    value: function info(msg) {
-      this.perform(msg, 'info');
-    }
-  }, {
-    key: "log",
-    value: function log(msg) {
-      this.perform(msg, 'log');
-    }
-  }, {
-    key: "error",
-    value: function error(msg) {
-      this.perform(msg, 'error');
-    }
-  }, {
-    key: "trace",
-    value: function trace(msg) {
-      this.perform(msg, 'trace');
-    }
-  }, {
-    key: "perform",
-    value: function perform(msg, type) {
-      var _this$output;
-
-      var lines = ConsoleDriver.buildStrings(ConsoleDriver.formatMessage(msg)); // @ts-ignore
-
-      (_this$output = this.output)[type].apply(_this$output, _toConsumableArray(lines));
-    }
-  }], [{
-    key: "buildStrings",
-    value: function buildStrings(fmt) {
-      return [fmt.fmtStr].concat(_toConsumableArray(fmt.fmtArgs));
-    }
-  }, {
-    key: "formatMessage",
-    value: function formatMessage(msg) {
-      var fmtStr = '';
-      var fmtArgs = [];
-      msg.getBlocks().forEach(function (block) {
-        var _ConsoleDriver$format = ConsoleDriver.formatBlock(block),
-            str = _ConsoleDriver$format.fmtStr,
-            args = _ConsoleDriver$format.fmtArgs;
-
-        fmtStr += str;
-        fmtArgs.push.apply(fmtArgs, _toConsumableArray(args));
-      });
-      return {
-        fmtStr: fmtStr,
-        fmtArgs: fmtArgs
-      };
-    }
-  }, {
-    key: "formatBlock",
-    value: function formatBlock(block) {
-      var fmtStr = "%c".concat(block.getText());
-      var fmtArgs = [];
-      var strStyle = '';
-      var style = block.getStyle();
-
-      for (var keyStyle in style) {
-        strStyle += "".concat(keyStyle, ":").concat(style[keyStyle], ";");
-      }
-
-      fmtArgs.push(strStyle);
-      return {
-        fmtStr: fmtStr,
-        fmtArgs: fmtArgs
-      };
-    }
-  }]);
-
-  return ConsoleDriver;
-}();
 
 var ColorCollection = /*#__PURE__*/function () {
   function ColorCollection(list) {

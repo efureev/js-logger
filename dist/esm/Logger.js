@@ -1,3 +1,4 @@
+import ConsoleBufferDriver from './drivers/ConsoleBufferDriver';
 import { DEBUG, ERROR, INFO, LOG_ALL, stringToLevel, TRACE } from './LogLevel';
 import Message from './Message';
 import MessageBlock from './MessageBlock';
@@ -36,6 +37,33 @@ class Logger {
 
   getDriver() {
     return this.driver;
+  }
+
+  setDriver(driver) {
+    this.driver = driver;
+    return this;
+  }
+
+  enableDebug({
+    printFragmented,
+    debugFn
+  } = {}) {
+    this.originDriver = this.driver;
+    this.driver = new ConsoleBufferDriver({
+      print: true,
+      printFragmented,
+      debugFn
+    });
+    return this;
+  }
+
+  disableDebug() {
+    if (this.originDriver) {
+      this.setDriver(this.originDriver);
+      this.originDriver = undefined;
+    }
+
+    return this;
   }
 
   getColors() {

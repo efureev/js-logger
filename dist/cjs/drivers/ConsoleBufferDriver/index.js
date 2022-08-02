@@ -17,6 +17,10 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 
+function _get() { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get.bind(); } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(arguments.length < 3 ? target : receiver); } return desc.value; }; } return _get.apply(this, arguments); }
+
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
@@ -38,19 +42,26 @@ var ConsoleBuffer = /*#__PURE__*/function (_ConsoleDriver) {
 
   var _super = _createSuper(ConsoleBuffer);
 
-  function ConsoleBuffer() {
+  function ConsoleBuffer(_ref) {
     var _this;
+
+    var print = _ref.print,
+        printFragmented = _ref.printFragmented,
+        debugFn = _ref.debugFn;
 
     _classCallCheck(this, ConsoleBuffer);
 
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
+    _this = _super.call(this);
 
-    _this = _super.call.apply(_super, [this].concat(args));
+    _defineProperty(_assertThisInitialized(_this), "print", false);
+
+    _defineProperty(_assertThisInitialized(_this), "printFragmented", false);
 
     _defineProperty(_assertThisInitialized(_this), "buffer", []);
 
+    _this.print = print;
+    _this.printFragmented = printFragmented || false;
+    _this.debugFn = debugFn || _this.output.dir;
     return _this;
   }
 
@@ -58,6 +69,44 @@ var ConsoleBuffer = /*#__PURE__*/function (_ConsoleDriver) {
     key: "perform",
     value: function perform(msg, type) {
       this.buffer = _ConsoleDriver2.default.buildStrings(_ConsoleDriver2.default.formatMessage(msg));
+
+      if (this.print) {
+        this.output.warn('--[debug] start');
+
+        _get(_getPrototypeOf(ConsoleBuffer.prototype), "perform", this).call(this, msg, type);
+
+        this.debugFn(this.buffer);
+
+        if (this.printFragmented) {
+          this.performFragmented();
+        }
+
+        this.output.warn('--[debug] finish');
+      }
+    }
+  }, {
+    key: "performFragmented",
+    value: function performFragmented() {
+      var _this2 = this;
+
+      if (!this.buffer.length) {
+        return;
+      }
+
+      var fragments = this.buffer[0].split('%c').slice(1);
+      var styles = this.buffer.slice(1);
+
+      if (fragments.length != styles.length) {
+        this.output.error('data inconsistency error: fragments: %d, styles: %d', fragments.length, styles.length);
+        this.output.log('fragments', fragments);
+        this.output.log('styles', styles);
+      }
+
+      fragments.forEach(function (fragment, idx) {
+        _this2.output.log("".concat(fragment, ": ").concat(styles[idx]));
+
+        _this2.output.log("%c".concat(fragment), styles[idx]);
+      });
     }
   }, {
     key: "clearBuffer",
@@ -69,6 +118,5 @@ var ConsoleBuffer = /*#__PURE__*/function (_ConsoleDriver) {
   return ConsoleBuffer;
 }(_ConsoleDriver2.default);
 
-var _default = ConsoleBuffer;
-exports.default = _default;
+exports.default = ConsoleBuffer;
 //# sourceMappingURL=index.js.map

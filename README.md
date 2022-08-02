@@ -253,3 +253,56 @@ logger.panels(
   'description'
 )
 ```
+
+### Debugging
+
+```js
+const defaultBlockConfig = {
+  offsetLeft: 1,
+  offsetRight: 1,
+  borderRadius: 3,
+  padding: [2, 4],
+}
+
+const panel = {
+  ...defaultBlockConfig,
+  bgColor: 'gray',
+  color: 'white',
+}
+
+const makePanel = (text, panelConfig) => ({
+  text,
+  ...panel,
+  ...panelConfig,
+})
+const prefixPanels = (prefix, ...panels) => logger.panels(
+  prefix,
+  makePanel('Application', { offsetLeft: 10 }),
+  ...panels.map((panel) => {
+    if (typeof panel === 'string') {
+      return panel
+    }
+
+    return {
+      padding: [2, 4],
+      ...panel,
+    }
+  })
+)
+
+const names = ['first', 'second']
+logger.enableDebug()
+// or `logger.enableDebug({ printFragmented: true })`
+// or `logger.enableDebug({ debugFn: console.log })`
+// or `logger.enableDebug({ debugFn: logger.getDriver().output.log })`
+
+prefixPanels(
+  'trace',
+  'Booter',
+  4,
+  'booted plugins',
+  ...names.map((text) => this.logger.makeNamedPanel(text, 'tealLabel'))
+)
+
+logger.disableDebug()
+```

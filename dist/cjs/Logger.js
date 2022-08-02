@@ -5,6 +5,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
+var _ConsoleBufferDriver = _interopRequireDefault(require("./drivers/ConsoleBufferDriver"));
+
 var _LogLevel = require("./LogLevel");
 
 var _Message = _interopRequireDefault(require("./Message"));
@@ -62,6 +64,37 @@ var Logger = /*#__PURE__*/function () {
     key: "getDriver",
     value: function getDriver() {
       return this.driver;
+    }
+  }, {
+    key: "setDriver",
+    value: function setDriver(driver) {
+      this.driver = driver;
+      return this;
+    }
+  }, {
+    key: "enableDebug",
+    value: function enableDebug() {
+      var _ref2 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+          printFragmented = _ref2.printFragmented,
+          debugFn = _ref2.debugFn;
+
+      this.originDriver = this.driver;
+      this.driver = new _ConsoleBufferDriver.default({
+        print: true,
+        printFragmented: printFragmented,
+        debugFn: debugFn
+      });
+      return this;
+    }
+  }, {
+    key: "disableDebug",
+    value: function disableDebug() {
+      if (this.originDriver) {
+        this.setDriver(this.originDriver);
+        this.originDriver = undefined;
+      }
+
+      return this;
     }
   }, {
     key: "getColors",
@@ -136,10 +169,10 @@ var Logger = /*#__PURE__*/function () {
   }, {
     key: "panel",
     value: function panel(panelText) {
-      var _ref2 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : new Object(null),
-          bgColor = _ref2.bgColor,
-          color = _ref2.color,
-          offset = _ref2.offset;
+      var _ref3 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : new Object(null),
+          bgColor = _ref3.bgColor,
+          color = _ref3.color,
+          offset = _ref3.offset;
 
       var baseText = arguments.length > 2 ? arguments[2] : undefined;
       var logLevel = arguments.length > 3 ? arguments[3] : undefined;

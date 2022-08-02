@@ -8,7 +8,7 @@ export interface FormatConsole {
 }
 
 class ConsoleDriver implements LoggerDriver {
-  private output = console
+  protected output = console
 
   debug(msg: Message): void {
     this.perform(msg, 'debug')

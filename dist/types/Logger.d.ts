@@ -18,7 +18,8 @@ interface PanelOptions {
 }
 declare type BlockPanel = string | MessageBlockConfig | MessageBlock;
 declare class Logger {
-    private readonly driver;
+    private driver;
+    private originDriver?;
     private readonly colors;
     private logLevel;
     constructor({ driver, colors, level }: LoggerConfig);
@@ -26,6 +27,12 @@ declare class Logger {
     addLogLevel(level: LevelType): void;
     excludeLogLevel(level: LevelType): void;
     getDriver(): LoggerDriver;
+    setDriver(driver: LoggerDriver): this;
+    enableDebug({ printFragmented, debugFn }?: {
+        printFragmented?: boolean;
+        debugFn?: Function;
+    }): this;
+    disableDebug(): this;
     getColors(): ColorCollection;
     private shouldLog;
     log(msgText: string | Message | MessageBlock, prefix?: string, offset?: number): void;

@@ -1,4 +1,5 @@
 import { LoggerDriver } from './drivers/LoggerDriver'
+import ConsoleBufferDriver from './drivers/ConsoleBufferDriver'
 import type { LevelType } from './LogLevel'
 import { DEBUG, ERROR, INFO, LOG_ALL, StringLevelType, stringToLevel, TRACE } from './LogLevel'
 import Message from './Message'
@@ -22,7 +23,8 @@ interface PanelOptions {
 type BlockPanel = string | MessageBlockConfig | MessageBlock
 
 class Logger {
-  private readonly driver: LoggerDriver
+  private driver: LoggerDriver
+  private originDriver?: LoggerDriver
   private readonly colors: ColorCollection
 
   private logLevel: LevelType = LOG_ALL
@@ -54,6 +56,28 @@ class Logger {
 
   public getDriver(): LoggerDriver {
     return this.driver
+  }
+
+  public setDriver(driver: LoggerDriver): this {
+    this.driver = driver
+
+    return this
+  }
+
+  public enableDebug({ printFragmented, debugFn }: { printFragmented?: boolean; debugFn?: Function } = {}): this {
+    this.originDriver = this.driver
+    this.driver = new ConsoleBufferDriver({ print: true, printFragmented, debugFn })
+
+    return this
+  }
+
+  public disableDebug(): this {
+    if (this.originDriver) {
+      this.setDriver(this.originDriver)
+      this.originDriver = undefined
+    }
+
+    return this
   }
 
   public getColors(): ColorCollection {
