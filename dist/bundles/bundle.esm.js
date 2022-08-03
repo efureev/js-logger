@@ -410,12 +410,12 @@ var isEmptyObject = function isEmptyObject(object) {
 
 var MessageBlock = /*#__PURE__*/function () {
   function MessageBlock(text) {
-    var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : new Object(null),
+    var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Object.create(null),
         colors = _ref.colors;
 
     _classCallCheck(this, MessageBlock);
 
-    _defineProperty(this, "style", new Object(null));
+    _defineProperty(this, "style", Object.create(null));
 
     this.colors = colors;
 
@@ -627,7 +627,7 @@ var MessageBlock = /*#__PURE__*/function () {
   }, {
     key: "clearStyle",
     value: function clearStyle() {
-      this.style = new Object(null);
+      this.style = Object.create(null);
       return this;
     }
   }, {
@@ -641,7 +641,7 @@ var MessageBlock = /*#__PURE__*/function () {
   }], [{
     key: "instance",
     value: function instance(block) {
-      var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : new Object(null);
+      var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Object.create(null);
       return block instanceof MessageBlock ? block : new MessageBlock(block, options);
     }
   }]);
@@ -854,7 +854,7 @@ var Logger = /*#__PURE__*/function () {
   }, {
     key: "panel",
     value: function panel(panelText) {
-      var _ref3 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : new Object(null),
+      var _ref3 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Object.create(null),
           bgColor = _ref3.bgColor,
           color = _ref3.color,
           offset = _ref3.offset;

@@ -124,7 +124,7 @@ class Logger {
     bgColor,
     color,
     offset
-  } = new Object(null), baseText, logLevel) {
+  } = Object.create(null), baseText, logLevel) {
     if (logLevel && !this.shouldLog(logLevel)) {
       return;
     }

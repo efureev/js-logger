@@ -1,11 +1,11 @@
 import { isEmptyObject } from './utils';
 
 class MessageBlock {
-  style = new Object(null);
+  style = Object.create(null);
 
   constructor(text, {
     colors
-  } = new Object(null)) {
+  } = Object.create(null)) {
     this.colors = colors;
 
     if (text === undefined) {
@@ -166,7 +166,7 @@ class MessageBlock {
   }
 
   clearStyle() {
-    this.style = new Object(null);
+    this.style = Object.create(null);
     return this;
   }
 
@@ -177,7 +177,7 @@ class MessageBlock {
     });
   }
 
-  static instance(block, options = new Object(null)) {
+  static instance(block, options = Object.create(null)) {
     return block instanceof MessageBlock ? block : new MessageBlock(block, options);
   }
 
