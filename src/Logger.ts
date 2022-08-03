@@ -136,7 +136,7 @@ class Logger {
    */
   panel(
     panelText: string | MessageBlock,
-    { bgColor, color, offset }: PanelOptions = new Object(null),
+    { bgColor, color, offset }: PanelOptions = Object.create(null),
     baseText?: string | MessageBlock,
     logLevel?: StringLevelType
   ) {

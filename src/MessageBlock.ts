@@ -32,9 +32,9 @@ export interface MessageBlockConfig {
 class MessageBlock {
   private _text?: string
   private readonly colors?: ColorCollection
-  private style: MessageBlockStyle = new Object(null)
+  private style: MessageBlockStyle = Object.create(null)
 
-  constructor(text: string | MessageBlockConfig, { colors }: MessageBlockOptions = new Object(null)) {
+  constructor(text: string | MessageBlockConfig, { colors }: MessageBlockOptions = Object.create(null)) {
     this.colors = colors
     if (text === undefined) {
       throw Error('Invalid `text` argument for MessageBlock')
@@ -190,7 +190,7 @@ class MessageBlock {
   }
 
   clearStyle(): this {
-    this.style = new Object(null)
+    this.style = Object.create(null)
 
     return this
   }
@@ -204,7 +204,7 @@ class MessageBlock {
 
   static instance(
     block: MessageBlock | MessageBlockConfig | string,
-    options: MessageBlockOptions = new Object(null)
+    options: MessageBlockOptions = Object.create(null)
   ): MessageBlock {
     return block instanceof MessageBlock ? block : new MessageBlock(block, options)
   }
