@@ -21,10 +21,23 @@ export default class ConsoleBuffer extends ConsoleDriver {
 
   public buffer: string[] = []
 
+  public performLines(lines: string[], type: string): string[] | void {
+    this.buffer = [
+      ...this.buffer,
+      ...lines
+    ]
+  }
+
   protected perform(msg: Message, type: string): string[] | void {
-    this.buffer = ConsoleDriver.buildStrings(ConsoleDriver.formatMessage(msg))
+    this.buffer = [
+      ...this.buffer,
+      ...ConsoleDriver.buildStrings(ConsoleDriver.formatMessage(msg))
+    ]
+
     if (this.print) {
-      this.output.warn('--[debug] start')
+      const warnFunc = this.output.warn ? this.output.warn : this.output.log
+
+      warnFunc('--[debug] start')
 
       const result = super.perform(msg, type)
 
@@ -32,7 +45,7 @@ export default class ConsoleBuffer extends ConsoleDriver {
       if (this.printFragmented) {
         this.performFragmented()
       }
-      this.output.warn('--[debug] finish')
+      warnFunc('--[debug] finish')
       if (this._returnResult) {
         return result
       }

@@ -60,16 +60,29 @@ var ConsoleDriver = /*#__PURE__*/function () {
       return this.perform(msg, 'trace');
     }
   }, {
+    key: "groupCollapsed",
+    value: function groupCollapsed(msg) {
+      return this.perform(msg, 'groupCollapsed');
+    }
+  }, {
+    key: "groupEnd",
+    value: function groupEnd() {
+      return this.output.groupEnd();
+    }
+  }, {
     key: "perform",
     value: function perform(msg, type) {
       var lines = ConsoleDriver.buildStrings(ConsoleDriver.formatMessage(msg));
-
+      return this.performLines(lines, type);
+    }
+  }, {
+    key: "performLines",
+    value: function performLines(lines, type) {
       if (!this._returnResult) {
-        var _this$output;
+        var _this$output, _this$output2;
 
         // @ts-ignore
-        (_this$output = this.output)[type].apply(_this$output, _toConsumableArray(lines));
-
+        this.output[type] ? (_this$output = this.output)[type].apply(_this$output, _toConsumableArray(lines)) : (_this$output2 = this.output).log.apply(_this$output2, _toConsumableArray(lines));
         return;
       }
 

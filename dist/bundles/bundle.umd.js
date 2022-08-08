@@ -229,16 +229,29 @@
         return this.perform(msg, 'trace');
       }
     }, {
+      key: "groupCollapsed",
+      value: function groupCollapsed(msg) {
+        return this.perform(msg, 'groupCollapsed');
+      }
+    }, {
+      key: "groupEnd",
+      value: function groupEnd() {
+        return this.output.groupEnd();
+      }
+    }, {
       key: "perform",
       value: function perform(msg, type) {
         var lines = ConsoleDriver.buildStrings(ConsoleDriver.formatMessage(msg));
-
+        return this.performLines(lines, type);
+      }
+    }, {
+      key: "performLines",
+      value: function performLines(lines, type) {
         if (!this._returnResult) {
-          var _this$output;
+          var _this$output, _this$output2;
 
           // @ts-ignore
-          (_this$output = this.output)[type].apply(_this$output, _toConsumableArray(lines));
-
+          this.output[type] ? (_this$output = this.output)[type].apply(_this$output, _toConsumableArray(lines)) : (_this$output2 = this.output).log.apply(_this$output2, _toConsumableArray(lines));
           return;
         }
 
@@ -327,12 +340,18 @@
     }
 
     _createClass(ConsoleBuffer, [{
+      key: "performLines",
+      value: function performLines(lines, type) {
+        this.buffer = [].concat(_toConsumableArray(this.buffer), _toConsumableArray(lines));
+      }
+    }, {
       key: "perform",
       value: function perform(msg, type) {
-        this.buffer = ConsoleDriver.buildStrings(ConsoleDriver.formatMessage(msg));
+        this.buffer = [].concat(_toConsumableArray(this.buffer), _toConsumableArray(ConsoleDriver.buildStrings(ConsoleDriver.formatMessage(msg))));
 
         if (this.print) {
-          this.output.warn('--[debug] start');
+          var warnFunc = this.output.warn ? this.output.warn : this.output.log;
+          warnFunc('--[debug] start');
 
           var result = _get(_getPrototypeOf(ConsoleBuffer.prototype), "perform", this).call(this, msg, type);
 
@@ -342,7 +361,7 @@
             this.performFragmented();
           }
 
-          this.output.warn('--[debug] finish');
+          warnFunc('--[debug] finish');
 
           if (this._returnResult) {
             return result;
@@ -867,14 +886,34 @@
       }
     }, {
       key: "error",
-      value: function error(msgText, prefix) {
-        var offset = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+      value: function error(msgText, prefix, _error) {
+        var offset = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
 
         if (!this.shouldLog(ERROR)) {
           return;
         }
 
+        if (_error instanceof Error && _error.stack && isString(_error.stack)) {
+          var lines = _error.stack.split('\n');
+
+          this.groupCollapsed(this.buildMessage(msgText, prefix, offset), lines);
+          return;
+        }
+
         return this.driver.error(this.buildMessage(msgText, prefix, offset));
+      }
+    }, {
+      key: "groupCollapsed",
+      value: function groupCollapsed(msgText) {
+        var _this = this;
+
+        var lines = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+        var listLogFn = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'log';
+        this.driver.groupCollapsed(this.buildMessage(msgText));
+        lines.forEach(function (line) {
+          _this.driver.performLines([line], listLogFn);
+        });
+        this.driver.groupEnd();
       }
     }, {
       key: "trace",
@@ -917,7 +956,7 @@
     }, {
       key: "panels",
       value: function panels(logLevel) {
-        var _this = this,
+        var _this2 = this,
             _Message$instance;
 
         for (var _len = arguments.length, blockConfigs = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -932,7 +971,7 @@
         blockConfigs.forEach(function (blockConfig) {
           if (isString(blockConfig) && blockConfig !== '' || isObject(blockConfig) && !isEmptyObject(blockConfig)) {
             blocks.push(MessageBlock.instance(blockConfig, {
-              colors: _this.colors
+              colors: _this2.colors
             }));
           }
         });

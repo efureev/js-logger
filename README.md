@@ -326,3 +326,42 @@ list === [
   'color:#ff000f;margin-left:20px;padding:1px;'
 ]
 ```
+
+### Group collapsed
+
+```js
+logger.groupCollapsed(
+  { text: 'Collapse panel', bgColor: 'teal', color: 'yellow', borderRadius: 5 },
+  ['text1', 'text2']
+)
+```
+
+```js
+const message = Message.instance({ text: 'ERROR', color: 'red' })
+message.pushBlock(
+  MessageBlock.instance({ text: 'Fatal Error', bgColor: 'red', color: 'white', borderRadius: 5 }),
+  MessageBlock.instance('description')
+)
+
+logger.groupCollapsed(message, ['text1', 'text2'])
+```
+
+**From error**
+
+```js
+const error = new Error('Custom error')
+error.stack = 'line 1\nline 2'
+
+// with stack collapsed
+logger.error(
+  error.title,
+  { text: 'Error', bgColor: 'red', borderRadius: 5 },
+  error
+)
+
+// or simple error
+logger.error(
+  'Error Title',
+  { text: 'Error', bgColor: 'red', borderRadius: 5 }
+)
+```

@@ -22,12 +22,23 @@ class ConsoleDriver {
     return this.perform(msg, 'trace');
   }
 
+  groupCollapsed(msg) {
+    return this.perform(msg, 'groupCollapsed');
+  }
+
+  groupEnd() {
+    return this.output.groupEnd();
+  }
+
   perform(msg, type) {
     const lines = ConsoleDriver.buildStrings(ConsoleDriver.formatMessage(msg));
+    return this.performLines(lines, type);
+  }
 
+  performLines(lines, type) {
     if (!this._returnResult) {
       // @ts-ignore
-      this.output[type](...lines);
+      this.output[type] ? this.output[type](...lines) : this.output.log(...lines);
       return;
     }
 

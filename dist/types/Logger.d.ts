@@ -36,11 +36,12 @@ declare class Logger {
     returnResult(): this;
     getColors(): ColorCollection;
     private shouldLog;
-    log(msgText: string | Message | MessageBlock, prefix?: string, offset?: number): string[] | void;
-    info(msgText: string | Message | MessageBlock, prefix?: string, offset?: number): string[] | void;
-    debug(msgText: string | Message | MessageBlock, prefix?: string, offset?: number): string[] | void;
-    error(msgText: string | Message | MessageBlock, prefix?: string, offset?: number): string[] | void;
-    trace(msgText: string | Message | MessageBlock, prefix?: string, offset?: number): string[] | void;
+    log(msgText: Message | BlockPanel, prefix?: BlockPanel, offset?: number): string[] | void;
+    info(msgText: Message | BlockPanel, prefix?: BlockPanel, offset?: number): string[] | void;
+    debug(msgText: Message | BlockPanel, prefix?: BlockPanel, offset?: number): string[] | void;
+    error(msgText: Message | BlockPanel, prefix?: BlockPanel, error?: Error, offset?: number): string[] | void;
+    groupCollapsed(msgText: Message | BlockPanel, lines?: string[], listLogFn?: string): void;
+    trace(msgText: Message | BlockPanel, prefix?: BlockPanel, offset?: number): string[] | void;
     /**
      * @deprecated
      * @use panels

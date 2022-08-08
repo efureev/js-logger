@@ -149,14 +149,34 @@ var Logger = /*#__PURE__*/function () {
     }
   }, {
     key: "error",
-    value: function error(msgText, prefix) {
-      var offset = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+    value: function error(msgText, prefix, _error) {
+      var offset = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
 
       if (!this.shouldLog(_LogLevel.ERROR)) {
         return;
       }
 
+      if (_error instanceof Error && _error.stack && (0, _utils.isString)(_error.stack)) {
+        var lines = _error.stack.split('\n');
+
+        this.groupCollapsed(this.buildMessage(msgText, prefix, offset), lines);
+        return;
+      }
+
       return this.driver.error(this.buildMessage(msgText, prefix, offset));
+    }
+  }, {
+    key: "groupCollapsed",
+    value: function groupCollapsed(msgText) {
+      var _this = this;
+
+      var lines = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+      var listLogFn = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'log';
+      this.driver.groupCollapsed(this.buildMessage(msgText));
+      lines.forEach(function (line) {
+        _this.driver.performLines([line], listLogFn);
+      });
+      this.driver.groupEnd();
     }
   }, {
     key: "trace",
@@ -200,7 +220,7 @@ var Logger = /*#__PURE__*/function () {
   }, {
     key: "panels",
     value: function panels(logLevel) {
-      var _this = this,
+      var _this2 = this,
           _Message$instance;
 
       for (var _len = arguments.length, blockConfigs = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -215,7 +235,7 @@ var Logger = /*#__PURE__*/function () {
       blockConfigs.forEach(function (blockConfig) {
         if ((0, _utils.isString)(blockConfig) && blockConfig !== '' || (0, _utils.isObject)(blockConfig) && !(0, _utils.isEmptyObject)(blockConfig)) {
           blocks.push(_MessageBlock.default.instance(blockConfig, {
-            colors: _this.colors
+            colors: _this2.colors
           }));
         }
       });

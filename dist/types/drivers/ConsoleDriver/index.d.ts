@@ -13,7 +13,10 @@ declare class ConsoleDriver implements LoggerDriver {
     log(msg: Message): string[] | void;
     error(msg: Message): string[] | void;
     trace(msg: Message): string[] | void;
+    groupCollapsed(msg: Message): string[] | void;
+    groupEnd(): void;
     protected perform(msg: Message, type: string): string[] | void;
+    performLines(lines: string[], type: string): string[] | void;
     returnResult(): this;
     protected static buildStrings(fmt: FormatConsole): Array<string>;
     protected static formatMessage(msg: Message): FormatConsole;

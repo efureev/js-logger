@@ -1,10 +1,11 @@
 import MessageBlock from './MessageBlock'
 import ColorCollection from './ColorCollection'
+import { BlockPanel } from './Logger'
 
 class Message {
   private blocks: Array<MessageBlock> = new Array<MessageBlock>()
 
-  constructor(text?: MessageBlock | string, colors?: ColorCollection) {
+  constructor(text?: BlockPanel, colors?: ColorCollection) {
     this.parse(text, colors)
   }
 
@@ -30,13 +31,13 @@ class Message {
     return this.blocks.length
   }
 
-  private parse(text?: string | MessageBlock, colors?: ColorCollection): void {
+  private parse(text?: BlockPanel, colors?: ColorCollection): void {
     if (text) {
       this.pushBlock(MessageBlock.instance(text, { colors }))
     }
   }
 
-  static instance(block?: Message | MessageBlock | string, colors?: ColorCollection): Message {
+  static instance(block?: Message | BlockPanel, colors?: ColorCollection): Message {
     return block instanceof Message ? block : new Message(block, colors)
   }
 }

@@ -105,12 +105,26 @@ class Logger {
     return this.driver.debug(this.buildMessage(msgText, prefix, offset));
   }
 
-  error(msgText, prefix, offset = 0) {
+  error(msgText, prefix, error, offset = 0) {
     if (!this.shouldLog(ERROR)) {
       return;
     }
 
+    if (error instanceof Error && error.stack && isString(error.stack)) {
+      const lines = error.stack.split('\n');
+      this.groupCollapsed(this.buildMessage(msgText, prefix, offset), lines);
+      return;
+    }
+
     return this.driver.error(this.buildMessage(msgText, prefix, offset));
+  }
+
+  groupCollapsed(msgText, lines = [], listLogFn = 'log') {
+    this.driver.groupCollapsed(this.buildMessage(msgText));
+    lines.forEach(line => {
+      this.driver.performLines([line], listLogFn);
+    });
+    this.driver.groupEnd();
   }
 
   trace(msgText, prefix, offset = 0) {

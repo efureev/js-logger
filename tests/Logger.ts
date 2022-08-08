@@ -1,11 +1,21 @@
 import assert from 'assert'
-import Logger, { BrowserLogger, ConsoleDriver, ERROR, LEVEL_INFO, LEVEL_INFO_STR, LEVEL_TRACE } from '../src'
+import Logger, {
+  BrowserLogger,
+  ConsoleDriver,
+  ERROR,
+  INFO,
+  LEVEL_DEBUG,
+  LEVEL_ERROR,
+  LEVEL_INFO,
+  LEVEL_INFO_STR,
+  LEVEL_TRACE,
+  TRACE
+} from '../src'
 import Message from '../src/Message'
 import MessageBlock from '../src/MessageBlock'
 import ConsoleBufferDriver from '../src/drivers/ConsoleBufferDriver'
 import ColorCollection from '../src/ColorCollection'
 import colors from '../src/Color'
-import { INFO, LEVEL_DEBUG, LEVEL_ERROR, TRACE } from '../src'
 
 describe('Logger', () => {
 
@@ -397,12 +407,77 @@ describe('Return Log', () => {
       { text: 'panel 3', color: 'red', offsetLeft: 2, padding: 1 }
     )
 
-    console.log(list)
     assert.equal(list.length, 4)
     assert.equal(list[0], '%cpanel 1%cpanel 2%cpanel 3')
     assert.equal(list[1], 'background:' + colorCollection.get('teal') + ';color:' + colorCollection.get('yellow') + ';border-radius:5px;')
     assert.equal(list[2], 'color:' + colorCollection.get('white') + ';')
     assert.equal(list[3], 'color:' + colorCollection.get('red') + ';margin-left:20px;padding:1px;')
+  })
+
+})
+
+describe('groupCollapsed', () => {
+  it('Log', () => {
+    const driver = new ConsoleBufferDriver()
+    const colorCollection = new ColorCollection(colors)
+    const logger = new Logger({ driver, colors: colorCollection })
+
+    logger.groupCollapsed(
+      { text: 'Collapse panel', bgColor: 'teal', color: 'yellow', borderRadius: 5 },
+      ['text1', 'text2']
+    )
+
+    assert.equal(driver.buffer.length, 4)
+    assert.equal(driver.buffer[0], '%cCollapse panel')
+    assert.equal(driver.buffer[1], 'background:#5FB3B3;color:#FAC863;border-radius:5px;')
+    assert.equal(driver.buffer[2], 'text1')
+    assert.equal(driver.buffer[3], 'text2')
+  })
+
+  it('From Message', () => {
+    const driver = new ConsoleBufferDriver()
+    const colorCollection = new ColorCollection(colors)
+    const logger = new Logger({ driver, colors: colorCollection })
+
+    const message = Message.instance({ text: 'ERROR', color: 'red' })
+    message.pushBlock(
+      MessageBlock.instance({ text: 'Fatal Error', bgColor: 'red', color: 'white', borderRadius: 5 }),
+      MessageBlock.instance('description')
+    )
+
+    logger.groupCollapsed(
+      message,
+      ['text1', 'text2']
+    )
+    assert.equal(driver.buffer.length, 6)
+
+    assert.equal(driver.buffer[0], '%cERROR%cFatal Error%cdescription')
+    assert.equal(driver.buffer[1], 'color:red;')
+    assert.equal(driver.buffer[2], 'background:red;color:white;border-radius:5px;')
+    assert.equal(driver.buffer[3], '')
+    assert.equal(driver.buffer[4], 'text1')
+    assert.equal(driver.buffer[5], 'text2')
+  })
+
+  it('Error', () => {
+    const driver = new ConsoleBufferDriver()
+    const colorCollection = new ColorCollection(colors)
+    const logger = new Logger({ driver, colors: colorCollection })
+
+    const e = new Error()
+    e.stack = 'line 1\nline 2'
+
+    logger.error(
+      'Error Title',
+      { text: 'Error', bgColor: 'red', borderRadius: 5 },
+      e
+    )
+    assert.equal(driver.buffer.length, 5)
+    assert.equal(driver.buffer[0], '%cError%cError Title')
+    assert.equal(driver.buffer[1], 'background:#ff000f;border-radius:5px;margin-right:10px;')
+    assert.equal(driver.buffer[2], '')
+    assert.equal(driver.buffer[3], 'line 1')
+    assert.equal(driver.buffer[4], 'line 2')
   })
 
 })

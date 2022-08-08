@@ -99,11 +99,11 @@ class Logger {
     return (this.logLevel & level) !== 0
   }
 
-  log(msgText: string | Message | MessageBlock, prefix?: string, offset = 0): string[] | void {
+  log(msgText: Message | BlockPanel, prefix?: BlockPanel, offset = 0): string[] | void {
     return this.driver.log(this.buildMessage(msgText, prefix, offset))
   }
 
-  info(msgText: string | Message | MessageBlock, prefix?: string, offset = 0): string[] | void {
+  info(msgText: Message | BlockPanel, prefix?: BlockPanel, offset = 0): string[] | void {
     if (!this.shouldLog(INFO)) {
       return
     }
@@ -113,7 +113,7 @@ class Logger {
     return this.driver.info(msg)
   }
 
-  debug(msgText: string | Message | MessageBlock, prefix?: string, offset = 0): string[] | void {
+  debug(msgText: Message | BlockPanel, prefix?: BlockPanel, offset = 0): string[] | void {
     if (!this.shouldLog(DEBUG)) {
       return
     }
@@ -121,15 +121,31 @@ class Logger {
     return this.driver.debug(this.buildMessage(msgText, prefix, offset))
   }
 
-  error(msgText: string | Message | MessageBlock, prefix?: string, offset = 0): string[] | void {
+  error(msgText: Message | BlockPanel, prefix?: BlockPanel, error?: Error, offset = 0): string[] | void {
     if (!this.shouldLog(ERROR)) {
+      return
+    }
+
+    if (error instanceof Error && error.stack && isString(error.stack)) {
+      const lines = error.stack.split('\n')
+      this.groupCollapsed(this.buildMessage(msgText, prefix, offset), lines)
       return
     }
 
     return this.driver.error(this.buildMessage(msgText, prefix, offset))
   }
 
-  trace(msgText: string | Message | MessageBlock, prefix?: string, offset = 0): string[] | void {
+  groupCollapsed(msgText: Message | BlockPanel, lines: string[] = [], listLogFn: string = 'log'): void {
+    this.driver.groupCollapsed(this.buildMessage(msgText))
+
+    lines.forEach(line => {
+      this.driver.performLines([line], listLogFn)
+    })
+
+    this.driver.groupEnd()
+  }
+
+  trace(msgText: Message | BlockPanel, prefix?: BlockPanel, offset = 0): string[] | void {
     if (!this.shouldLog(TRACE)) {
       return
     }
@@ -186,7 +202,7 @@ class Logger {
     return this.driver.log(msg)
   }
 
-  private buildMessage(msgText: string | Message | MessageBlock, prefix?: string, offset: number = 0): Message {
+  private buildMessage(msgText: Message | BlockPanel, prefix?: BlockPanel, offset: number = 0): Message {
     if (msgText instanceof Message) {
       return msgText
     }

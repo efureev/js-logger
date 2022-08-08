@@ -31,12 +31,25 @@ class ConsoleDriver implements LoggerDriver {
     return this.perform(msg, 'trace')
   }
 
+  groupCollapsed(msg: Message): string[] | void {
+    return this.perform(msg, 'groupCollapsed')
+  }
+
+  groupEnd(): void {
+    return this.output.groupEnd()
+  }
+
   protected perform(msg: Message, type: string): string[] | void {
     const lines = ConsoleDriver.buildStrings(ConsoleDriver.formatMessage(msg))
 
+    return this.performLines(lines, type)
+  }
+
+
+  public performLines(lines: string[], type: string): string[] | void {
     if (!this._returnResult) {
       // @ts-ignore
-      this.output[type](...lines)
+      this.output[type] ? this.output[type](...lines) : this.output.log(...lines)
       return
     }
 
