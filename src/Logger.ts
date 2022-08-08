@@ -99,42 +99,42 @@ class Logger {
     return (this.logLevel & level) !== 0
   }
 
-  log(msgText: string | Message | MessageBlock, prefix?: string, offset = 0): void {
-    this.driver.log(this.buildMessage(msgText, prefix, offset))
+  log(msgText: string | Message | MessageBlock, prefix?: string, offset = 0): string[] | void {
+    return this.driver.log(this.buildMessage(msgText, prefix, offset))
   }
 
-  info(msgText: string | Message | MessageBlock, prefix?: string, offset = 0): void {
+  info(msgText: string | Message | MessageBlock, prefix?: string, offset = 0): string[] | void {
     if (!this.shouldLog(INFO)) {
       return
     }
 
     const msg = this.buildMessage(msgText, prefix, offset)
 
-    this.driver.info(msg)
+    return this.driver.info(msg)
   }
 
-  debug(msgText: string | Message | MessageBlock, prefix?: string, offset = 0) {
+  debug(msgText: string | Message | MessageBlock, prefix?: string, offset = 0): string[] | void {
     if (!this.shouldLog(DEBUG)) {
       return
     }
 
-    this.driver.debug(this.buildMessage(msgText, prefix, offset))
+    return this.driver.debug(this.buildMessage(msgText, prefix, offset))
   }
 
-  error(msgText: string | Message | MessageBlock, prefix?: string, offset = 0) {
+  error(msgText: string | Message | MessageBlock, prefix?: string, offset = 0): string[] | void {
     if (!this.shouldLog(ERROR)) {
       return
     }
 
-    this.driver.error(this.buildMessage(msgText, prefix, offset))
+    return this.driver.error(this.buildMessage(msgText, prefix, offset))
   }
 
-  trace(msgText: string | Message | MessageBlock, prefix?: string, offset = 0) {
+  trace(msgText: string | Message | MessageBlock, prefix?: string, offset = 0): string[] | void {
     if (!this.shouldLog(TRACE)) {
       return
     }
 
-    this.driver.trace(this.buildMessage(msgText, prefix, offset))
+    return this.driver.trace(this.buildMessage(msgText, prefix, offset))
   }
 
   /**
@@ -146,7 +146,7 @@ class Logger {
     { bgColor, color, offset }: PanelOptions = Object.create(null),
     baseText?: string | MessageBlock,
     logLevel?: StringLevelType
-  ) {
+  ): string[] | void {
     if (logLevel && !this.shouldLog(logLevel)) {
       return
     }
@@ -162,10 +162,10 @@ class Logger {
       baseText ? MessageBlock.instance(baseText, { colors: this.colors }).offsetLeft(1) : null
     )
 
-    this.driver.log(msg)
+    return this.driver.log(msg)
   }
 
-  panels(logLevel?: StringLevelType, ...blockConfigs: BlockPanel[]) {
+  panels(logLevel?: StringLevelType, ...blockConfigs: BlockPanel[]): string[] | void {
     if (!blockConfigs.length || (logLevel && !this.shouldLog(logLevel))) {
       return
     }

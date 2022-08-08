@@ -36,17 +36,17 @@ declare class Logger {
     returnResult(): this;
     getColors(): ColorCollection;
     private shouldLog;
-    log(msgText: string | Message | MessageBlock, prefix?: string, offset?: number): void;
-    info(msgText: string | Message | MessageBlock, prefix?: string, offset?: number): void;
-    debug(msgText: string | Message | MessageBlock, prefix?: string, offset?: number): void;
-    error(msgText: string | Message | MessageBlock, prefix?: string, offset?: number): void;
-    trace(msgText: string | Message | MessageBlock, prefix?: string, offset?: number): void;
+    log(msgText: string | Message | MessageBlock, prefix?: string, offset?: number): string[] | void;
+    info(msgText: string | Message | MessageBlock, prefix?: string, offset?: number): string[] | void;
+    debug(msgText: string | Message | MessageBlock, prefix?: string, offset?: number): string[] | void;
+    error(msgText: string | Message | MessageBlock, prefix?: string, offset?: number): string[] | void;
+    trace(msgText: string | Message | MessageBlock, prefix?: string, offset?: number): string[] | void;
     /**
      * @deprecated
      * @use panels
      */
-    panel(panelText: string | MessageBlock, { bgColor, color, offset }?: PanelOptions, baseText?: string | MessageBlock, logLevel?: StringLevelType): void;
-    panels(logLevel?: StringLevelType, ...blockConfigs: BlockPanel[]): void | string[];
+    panel(panelText: string | MessageBlock, { bgColor, color, offset }?: PanelOptions, baseText?: string | MessageBlock, logLevel?: StringLevelType): string[] | void;
+    panels(logLevel?: StringLevelType, ...blockConfigs: BlockPanel[]): string[] | void;
     private buildMessage;
 }
 export default Logger;

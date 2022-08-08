@@ -85,7 +85,7 @@ class Logger {
   }
 
   log(msgText, prefix, offset = 0) {
-    this.driver.log(this.buildMessage(msgText, prefix, offset));
+    return this.driver.log(this.buildMessage(msgText, prefix, offset));
   }
 
   info(msgText, prefix, offset = 0) {
@@ -94,7 +94,7 @@ class Logger {
     }
 
     const msg = this.buildMessage(msgText, prefix, offset);
-    this.driver.info(msg);
+    return this.driver.info(msg);
   }
 
   debug(msgText, prefix, offset = 0) {
@@ -102,7 +102,7 @@ class Logger {
       return;
     }
 
-    this.driver.debug(this.buildMessage(msgText, prefix, offset));
+    return this.driver.debug(this.buildMessage(msgText, prefix, offset));
   }
 
   error(msgText, prefix, offset = 0) {
@@ -110,7 +110,7 @@ class Logger {
       return;
     }
 
-    this.driver.error(this.buildMessage(msgText, prefix, offset));
+    return this.driver.error(this.buildMessage(msgText, prefix, offset));
   }
 
   trace(msgText, prefix, offset = 0) {
@@ -118,7 +118,7 @@ class Logger {
       return;
     }
 
-    this.driver.trace(this.buildMessage(msgText, prefix, offset));
+    return this.driver.trace(this.buildMessage(msgText, prefix, offset));
   }
   /**
    * @deprecated
@@ -140,7 +140,7 @@ class Logger {
     }).background(bgColor || 'white').color(color || 'gray').offsetLeft(offset || 0).borderRadius(3).padding(2, 4), baseText ? MessageBlock.instance(baseText, {
       colors: this.colors
     }).offsetLeft(1) : null);
-    this.driver.log(msg);
+    return this.driver.log(msg);
   }
 
   panels(logLevel, ...blockConfigs) {

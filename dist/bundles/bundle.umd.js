@@ -840,7 +840,7 @@
       key: "log",
       value: function log(msgText, prefix) {
         var offset = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
-        this.driver.log(this.buildMessage(msgText, prefix, offset));
+        return this.driver.log(this.buildMessage(msgText, prefix, offset));
       }
     }, {
       key: "info",
@@ -852,7 +852,7 @@
         }
 
         var msg = this.buildMessage(msgText, prefix, offset);
-        this.driver.info(msg);
+        return this.driver.info(msg);
       }
     }, {
       key: "debug",
@@ -863,7 +863,7 @@
           return;
         }
 
-        this.driver.debug(this.buildMessage(msgText, prefix, offset));
+        return this.driver.debug(this.buildMessage(msgText, prefix, offset));
       }
     }, {
       key: "error",
@@ -874,7 +874,7 @@
           return;
         }
 
-        this.driver.error(this.buildMessage(msgText, prefix, offset));
+        return this.driver.error(this.buildMessage(msgText, prefix, offset));
       }
     }, {
       key: "trace",
@@ -885,7 +885,7 @@
           return;
         }
 
-        this.driver.trace(this.buildMessage(msgText, prefix, offset));
+        return this.driver.trace(this.buildMessage(msgText, prefix, offset));
       }
       /**
        * @deprecated
@@ -912,7 +912,7 @@
         }).background(bgColor || 'white').color(color || 'gray').offsetLeft(offset || 0).borderRadius(3).padding(2, 4), baseText ? MessageBlock.instance(baseText, {
           colors: this.colors
         }).offsetLeft(1) : null);
-        this.driver.log(msg);
+        return this.driver.log(msg);
       }
     }, {
       key: "panels",
