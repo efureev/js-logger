@@ -13,6 +13,8 @@ var _Message = _interopRequireDefault(require("./Message"));
 
 var _MessageBlock = _interopRequireDefault(require("./MessageBlock"));
 
+var _utils = require("./utils");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -205,10 +207,16 @@ var Logger = /*#__PURE__*/function () {
 
       var blocks = [];
       blockConfigs.forEach(function (blockConfig) {
-        blocks.push(_MessageBlock.default.instance(blockConfig, {
-          colors: _this.colors
-        }));
+        if ((0, _utils.isString)(blockConfig) && blockConfig !== '' || (0, _utils.isObject)(blockConfig) && !(0, _utils.isEmptyObject)(blockConfig)) {
+          blocks.push(_MessageBlock.default.instance(blockConfig, {
+            colors: _this.colors
+          }));
+        }
       });
+
+      if (!blocks.length) {
+        return;
+      }
 
       var msg = (_Message$instance = _Message.default.instance()).pushBlock.apply(_Message$instance, blocks);
 

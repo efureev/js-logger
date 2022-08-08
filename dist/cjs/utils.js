@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.isString = exports.isEmptyObject = void 0;
+exports.isString = exports.isObject = exports.isEmptyObject = void 0;
 
 function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
 
@@ -26,4 +26,11 @@ var isString = function isString(value) {
 };
 
 exports.isString = isString;
+var isObject = Object.prototype.toString.call(null) === '[object Object]' ? function (value) {
+  // check ownerDocument here as well to exclude DOM nodes
+  return value != null && Object.prototype.toString.call(value) === '[object Object]' && value.ownerDocument === undefined;
+} : function (value) {
+  return Object.prototype.toString.call(value) === '[object Object]';
+};
+exports.isObject = isObject;
 //# sourceMappingURL=utils.js.map

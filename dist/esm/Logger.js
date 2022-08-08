@@ -2,6 +2,7 @@ import ConsoleBufferDriver from './drivers/ConsoleBufferDriver';
 import { DEBUG, ERROR, INFO, LOG_ALL, stringToLevel, TRACE } from './LogLevel';
 import Message from './Message';
 import MessageBlock from './MessageBlock';
+import { isEmptyObject, isObject, isString } from './utils';
 
 class Logger {
   logLevel = LOG_ALL;
@@ -144,10 +145,17 @@ class Logger {
 
     const blocks = [];
     blockConfigs.forEach(blockConfig => {
-      blocks.push(MessageBlock.instance(blockConfig, {
-        colors: this.colors
-      }));
+      if (isString(blockConfig) && blockConfig !== '' || isObject(blockConfig) && !isEmptyObject(blockConfig)) {
+        blocks.push(MessageBlock.instance(blockConfig, {
+          colors: this.colors
+        }));
+      }
     });
+
+    if (!blocks.length) {
+      return;
+    }
+
     const msg = Message.instance().pushBlock(...blocks);
     this.driver.log(msg);
   }

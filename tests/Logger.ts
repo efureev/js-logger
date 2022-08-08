@@ -374,4 +374,13 @@ describe('Log Panels', () => {
 
     assert.equal(driver.buffer.length, 0)
   })
+
+  it('Log empty panels', () => {
+    const driver = new ConsoleBufferDriver()
+    const colorCollection = new ColorCollection(colors)
+    const logger = new Logger({ driver, colors: colorCollection })
+
+    logger.panels('info', null, undefined, '', {})
+    assert.equal(driver.buffer.length, 0)
+  })
 })

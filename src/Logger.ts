@@ -7,6 +7,7 @@ import type { MessageBlockConfig } from './MessageBlock'
 import MessageBlock from './MessageBlock'
 import { ColorValue } from './Color'
 import ColorCollection from './ColorCollection'
+import { isEmptyObject, isObject, isString } from './utils'
 
 export interface LoggerConfig {
   driver: LoggerDriver
@@ -20,7 +21,7 @@ interface PanelOptions {
   offset?: number
 }
 
-type BlockPanel = string | MessageBlockConfig | MessageBlock
+export type BlockPanel = string | MessageBlockConfig | MessageBlock
 
 class Logger {
   private driver: LoggerDriver
@@ -165,8 +166,14 @@ class Logger {
 
     const blocks: MessageBlock[] = []
     blockConfigs.forEach(blockConfig => {
-      blocks.push(MessageBlock.instance(blockConfig, { colors: this.colors }))
+      if ((isString(blockConfig) && blockConfig !== '') || (isObject(blockConfig) && !isEmptyObject(blockConfig))) {
+        blocks.push(MessageBlock.instance(blockConfig, { colors: this.colors }))
+      }
     })
+
+    if (!blocks.length) {
+      return
+    }
 
     const msg = Message.instance().pushBlock(...blocks)
 

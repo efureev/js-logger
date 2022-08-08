@@ -413,6 +413,15 @@
 
     return true;
   };
+  var isString = function isString(value) {
+    return typeof value === 'string';
+  };
+  var isObject = Object.prototype.toString.call(null) === '[object Object]' ? function (value) {
+    // check ownerDocument here as well to exclude DOM nodes
+    return value != null && Object.prototype.toString.call(value) === '[object Object]' && value.ownerDocument === undefined;
+  } : function (value) {
+    return Object.prototype.toString.call(value) === '[object Object]';
+  };
 
   var MessageBlock = /*#__PURE__*/function () {
     function MessageBlock(text) {
@@ -895,10 +904,16 @@
 
         var blocks = [];
         blockConfigs.forEach(function (blockConfig) {
-          blocks.push(MessageBlock.instance(blockConfig, {
-            colors: _this.colors
-          }));
+          if (isString(blockConfig) && blockConfig !== '' || isObject(blockConfig) && !isEmptyObject(blockConfig)) {
+            blocks.push(MessageBlock.instance(blockConfig, {
+              colors: _this.colors
+            }));
+          }
         });
+
+        if (!blocks.length) {
+          return;
+        }
 
         var msg = (_Message$instance = Message.instance()).pushBlock.apply(_Message$instance, blocks);
 

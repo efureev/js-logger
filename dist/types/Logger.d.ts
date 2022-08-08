@@ -16,7 +16,7 @@ interface PanelOptions {
     color?: ColorValue | string;
     offset?: number;
 }
-declare type BlockPanel = string | MessageBlockConfig | MessageBlock;
+export declare type BlockPanel = string | MessageBlockConfig | MessageBlock;
 declare class Logger {
     private driver;
     private originDriver?;
