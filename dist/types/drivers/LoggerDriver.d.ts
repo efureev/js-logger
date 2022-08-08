@@ -1,9 +1,10 @@
 import Message from '../Message';
 export interface LoggerDriver {
-    debug(msg: Message): void;
-    info(msg: Message): void;
-    log(msg: Message): void;
-    error(msg: Message): void;
-    trace(msg: Message): void;
+    debug(msg: Message): string[] | void;
+    info(msg: Message): string[] | void;
+    log(msg: Message): string[] | void;
+    error(msg: Message): string[] | void;
+    trace(msg: Message): string[] | void;
+    returnResult(): this;
 }
 //# sourceMappingURL=LoggerDriver.d.ts.map

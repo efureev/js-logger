@@ -1,11 +1,11 @@
 import assert from 'assert'
-import Logger, { BrowserLogger, ERROR, LEVEL_INFO, LEVEL_INFO_STR, LEVEL_TRACE } from '../src'
+import Logger, { BrowserLogger, ConsoleDriver, ERROR, LEVEL_INFO, LEVEL_INFO_STR, LEVEL_TRACE } from '../src'
 import Message from '../src/Message'
 import MessageBlock from '../src/MessageBlock'
 import ConsoleBufferDriver from '../src/drivers/ConsoleBufferDriver'
 import ColorCollection from '../src/ColorCollection'
 import colors from '../src/Color'
-import { INFO, LEVEL_DEBUG, LEVEL_ERROR, TRACE } from '../src/LogLevel'
+import { INFO, LEVEL_DEBUG, LEVEL_ERROR, TRACE } from '../src'
 
 describe('Logger', () => {
 
@@ -383,4 +383,26 @@ describe('Log Panels', () => {
     logger.panels('info', null, undefined, '', {})
     assert.equal(driver.buffer.length, 0)
   })
+})
+
+describe('Return Log', () => {
+  it('Log', () => {
+    const driver = new ConsoleDriver()
+    const colorCollection = new ColorCollection(colors)
+    const logger = new Logger({ driver, colors: colorCollection })
+
+    const list: string[] = <string[]>logger.returnResult().panels('info',
+      { text: 'panel 1', bgColor: 'teal', color: 'yellow', borderRadius: 5 },
+      { text: 'panel 2', color: 'white' },
+      { text: 'panel 3', color: 'red', offsetLeft: 2, padding: 1 }
+    )
+
+    console.log(list)
+    assert.equal(list.length, 4)
+    assert.equal(list[0], '%cpanel 1%cpanel 2%cpanel 3')
+    assert.equal(list[1], 'background:' + colorCollection.get('teal') + ';color:' + colorCollection.get('yellow') + ';border-radius:5px;')
+    assert.equal(list[2], 'color:' + colorCollection.get('white') + ';')
+    assert.equal(list[3], 'color:' + colorCollection.get('red') + ';margin-left:20px;padding:1px;')
+  })
+
 })

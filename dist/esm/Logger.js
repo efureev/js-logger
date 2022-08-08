@@ -67,6 +67,11 @@ class Logger {
     return this;
   }
 
+  returnResult() {
+    this.driver.returnResult();
+    return this;
+  }
+
   getColors() {
     return this.colors;
   }
@@ -157,7 +162,7 @@ class Logger {
     }
 
     const msg = Message.instance().pushBlock(...blocks);
-    this.driver.log(msg);
+    return this.driver.log(msg);
   }
 
   buildMessage(msgText, prefix, offset = 0) {

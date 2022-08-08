@@ -29,42 +29,58 @@ var ConsoleDriver = /*#__PURE__*/function () {
   function ConsoleDriver() {
     _classCallCheck(this, ConsoleDriver);
 
+    _defineProperty(this, "_returnResult", false);
+
     _defineProperty(this, "output", console);
   }
 
   _createClass(ConsoleDriver, [{
     key: "debug",
     value: function debug(msg) {
-      this.perform(msg, 'debug');
+      return this.perform(msg, 'debug');
     }
   }, {
     key: "info",
     value: function info(msg) {
-      this.perform(msg, 'info');
+      return this.perform(msg, 'info');
     }
   }, {
     key: "log",
     value: function log(msg) {
-      this.perform(msg, 'log');
+      return this.perform(msg, 'log');
     }
   }, {
     key: "error",
     value: function error(msg) {
-      this.perform(msg, 'error');
+      return this.perform(msg, 'error');
     }
   }, {
     key: "trace",
     value: function trace(msg) {
-      this.perform(msg, 'trace');
+      return this.perform(msg, 'trace');
     }
   }, {
     key: "perform",
     value: function perform(msg, type) {
-      var _this$output;
+      var lines = ConsoleDriver.buildStrings(ConsoleDriver.formatMessage(msg));
 
-      var lines = ConsoleDriver.buildStrings(ConsoleDriver.formatMessage(msg)); // @ts-ignore
+      if (!this._returnResult) {
+        var _this$output;
 
-      (_this$output = this.output)[type].apply(_this$output, _toConsumableArray(lines));
+        // @ts-ignore
+        (_this$output = this.output)[type].apply(_this$output, _toConsumableArray(lines));
+
+        return;
+      }
+
+      this._returnResult = false;
+      return lines;
+    }
+  }, {
+    key: "returnResult",
+    value: function returnResult() {
+      this._returnResult = true;
+      return this;
     }
   }], [{
     key: "buildStrings",

@@ -8,33 +8,46 @@ export interface FormatConsole {
 }
 
 class ConsoleDriver implements LoggerDriver {
-  protected output = console
+  protected _returnResult: boolean = false
+  protected output: Console = console
 
-  debug(msg: Message): void {
-    this.perform(msg, 'debug')
+  debug(msg: Message): string[] | void {
+    return this.perform(msg, 'debug')
   }
 
-  info(msg: Message): void {
-    this.perform(msg, 'info')
+  info(msg: Message): string[] | void {
+    return this.perform(msg, 'info')
   }
 
-  log(msg: Message): void {
-    this.perform(msg, 'log')
+  log(msg: Message): string[] | void {
+    return this.perform(msg, 'log')
   }
 
-  error(msg: Message): void {
-    this.perform(msg, 'error')
+  error(msg: Message): string[] | void {
+    return this.perform(msg, 'error')
   }
 
-  trace(msg: Message): void {
-    this.perform(msg, 'trace')
+  trace(msg: Message): string[] | void {
+    return this.perform(msg, 'trace')
   }
 
-  protected perform(msg: Message, type: string) {
+  protected perform(msg: Message, type: string): string[] | void {
     const lines = ConsoleDriver.buildStrings(ConsoleDriver.formatMessage(msg))
 
-    // @ts-ignore
-    this.output[type](...lines)
+    if (!this._returnResult) {
+      // @ts-ignore
+      this.output[type](...lines)
+      return
+    }
+
+    this._returnResult = false
+    return lines
+  }
+
+  public returnResult(): this {
+    this._returnResult = true
+
+    return this
   }
 
   protected static buildStrings(fmt: FormatConsole): Array<string> {

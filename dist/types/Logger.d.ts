@@ -33,6 +33,7 @@ declare class Logger {
         debugFn?: Function;
     }): this;
     disableDebug(): this;
+    returnResult(): this;
     getColors(): ColorCollection;
     private shouldLog;
     log(msgText: string | Message | MessageBlock, prefix?: string, offset?: number): void;
@@ -45,7 +46,7 @@ declare class Logger {
      * @use panels
      */
     panel(panelText: string | MessageBlock, { bgColor, color, offset }?: PanelOptions, baseText?: string | MessageBlock, logLevel?: StringLevelType): void;
-    panels(logLevel?: StringLevelType, ...blockConfigs: BlockPanel[]): void;
+    panels(logLevel?: StringLevelType, ...blockConfigs: BlockPanel[]): void | string[];
     private buildMessage;
 }
 export default Logger;

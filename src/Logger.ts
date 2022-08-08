@@ -81,6 +81,12 @@ class Logger {
     return this
   }
 
+  public returnResult(): this {
+    this.driver.returnResult()
+
+    return this
+  }
+
   public getColors(): ColorCollection {
     return this.colors
   }
@@ -177,7 +183,7 @@ class Logger {
 
     const msg = Message.instance().pushBlock(...blocks)
 
-    this.driver.log(msg)
+    return this.driver.log(msg)
   }
 
   private buildMessage(msgText: string | Message | MessageBlock, prefix?: string, offset: number = 0): Message {

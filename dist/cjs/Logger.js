@@ -99,6 +99,12 @@ var Logger = /*#__PURE__*/function () {
       return this;
     }
   }, {
+    key: "returnResult",
+    value: function returnResult() {
+      this.driver.returnResult();
+      return this;
+    }
+  }, {
     key: "getColors",
     value: function getColors() {
       return this.colors;
@@ -220,7 +226,7 @@ var Logger = /*#__PURE__*/function () {
 
       var msg = (_Message$instance = _Message.default.instance()).pushBlock.apply(_Message$instance, blocks);
 
-      this.driver.log(msg);
+      return this.driver.log(msg);
     }
   }, {
     key: "buildMessage",

@@ -1,30 +1,43 @@
 class ConsoleDriver {
+  _returnResult = false;
   output = console;
 
   debug(msg) {
-    this.perform(msg, 'debug');
+    return this.perform(msg, 'debug');
   }
 
   info(msg) {
-    this.perform(msg, 'info');
+    return this.perform(msg, 'info');
   }
 
   log(msg) {
-    this.perform(msg, 'log');
+    return this.perform(msg, 'log');
   }
 
   error(msg) {
-    this.perform(msg, 'error');
+    return this.perform(msg, 'error');
   }
 
   trace(msg) {
-    this.perform(msg, 'trace');
+    return this.perform(msg, 'trace');
   }
 
   perform(msg, type) {
-    const lines = ConsoleDriver.buildStrings(ConsoleDriver.formatMessage(msg)); // @ts-ignore
+    const lines = ConsoleDriver.buildStrings(ConsoleDriver.formatMessage(msg));
 
-    this.output[type](...lines);
+    if (!this._returnResult) {
+      // @ts-ignore
+      this.output[type](...lines);
+      return;
+    }
+
+    this._returnResult = false;
+    return lines;
+  }
+
+  returnResult() {
+    this._returnResult = true;
+    return this;
   }
 
   static buildStrings(fmt) {

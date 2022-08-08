@@ -21,16 +21,21 @@ export default class ConsoleBuffer extends ConsoleDriver {
 
   public buffer: string[] = []
 
-  protected perform(msg: Message, type: string) {
+  protected perform(msg: Message, type: string): string[] | void {
     this.buffer = ConsoleDriver.buildStrings(ConsoleDriver.formatMessage(msg))
     if (this.print) {
       this.output.warn('--[debug] start')
-      super.perform(msg, type)
+
+      const result = super.perform(msg, type)
+
       this.debugFn(this.buffer)
       if (this.printFragmented) {
         this.performFragmented()
       }
       this.output.warn('--[debug] finish')
+      if (this._returnResult) {
+        return result
+      }
     }
   }
 

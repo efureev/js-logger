@@ -18,6 +18,7 @@ yarn add @feugene/browser-logger
 |![Chrome](./.media/chrome.png)|![Chrome](./.media/safari.png)|
 
 ![](./.media/screenshot.png)
+
 ## Use
 
 ### Basic use
@@ -306,4 +307,22 @@ prefixPanels(
 )
 
 logger.disableDebug()
+```
+
+### Return a result
+
+```js
+
+const list: string[] = logger.returnResult().panels('info',
+  { text: 'panel 1', bgColor: 'teal', color: 'yellow', borderRadius: 5 },
+  { text: 'panel 2', color: 'white' },
+  { text: 'panel 3', color: 'red', offsetLeft: 2, padding: 1 }
+)
+
+list === [
+  '%cpanel 1%cpanel 2%cpanel 3',
+  'background:#5FB3B3;color:#FAC863;border-radius:5px;',
+  'color:#FFFFFF;',
+  'color:#ff000f;margin-left:20px;padding:1px;'
+]
 ```

@@ -21,7 +21,7 @@ export default class ConsoleBuffer extends ConsoleDriver {
 
     if (this.print) {
       this.output.warn('--[debug] start');
-      super.perform(msg, type);
+      const result = super.perform(msg, type);
       this.debugFn(this.buffer);
 
       if (this.printFragmented) {
@@ -29,6 +29,10 @@ export default class ConsoleBuffer extends ConsoleDriver {
       }
 
       this.output.warn('--[debug] finish');
+
+      if (this._returnResult) {
+        return result;
+      }
     }
   }
 

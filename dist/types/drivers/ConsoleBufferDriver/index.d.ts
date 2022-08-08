@@ -11,7 +11,7 @@ export default class ConsoleBuffer extends ConsoleDriver {
     private readonly debugFn;
     constructor({ print, printFragmented, debugFn }?: ConsoleBufferConfig);
     buffer: string[];
-    protected perform(msg: Message, type: string): void;
+    protected perform(msg: Message, type: string): string[] | void;
     private performFragmented;
     clearBuffer(): void;
 }

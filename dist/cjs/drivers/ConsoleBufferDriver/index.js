@@ -74,7 +74,7 @@ var ConsoleBuffer = /*#__PURE__*/function (_ConsoleDriver) {
       if (this.print) {
         this.output.warn('--[debug] start');
 
-        _get(_getPrototypeOf(ConsoleBuffer.prototype), "perform", this).call(this, msg, type);
+        var result = _get(_getPrototypeOf(ConsoleBuffer.prototype), "perform", this).call(this, msg, type);
 
         this.debugFn(this.buffer);
 
@@ -83,6 +83,10 @@ var ConsoleBuffer = /*#__PURE__*/function (_ConsoleDriver) {
         }
 
         this.output.warn('--[debug] finish');
+
+        if (this._returnResult) {
+          return result;
+        }
       }
     }
   }, {
