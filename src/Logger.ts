@@ -15,7 +15,7 @@ export interface LoggerConfig {
   level?: StringLevelType
 }
 
-interface PanelOptions {
+export interface PanelOptions {
   bgColor?: ColorValue | string
   color?: ColorValue | string
   offset?: number
@@ -91,7 +91,7 @@ class Logger {
     return this.colors
   }
 
-  private shouldLog(level: StringLevelType): boolean {
+  protected shouldLog(level: StringLevelType): boolean {
     if (typeof level === 'string') {
       level = stringToLevel(level)
     }
