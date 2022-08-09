@@ -365,3 +365,28 @@ logger.error(
   { text: 'Error', bgColor: 'red', borderRadius: 5 }
 )
 ```
+
+Example of this:
+
+`Collapsed view`
+![](./.media/error-collapsed.png)
+
+`Expanded view`
+![](./.media/error-expanded.png)
+
+```js
+const error = new Error('Custom error')
+const message = Message.instance(
+  this.makeBasicPanel('ERROR', 1, { color: 'red' }),
+  this.logger.getColors()
+)
+
+message.pushBlock(
+  MessageBlock.instance(
+    this.makeNamedPanel(title, 'red', { color: 'white' })
+  ),
+  MessageBlock.instance(text, { colors: this.logger.getColors() })
+)
+
+this.logger.error(message, '', error)
+```
